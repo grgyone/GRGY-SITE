@@ -32,7 +32,13 @@ main { max-width: 800px; margin: 40px auto; padding: 0 20px; }
 
 /* Секция соцсетей */
 .social { text-align: center; }
-.social img { max-width: 100%; height: auto; display: block; margin: 0 auto 20px; }
+.social img {
+  /* Теперь ширина от 200px до 400px, адаптивно */
+  width: clamp(200px, 50%, 700px);
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+}
 .social-links {
 list-style: none;
 display: flex;
