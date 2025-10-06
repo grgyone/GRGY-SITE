@@ -34,7 +34,7 @@ main { max-width: 800px; margin: 40px auto; padding: 0 20px; }
 .social { text-align: center; }
 .social img {
   /* Теперь ширина от 200px до 400px, адаптивно */
-  width: clamp(200px, 50%, 400px);
+  width: clamp(50px, 50%, 100px);
   height: auto;
   display: block;
   margin: 0 auto 20px;
