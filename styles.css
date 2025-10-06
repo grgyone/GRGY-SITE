@@ -3,27 +3,41 @@
 body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
 
 
-/* Адаптивная шапка */
+/* Перекладываем навигацию под логотип и центрируем всё */
 header {
-position: sticky;
-top: 0;
-background: #fff;
-border-bottom: 1px solid #ddd;
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 10px 20px;
-z-index: 100;
+  display: flex;
+  flex-direction: column;      /* лого + навигация в колонку */
+  align-items: center;         /* центрируем по горизонтали */
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  border-bottom: 1px solid #ffffff;
+  z-index: 100;
 }
-.logo { height: clamp(30px, 5vw, 60px); }
+
+/* Логотип */
+.logo {
+  height: clamp(30px, 4vw, 40px);
+  margin-bottom: 10px;         /* отступ под логотипом */
+}
+
+/* Навигация */
+nav {
+  display: flex;
+  gap: 20px;                   /* расстояние между ссылками */
+}
+
 nav a {
-margin-left: 15px;
-text-decoration: none;
-color: #333;
-font-weight: bold;
-font-size: clamp(14px, 2vw, 18px);
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: clamp(14px, 2vw, 16px);
 }
-nav a:hover { color: #0073e6; }
+
+nav a:hover {
+  color: #8a8a8a;
+}
 
 
 /* Основная область */
