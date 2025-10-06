@@ -27,10 +27,11 @@
     .logo {
       height: clamp(30px, 5vw, 60px);
     }
+    /* Навигационные ссылки */
     nav a {
       margin-left: 15px;
       text-decoration: none;
-      color: #333;
+      color: #000;
       font-weight: bold;
       font-size: clamp(14px, 2vw, 18px);
     }
@@ -57,7 +58,7 @@
     }
     .social-links a {
       text-decoration: none;
-      color: #0073e6;
+      color: #000;
       font-size: 16px;
     }
     .social-links a:hover { text-decoration: underline; }
@@ -71,25 +72,25 @@
 <body>
   <header>
     <!-- Логотип -->
-    <a href="/">
+    <a href="/" target="_blank">
       <img src="images/logo.png" alt="Логотип сайта" class="logo">
     </a>
     <!-- Навигация -->
     <nav>
-      <a href="#social">Social</a>
-      <a href="#about">About</a>
+      <a href="/about" target="_blank">About</a>
+      <a href="/portfolio" target="_blank">Portfolio</a>
     </nav>
   </header>
 
   <main>
-    <section id="social" class="social">
+    <section class="social">
       <!-- Центральное изображение -->
       <img src="images/placeholder.jpg" alt="Центральное изображение">
-      <!-- Ссылки на соцсети -->
+      <!-- Ссылки на соцсети под изображением -->
       <ul class="social-links">
-        <li><a href="https://instagram.com/grgyone" target="_blank">instagram</a></li>
-        <li><a href="https://x.com/grgyone" target="_blank">x.com</a></li>
-        <li><a href="https://grgyone.tumblr.com" target="_blank">tumblr</a></li>
+        <li><a href="https://instagram.com/grgyone" target="_blank">Instagram</a></li>
+        <li><a href="https://x.com/grgyone" target="_blank">X.com</a></li>
+        <li><a href="https://grgyone.tumblr.com" target="_blank">Tumblr</a></li>
       </ul>
     </section>
 
