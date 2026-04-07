@@ -1,6 +1,7 @@
 (function () {
   const SUPABASE_URL = 'https://nqthqdqeraewodcxdags.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_9O0DIjJnI8PEgqx4Bj257w_ARo7aAkP';
+  const CREATE_ORDER_FUNCTION_URL = SUPABASE_URL + '/functions/v1/create-order';
   const PLACEHOLDER_IMAGE = 'images/store-placeholder.svg';
   const formatter = new Intl.NumberFormat('ru-RU', {
     style: 'currency',
@@ -144,6 +145,8 @@ function isProductActive(product) {
     fetchCatalog: fetchCatalog,
     fetchProductBySlug: fetchProductBySlug,
     formatPrice: formatPrice,
-    placeholderImage: PLACEHOLDER_IMAGE
+    placeholderImage: PLACEHOLDER_IMAGE,
+    functionUrl: CREATE_ORDER_FUNCTION_URL,
+    anonKey: SUPABASE_ANON_KEY
   };
 })();

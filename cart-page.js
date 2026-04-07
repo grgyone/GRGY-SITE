@@ -19,6 +19,18 @@ document.addEventListener('DOMContentLoaded', function () {
     return window.GRGY_CART.getItems();
   }
 
+  function getCheckoutFunctionUrl() {
+    return window.GRGY_STORE_API && window.GRGY_STORE_API.functionUrl
+      ? window.GRGY_STORE_API.functionUrl
+      : 'https://nqthqdqeraewodcxdags.supabase.co/functions/v1/create-order';
+  }
+
+  function getAnonKey() {
+    return window.GRGY_STORE_API && window.GRGY_STORE_API.anonKey
+      ? window.GRGY_STORE_API.anonKey
+      : 'sb_publishable_9O0DIjJnI8PEgqx4Bj257w_ARo7aAkP';
+  }
+
   function renderCart() {
     const items = getItems();
     list.innerHTML = '';
@@ -132,15 +144,17 @@ document.addEventListener('DOMContentLoaded', function () {
         })
       };
 
-      const functionUrl =
-        'https://nqthqdqeraewodcxdags.supabase.co/functions/v1/create-order';
+      const functionUrl = getCheckoutFunctionUrl();
+      const anonKey = getAnonKey();
 
       const response = await fetch(functionUrl, {
         method: 'POST',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
-          apikey: 'sb_publishable_9O0DIjJnI8PEgqx4Bj257w_ARo7aAkP',
-          Authorization: 'Bearer sb_publishable_9O0DIjJnI8PEgqx4Bj257w_ARo7aAkP'
+          Accept: 'application/json',
+          apikey: anonKey,
+          Authorization: 'Bearer ' + anonKey
         },
         body: JSON.stringify(payload)
       });
