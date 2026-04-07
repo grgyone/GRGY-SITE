@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     grid.innerHTML = '';
 
     if (!products.length) {
-      setStatus('', 'empty');
+      hideStatus();
       return;
     }
 

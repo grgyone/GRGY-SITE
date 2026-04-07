@@ -145,8 +145,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     hideStatus();
   }
 
-  setStatus('Loading product...', 'info');
-
   try {
     const product = await window.GRGY_STORE_API.fetchProductBySlug(slug);
 

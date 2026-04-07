@@ -19,13 +19,13 @@
 </nav>
 </header>
 <main class="product-main">
-  <section id="product-status" class="page-status" aria-live="polite">Loading product...</section>
+  <section id="product-status" class="page-status" aria-live="polite" hidden></section>
   <section id="product-page" class="product-layout" hidden>
     <div class="product-gallery">
       <div class="product-gallery-main">
-        <button id="gallery-prev" class="gallery-arrow" type="button" aria-label="Previous image">Previous</button>
+        <button id="gallery-prev" class="gallery-arrow" type="button" aria-label="Previous image">&lt;</button>
         <img id="product-image" src="images/store-placeholder.svg" alt="" class="product-detail-image">
-        <button id="gallery-next" class="gallery-arrow" type="button" aria-label="Next image">Next</button>
+        <button id="gallery-next" class="gallery-arrow" type="button" aria-label="Next image">&gt;</button>
       </div>
       <div id="product-thumbnails" class="product-thumbnails" aria-label="Product gallery thumbnails"></div>
     </div>
