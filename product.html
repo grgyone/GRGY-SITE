@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product - Grgy Sukhanov</title>
+<link rel="icon" href="favicon.ico" sizes="32x32" type="image/png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+<a href="index.html"><img src="images/logo.png" alt="Логотип сайта" class="logo"></a>
+<nav>
+<a href="https://grgyone.com">Home</a>
+<a href="about.html">About</a>
+<a href="portfolio.html">Portfolio</a>
+<a href="store.html">STORE</a>
+<a href="cart_items.html" class="cart-link">Cart <span id="cart-badge" class="cart-badge"></span></a>
+</nav>
+</header>
+<main class="product-main">
+  <section id="product-status" class="page-status" aria-live="polite">Loading product...</section>
+  <section id="product-page" class="product-layout" hidden>
+    <div class="product-gallery">
+      <div class="product-gallery-main">
+        <button id="gallery-prev" class="gallery-arrow" type="button" aria-label="Previous image">Previous</button>
+        <img id="product-image" src="images/store-placeholder.svg" alt="" class="product-detail-image">
+        <button id="gallery-next" class="gallery-arrow" type="button" aria-label="Next image">Next</button>
+      </div>
+      <div id="product-thumbnails" class="product-thumbnails" aria-label="Product gallery thumbnails"></div>
+    </div>
+    <div class="product-info">
+      <p class="eyebrow">NEW GRGY TIMES STORE</p>
+      <h1 id="product-title" class="product-detail-title"></h1>
+      <p id="product-price" class="product-detail-price"></p>
+      <div id="product-description" class="product-detail-description"></div>
+      <button id="add-to-cart" class="add-to-cart-btn" type="button">Add to cart</button>
+      <p id="add-status" class="add-status" aria-live="polite"></p>
+    </div>
+  </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
+<script src="cart-utils.js"></script>
+<script src="product-page.js"></script>
+</body>
+</html>
