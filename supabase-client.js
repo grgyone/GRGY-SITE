@@ -98,7 +98,11 @@ function isProductActive(product) {
   }
 
   async function fetchCatalog() {
-    const response = await window.GRGY_SUPABASE.from('products').select('*').order('id', { ascending: true });
+    const response = await window.GRGY_SUPABASE
+      .from('products')
+      .select('*')
+      .order('sort_order', { ascending: true, nullsFirst: false })
+      .order('id', { ascending: true });
 
     if (response.error) {
       throw response.error;
