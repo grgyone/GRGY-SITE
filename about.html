@@ -10,10 +10,15 @@
 <body>
 <header>
 <a href="index.html"><img src="images/logo.png" alt="Логотип сайта" class="logo"></a>
-<nav>
+<nav class="site-nav" aria-label="Main navigation">
 <a href="https://grgyone.com">Home</a>
 <a href="about.html">About</a>
-<a href="portfolio.html">Portfolio</a>
+<div class="nav-dropdown">
+<a href="portfolio.html" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="portfolio-submenu">Portfolio</a>
+<div id="portfolio-submenu" class="nav-dropdown-menu" hidden>
+<a href="/free/">FREE</a>
+</div>
+</div>
 <a href="store.html">STORE</a>
 <a href="cart_items.html" class="cart-link">Cart <span id="cart-badge" class="cart-badge"></span></a>
 </nav>
@@ -27,11 +32,13 @@
     <a href="https://grgy.tumblr.com" target="_blank">CLICK to tumblr</a><br>
     <a href="https://vk.com/newgrgytimes" target="_blank">CLICK to vk.com</a><br>
     <a href="https://x.com/grgyone" target="_blank">CLICK to x.com</a><br>
+    <a href="https://www.threads.com/@grgyone" target="_blank">CLICK to threads</a><br>
     <a href="https://instagram.com/grgyone" target="_blank">CLICK to instagram</a><br>
     <a href="https://t.me/newgrgytimes" target="_blank">CLICK to telegram group</a><br>
     <a href="https://www.pinterest.com/grgyone" target="_blank">CLICK to pinterest</a>
   </p>
 </main>
 <script src="cart-utils.js"></script>
+<script src="site-nav.js"></script>
 </body>
 </html>
