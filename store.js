@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   function buildCard(product) {
     const article = document.createElement('article');
     article.className = 'product-card';
+    article.classList.toggle('is-out-of-stock', !product.inStock);
 
     const imageLink = document.createElement('a');
     imageLink.href = productLink(product.slug);
@@ -47,10 +48,47 @@ document.addEventListener('DOMContentLoaded', async function () {
     price.className = 'product-price';
     price.textContent = window.GRGY_STORE_API.formatPrice(product.price_rub);
 
+    const stockLabel = document.createElement('p');
+    stockLabel.className = 'product-stock-label';
+    stockLabel.textContent = 'OUT OF STOCK';
+
+    const purchaseRow = document.createElement('div');
+    purchaseRow.className = 'product-purchase-row';
+
+    if (product.inStock) {
+      const addButton = document.createElement('button');
+      addButton.type = 'button';
+      addButton.className = 'add-to-cart-btn product-card-add-btn';
+      addButton.textContent = 'Add to cart';
+      addButton.addEventListener('click', function () {
+        window.GRGY_CART.addItem({
+          product_id: product.id,
+          slug: product.slug,
+          name: product.name,
+          price_rub: product.price_rub,
+          image_url: product.primaryImage || window.GRGY_STORE_API.placeholderImage,
+          quantity: 1
+        });
+
+        addButton.textContent = 'Added';
+        addButton.disabled = true;
+
+        window.setTimeout(function () {
+          addButton.textContent = 'Add to cart';
+          addButton.disabled = false;
+        }, 1200);
+      });
+
+      purchaseRow.appendChild(price);
+      purchaseRow.appendChild(addButton);
+    } else {
+      purchaseRow.appendChild(stockLabel);
+    }
+
     imageLink.appendChild(image);
     article.appendChild(imageLink);
     article.appendChild(title);
-    article.appendChild(price);
+    article.appendChild(purchaseRow);
     return article;
   }
 

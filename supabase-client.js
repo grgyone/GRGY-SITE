@@ -14,6 +14,15 @@
     return formatter.format(amount);
   }
 
+  function parseStockQuantity(value) {
+    if (value === null || typeof value === 'undefined' || value === '') {
+      return null;
+    }
+
+    const amount = Number(value);
+    return Number.isFinite(amount) ? Math.max(0, Math.floor(amount)) : null;
+  }
+
   function getImageUrl(record) {
     if (!record || typeof record !== 'object') {
       return null;
@@ -39,6 +48,7 @@ function isProductActive(product) {
 }
 
   function normalizeProduct(product, images) {
+    const stockQuantity = parseStockQuantity(product.stock_quantity);
     const gallery = Array.isArray(images)
       ? images
           .map(function (image) {
@@ -60,6 +70,8 @@ function isProductActive(product) {
       name: product.name || product.title || 'Untitled',
       description: product.description || '',
       price_rub: Number(product.price_rub) || 0,
+      stock_quantity: stockQuantity,
+      inStock: stockQuantity === null ? true : stockQuantity > 0,
       active: isProductActive(product),
       images: gallery,
       primaryImage: gallery[0] ? gallery[0].image_url : PLACEHOLDER_IMAGE

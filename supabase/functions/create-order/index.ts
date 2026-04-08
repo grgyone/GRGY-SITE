@@ -49,14 +49,6 @@ function normalizeItems(items: unknown): OrderItemInput[] {
     .filter(Boolean) as OrderItemInput[];
 }
 
-function buildOrderNumber(orderId: number) {
-  const date = new Date();
-  const year = String(date.getUTCFullYear()).slice(-2);
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  return `GRGY-${year}${month}${day}-${String(orderId).padStart(4, "0")}`;
-}
-
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -101,83 +93,28 @@ Deno.serve(async (req) => {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 
-  const productIds = items.map((item) => item.product_id);
-  const { data: products, error: productsError } = await supabase
-    .from("products")
-    .select("id, name, title, price_rub")
-    .in("id", productIds);
-
-  if (productsError) {
-    return jsonResponse({ error: productsError.message }, 500);
-  }
-
-  if (!products || products.length !== productIds.length) {
-    return jsonResponse({ error: "Some products were not found" }, 400);
-  }
-
-  const productMap = new Map(
-    products.map((product) => [Number(product.id), product]),
-  );
-
-  const total = items.reduce((sum, item) => {
-    const product = productMap.get(item.product_id);
-    const price = Number(product?.price_rub) || 0;
-    return sum + price * item.quantity;
-  }, 0);
-
-  const { data: insertedOrder, error: orderError } = await supabase
-    .from("orders")
-    .insert({
-      email,
-      contact,
-      comment,
-      total_rub: total,
-      status: "new",
-    })
-    .select("id")
-    .single();
-
-  if (orderError || !insertedOrder) {
-    return jsonResponse({ error: orderError?.message || "Order insert failed" }, 500);
-  }
-
-  const orderId = Number(insertedOrder.id);
-  const orderNumber = buildOrderNumber(orderId);
-
-  const { error: orderNumberError } = await supabase
-    .from("orders")
-    .update({ order_number: orderNumber })
-    .eq("id", orderId);
-
-  if (orderNumberError) {
-    return jsonResponse({ error: orderNumberError.message }, 500);
-  }
-
-  const orderItems = items.map((item) => {
-    const product = productMap.get(item.product_id);
-    const unitPrice = Number(product?.price_rub) || 0;
-
-    return {
-      order_id: orderId,
-      product_id: item.product_id,
-      product_name: String(product?.name || product?.title || "Untitled"),
-      quantity: item.quantity,
-      unit_price_rub: unitPrice,
-      line_total_rub: unitPrice * item.quantity,
-    };
+  const { data, error } = await supabase.rpc("create_store_order", {
+    p_email: email,
+    p_contact: contact || null,
+    p_comment: comment || null,
+    p_items: items,
   });
 
-  const { error: orderItemsError } = await supabase
-    .from("order_items")
-    .insert(orderItems);
+  if (error) {
+    const message = error.message || "Order creation failed";
+    const status = /stock|not enough|unavailable/i.test(message) ? 409 : 500;
+    return jsonResponse({ error: message }, status);
+  }
 
-  if (orderItemsError) {
-    return jsonResponse({ error: orderItemsError.message }, 500);
+  const createdOrder = Array.isArray(data) ? data[0] : data;
+  if (!createdOrder) {
+    return jsonResponse({ error: "Order creation failed" }, 500);
   }
 
   return jsonResponse({
     success: true,
-    order_number: orderNumber,
-    id: orderId,
+    order_number:
+      createdOrder.order_number || createdOrder.p_order_number || createdOrder.number,
+    id: createdOrder.order_id || createdOrder.id,
   });
 });

@@ -55,6 +55,26 @@ document.addEventListener('DOMContentLoaded', async function () {
     addStatus.textContent = message;
   }
 
+  function updatePurchaseState(product) {
+    if (!priceElement || !addButton) {
+      return;
+    }
+
+    if (product.inStock) {
+      priceElement.textContent = window.GRGY_STORE_API.formatPrice(product.price_rub);
+      priceElement.classList.remove('is-out-of-stock');
+      addButton.hidden = false;
+      addButton.disabled = false;
+      return;
+    }
+
+    priceElement.textContent = 'OUT OF STOCK';
+    priceElement.classList.add('is-out-of-stock');
+    addButton.hidden = true;
+    addButton.disabled = true;
+    setAddStatus('This item is currently unavailable.');
+  }
+
   function updateGallery() {
     if (!galleryImages.length || !imageElement) {
       return;
@@ -132,13 +152,14 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     document.title = product.name + ' - Grgy Sukhanov';
     titleElement.textContent = product.name;
-    priceElement.textContent = window.GRGY_STORE_API.formatPrice(product.price_rub);
     descriptionElement.textContent = product.description || '';
     descriptionElement.hidden = !product.description;
     imageElement.addEventListener('error', function () {
       imageElement.src = window.GRGY_STORE_API.placeholderImage;
     });
 
+    setAddStatus('');
+    updatePurchaseState(product);
     renderThumbnails();
     updateGallery();
     page.hidden = false;
@@ -174,7 +195,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   if (addButton) {
     addButton.addEventListener('click', function () {
-      if (!currentProduct) {
+      if (!currentProduct || !currentProduct.inStock) {
         return;
       }
 

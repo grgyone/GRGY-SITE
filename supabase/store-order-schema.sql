@@ -38,3 +38,175 @@ for all
 to service_role
 using (true)
 with check (true);
+
+alter table public.products
+  add column if not exists stock_quantity integer not null default 0;
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'products_stock_quantity_check'
+  ) then
+    alter table public.products
+      add constraint products_stock_quantity_check
+      check (stock_quantity >= 0);
+  end if;
+end $$;
+
+create or replace function public.create_store_order(
+  p_email text,
+  p_contact text default null,
+  p_comment text default null,
+  p_items jsonb default '[]'::jsonb
+)
+returns table(order_id bigint, order_number text)
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_order_id bigint;
+  v_order_number text;
+begin
+  if coalesce(trim(p_email), '') = '' then
+    raise exception 'Email is required';
+  end if;
+
+  if p_items is null or jsonb_typeof(p_items) <> 'array' or jsonb_array_length(p_items) = 0 then
+    raise exception 'Order must contain at least one item';
+  end if;
+
+  if exists (
+    with normalized_items as (
+      select
+        nullif(item ->> 'product_id', '')::bigint as product_id,
+        nullif(item ->> 'quantity', '')::integer as quantity
+      from jsonb_array_elements(p_items) as item
+    )
+    select 1
+    from normalized_items
+    where product_id is null
+      or quantity is null
+      or quantity < 1
+  ) then
+    raise exception 'Invalid order items payload';
+  end if;
+
+  perform 1
+  from public.products as p
+  join (
+    select
+      (item ->> 'product_id')::bigint as product_id,
+      sum((item ->> 'quantity')::integer) as quantity
+    from jsonb_array_elements(p_items) as item
+    group by 1
+  ) as i on i.product_id = p.id
+  for update;
+
+  if (
+    select count(*)
+    from (
+      select (item ->> 'product_id')::bigint as product_id
+      from jsonb_array_elements(p_items) as item
+      group by 1
+    ) as requested
+  ) <> (
+    select count(*)
+    from public.products as p
+    join (
+      select (item ->> 'product_id')::bigint as product_id
+      from jsonb_array_elements(p_items) as item
+      group by 1
+    ) as requested on requested.product_id = p.id
+  ) then
+    raise exception 'Some products were not found';
+  end if;
+
+  if exists (
+    select 1
+    from public.products as p
+    join (
+      select
+        (item ->> 'product_id')::bigint as product_id,
+        sum((item ->> 'quantity')::integer) as quantity
+      from jsonb_array_elements(p_items) as item
+      group by 1
+    ) as requested on requested.product_id = p.id
+    where p.stock_quantity < requested.quantity
+  ) then
+    raise exception 'Not enough stock for one or more products';
+  end if;
+
+  insert into public.orders (
+    email,
+    contact,
+    comment,
+    total_rub,
+    status
+  )
+  select
+    lower(trim(p_email)),
+    nullif(trim(coalesce(p_contact, '')), ''),
+    nullif(trim(coalesce(p_comment, '')), ''),
+    sum((p.price_rub * requested.quantity)::numeric),
+    'new'
+  from public.products as p
+  join (
+    select
+      (item ->> 'product_id')::bigint as product_id,
+      sum((item ->> 'quantity')::integer) as quantity
+    from jsonb_array_elements(p_items) as item
+    group by 1
+  ) as requested on requested.product_id = p.id
+  returning id into v_order_id;
+
+  v_order_number := 'GRGY-' || to_char(timezone('utc', now()), 'YYMMDD') || '-' || lpad(v_order_id::text, 4, '0');
+
+  update public.orders
+  set order_number = v_order_number
+  where id = v_order_id;
+
+  insert into public.order_items (
+    order_id,
+    product_id,
+    product_name,
+    quantity,
+    unit_price_rub,
+    line_total_rub
+  )
+  select
+    v_order_id,
+    p.id,
+    coalesce(p.name, p.title, 'Untitled'),
+    requested.quantity,
+    p.price_rub,
+    (p.price_rub * requested.quantity)::numeric
+  from public.products as p
+  join (
+    select
+      (item ->> 'product_id')::bigint as product_id,
+      sum((item ->> 'quantity')::integer) as quantity
+    from jsonb_array_elements(p_items) as item
+    group by 1
+  ) as requested on requested.product_id = p.id;
+
+  update public.products as p
+  set stock_quantity = p.stock_quantity - requested.quantity
+  from (
+    select
+      (item ->> 'product_id')::bigint as product_id,
+      sum((item ->> 'quantity')::integer) as quantity
+    from jsonb_array_elements(p_items) as item
+    group by 1
+  ) as requested
+  where p.id = requested.product_id;
+
+  return query
+  select v_order_id, v_order_number;
+end;
+$$;
+
+revoke all on function public.create_store_order(text, text, text, jsonb) from public;
+grant execute on function public.create_store_order(text, text, text, jsonb) to service_role;
