@@ -1,0 +1,134 @@
+import { stat, mkdir } from 'node:fs/promises';
+import path from 'node:path';
+
+const esc = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+export const localized = (value, lang) => typeof value === 'string' ? value : value?.[lang] || '';
+export const projectUrl = project => `/works/projects/${project.slug}/`;
+export const localUrl = (url, lang) => (lang === 'ru' ? '/ru' : '') + url;
+export const projectImages = project => [project.coverImage, ...project.gallery].filter((image, index, images) => image && images.findIndex(other => other?.src === image.src) === index);
+export const imageBase = (project, image) => `/images/projects/optimized/${project.id}/${projectImages(project).findIndex(other => other.src === image.src)}`;
+const labels = {
+  en: { projects: 'Projects', back: 'Back to Projects', year: 'Year', projectType: 'Project Type', medium: 'Medium', collaborators: 'Collaborators', location: 'Location', description: 'Description', prev: 'Previous Project', next: 'Next Project', links: 'Related links', original: 'Open original image', download: 'Download video', video: 'Video' },
+  ru: { projects: 'Проекты', back: 'Назад к проектам', year: 'Год', projectType: 'Тип проекта', medium: 'Материал', collaborators: 'Участники', location: 'Место', description: 'Описание', prev: 'Предыдущий проект', next: 'Следующий проект', links: 'Ссылки', original: 'Открыть оригинал', download: 'Скачать видео', video: 'Видео' }
+};
+export const projectsTitle = lang => labels[lang].projects;
+const mediaUrl = src => esc(src.split('/').map(encodeURIComponent).join('/'));
+
+function requireText(value, context) {
+  if (typeof value !== 'string' || !value.trim()) throw new Error(`${context}: text is required`);
+}
+function requireUrl(url, context) {
+  try { if (new URL(url).protocol !== 'https:') throw new Error(); }
+  catch { throw new Error(`${context}: an HTTPS URL is required`); }
+}
+export async function checkAsset(root, src, context) {
+  if (typeof src !== 'string' || !/^\/(?:images|videos)\/projects\//.test(src) || /[\\\u0000-\u001f]/.test(src) || src.split('/').some(part => part === '..' || part.startsWith('.'))) throw new Error(`${context}: use a local project media path`);
+  const file = path.resolve(root, '.' + src);
+  if (!file.startsWith(path.resolve(root) + path.sep)) throw new Error(`${context}: invalid media path`);
+  if (!(await stat(file)).isFile()) throw new Error(`${context}: missing file ${src}`);
+}
+function dimensions(media, context) {
+  if (![media.width, media.height].every(value => Number.isInteger(value) && value > 0)) throw new Error(`${context}: positive image/video dimensions are required`);
+}
+
+export async function readyProjects(records, root, { checkOptimized = true } = {}) {
+  if (!Array.isArray(records)) throw new Error('Projects data must be an array');
+  const ids = new Set();
+  const slugs = new Set();
+  for (const project of records) {
+    for (const [key, seen] of [['id', ids], ['slug', slugs]]) {
+      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(project[key]) || seen.has(project[key])) throw new Error(`Invalid or duplicate project ${key}: ${project[key]}`);
+      seen.add(project[key]);
+    }
+    if (!['draft', 'ready'].includes(project.status)) throw new Error(`${project.id}: status must be draft or ready`);
+    if (project.category !== 'projects') throw new Error(`${project.id}: category must be projects`);
+    if (!Number.isFinite(project.displayOrder)) throw new Error(`${project.id}: displayOrder is required`);
+    requireText(project.title, project.id);
+  }
+  const projects = records.filter(project => project.status === 'ready').sort((a, b) => a.displayOrder - b.displayOrder);
+  for (const project of projects) {
+    if (!Number.isInteger(project.year)) throw new Error(`${project.id}: confirmed year is required`);
+    for (const lang of ['En', 'Ru']) requireText(project[`description${lang}`], `${project.id} description${lang}`);
+    if (!Array.isArray(project.gallery) || !Array.isArray(project.videos) || !Array.isArray(project.collaborators) || !Array.isArray(project.externalLinks)) throw new Error(`${project.id}: media and link arrays are required`);
+    for (const image of projectImages(project)) {
+      await checkAsset(root, image.src, project.id);
+      if (!/\.(?:png|jpe?g|webp)$/i.test(image.src)) throw new Error(`${project.id}: unsupported image format`);
+      dimensions(image, project.id);
+      requireText(image.altEn, `${project.id} image altEn`);
+      requireText(image.altRu, `${project.id} image altRu`);
+      if (image.objectPosition && !/^\d+(?:\.\d+)?% \d+(?:\.\d+)?%$/.test(image.objectPosition)) throw new Error(`${project.id}: invalid objectPosition`);
+      if (checkOptimized) for (const width of [480, 960, 1920]) await checkAsset(root, `${imageBase(project, image)}-${width}.webp`, project.id);
+    }
+    for (const collaborator of project.collaborators) {
+      requireText(collaborator.name, project.id);
+      if (collaborator.url) requireUrl(collaborator.url, project.id);
+    }
+    for (const link of project.externalLinks) {
+      requireUrl(link.url, project.id);
+      for (const lang of ['en', 'ru']) requireText(localized(link.label, lang), `${project.id} link ${lang}`);
+    }
+    for (const video of project.videos) {
+      await checkAsset(root, video.src, project.id);
+      if (!/\.(?:mp4|webm)$/i.test(video.src)) throw new Error(`${project.id}: use a browser-compatible MP4 or WebM video`);
+      dimensions(video, project.id);
+      if (video.poster) await checkAsset(root, video.poster, project.id);
+      for (const track of video.tracks || []) {
+        await checkAsset(root, track.src, project.id);
+        if (!['en', 'ru'].includes(track.lang) || !track.src.endsWith('.vtt')) throw new Error(`${project.id}: use EN/RU WebVTT captions`);
+        requireText(track.label, project.id);
+      }
+    }
+  }
+  return projects;
+}
+
+export async function optimizeProjectImages(projects, root) {
+  const { default: sharp } = await import('sharp');
+  for (const project of projects) {
+    for (const image of projectImages(project)) {
+      const original = path.join(root, image.src);
+      const metadata = await sharp(original).metadata();
+      const swapped = [5, 6, 7, 8].includes(metadata.orientation);
+      if ((swapped ? metadata.height : metadata.width) !== image.width || (swapped ? metadata.width : metadata.height) !== image.height) {
+        throw new Error(`${project.id}: image dimensions do not match the original ${image.src}`);
+      }
+      const base = path.join(root, imageBase(project, image));
+      await mkdir(path.dirname(base), { recursive: true });
+      for (const width of [480, 960, 1920]) {
+        await sharp(original).rotate().resize({ width, withoutEnlargement: true })
+          .webp({ quality: 82 }).toFile(`${base}-${width}.webp`);
+      }
+    }
+  }
+}
+
+export function projectImage(project, image, lang, { thumbnail = false, eager = false } = {}) {
+  const base = imageBase(project, image);
+  const widths = [...new Set([480, 960, 1920].map(width => Math.min(width, image.width)))];
+  const source = width => `${base}-${width <= 480 ? 480 : width <= 960 ? 960 : 1920}.webp`;
+  const sizes = thumbnail ? '(max-width: 480px) calc(100vw - 40px), (max-width: 760px) calc((100vw - 56px) / 2), 380px' : '(max-width: 760px) calc(100vw - 40px), (max-width: 1200px) calc(100vw - 300px), 1000px';
+  return `<img class="${thumbnail ? 'artwork-thumbnail' : 'project-image'}" src="${base}-${thumbnail ? 960 : 1920}.webp" srcset="${widths.map(width => `${source(width)} ${width}w`).join(', ')}" sizes="${sizes}" width="${image.width}" height="${image.height}" alt="${esc(image[lang === 'ru' ? 'altRu' : 'altEn'])}" loading="${eager ? 'eager' : 'lazy'}"${eager ? ' fetchpriority="high"' : ''} decoding="async"${thumbnail ? ` style="object-position: ${image.objectPosition || '50% 50%'}"` : ''}>`;
+}
+
+export function projectCards(projects, lang) {
+  return projects.map(project => project.coverImage
+    ? `<figure class="artwork-card project-card"><a href="${localUrl(projectUrl(project), lang)}">${projectImage(project, project.coverImage, lang, { thumbnail: true })}<figcaption><span class="artwork-title">${esc(project.title)}</span><span class="artwork-year">${project.year}</span></figcaption></a></figure>`
+    : `<article class="project-card project-card-text"><h2><a href="${localUrl(projectUrl(project), lang)}">${esc(project.title)}</a></h2><p class="project-card-meta">${project.year}${localized(project.projectType, lang) ? ' · ' + esc(localized(project.projectType, lang)) : ''}</p><p class="project-card-description">${esc(project[lang === 'ru' ? 'descriptionRu' : 'descriptionEn'])}</p></article>`).join('\n');
+}
+export function projectCv(projects, lang) {
+  if (!projects.length) return '';
+  return `<section class="cv-projects"><h2>${labels[lang].projects}</h2><ul class="exhibition-list">${projects.map(project => `<li>${project.year} — <a href="${localUrl(projectUrl(project), lang)}">${esc(project.title)}</a></li>`).join('')}</ul></section>`;
+}
+export function projectContent(project, projects, lang) {
+  const t = labels[lang];
+  const info = (key, value) => value ? `<div><dt>${t[key]}</dt><dd>${value}</dd></div>` : '';
+  const collaborators = project.collaborators.map(person => person.url ? `<a href="${esc(person.url)}" target="_blank" rel="noopener noreferrer">${esc(person.name)}</a>` : esc(person.name)).join(', ');
+  const caption = media => localized(media.caption, lang);
+  const figure = (image, eager = false) => `<figure class="project-figure"><a href="${mediaUrl(image.src)}" aria-label="${t.original}">${projectImage(project, image, lang, { eager })}</a>${caption(image) ? `<figcaption>${esc(caption(image))}</figcaption>` : ''}</figure>`;
+  const index = projects.findIndex(other => other.id === project.id);
+  const adjacent = (other, direction) => other ? `<a href="${localUrl(projectUrl(other), lang)}" rel="${direction}"><span>${direction === 'prev' ? t.prev : t.next}</span>${esc(other.title)}</a>` : '<span></span>';
+  const description = project[lang === 'ru' ? 'descriptionRu' : 'descriptionEn'];
+  const videos = project.videos.map(video => `<figure class="project-figure"><video class="project-video" controls playsinline preload="metadata" width="${video.width}" height="${video.height}" aria-label="${esc(caption(video) || project.title + ' — ' + t.video)}"${video.poster ? ` poster="${mediaUrl(video.poster)}"` : ''}><source src="${mediaUrl(video.src)}" type="${video.src.toLowerCase().endsWith('.webm') ? 'video/webm' : 'video/mp4'}">${(video.tracks || []).map(track => `<track kind="captions" src="${mediaUrl(track.src)}" srclang="${track.lang}" label="${esc(track.label)}"${track.lang === lang ? ' default' : ''}>`).join('')}<a href="${mediaUrl(video.src)}">${t.download}</a></video>${caption(video) ? `<figcaption>${esc(caption(video))}</figcaption>` : ''}</figure>`).join('');
+  const gallery = projectImages(project).filter(image => image.src !== project.coverImage?.src).map(image => figure(image)).join('') + videos;
+  return `<article class="project-detail${project.coverImage ? '' : ' project-detail-text'}"><a class="back-link" href="${localUrl('/works/projects/', lang)}">← ${t.back}</a>${project.coverImage ? figure(project.coverImage, true) : ''}<div class="project-information"><div><h1>${esc(project.title)}</h1><dl>${info('year', project.year)}${info('projectType', esc(localized(project.projectType, lang)))}${info('medium', esc(localized(project.medium, lang)))}${info('collaborators', collaborators)}${info('location', esc(localized(project.location, lang)))}</dl></div><section class="project-description" aria-label="${t.description}">${description.split(/\n\s*\n/).map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}</section></div>${gallery ? `<div class="project-gallery">${gallery}</div>` : ''}${project.externalLinks.length ? `<section class="project-external-links"><h2>${t.links}</h2><ul>${project.externalLinks.map(link => `<li><a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">${esc(localized(link.label, lang))}</a></li>`).join('')}</ul></section>` : ''}<nav class="artwork-pagination" aria-label="${t.projects}">${adjacent(projects[index - 1], 'prev')}${adjacent(projects[index + 1], 'next')}</nav></article>`;
+}

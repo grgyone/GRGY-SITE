@@ -4,10 +4,12 @@ import { readFile, stat, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
+import { projectUrl } from '../scripts/projects.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = file => readFile(path.join(root, file), 'utf8');
 const data = JSON.parse(await read('data/artworks.json'));
+const projects = JSON.parse(await read('data/projects.json')).filter(project => project.status === 'ready');
 const workUrl = work => `/works/${work.category}/${work.slug}/`;
 const publicPages = [];
 async function discover(directory = '') {
@@ -75,11 +77,36 @@ test('navigation order, category filtering and bilingual approved texts', async 
   assert.ok(english.indexOf('href="/bio/"') < english.indexOf('class="works-heading"'));
   assert.ok(english.indexOf('href="/cv/"') < english.indexOf('class="works-heading"'));
   assert.match(english, /href="\/works\/composition\/">Works/);
-  assert.doesNotMatch(english, />Objects<|>Projects</);
+  assert.doesNotMatch(english, />Objects</);
+  assert.match(english, /href="\/works\/projects\/">Projects/);
+  assert.ok(english.indexOf('href="/contact/"') < english.indexOf('class="works-heading"'));
+  assert.doesNotMatch(english, /New Grgy Times|src="\/images\/logo\.png"/);
   assert.match(await read('ru/cv/index.html'), /чёрное облако с белыми глазами/);
   assert.match(await read('cv/index.html'), /black cloud with white eyes/);
   assert.match(await read('artist-statement/index.html'), /Visual Art Journal/);
   assert.match(await read('ru/artist-statement/index.html'), /ЦИПР, Нижний Новгород/);
+});
+
+test('every project has EN/RU pages, CV links, metadata and sitemap entries without borrowed images', async () => {
+  const sitemap = await read('sitemap.xml');
+  for (const prefix of ['', '/ru']) {
+    const cv = await read(prefix.slice(1) + (prefix ? '/' : '') + 'cv/index.html');
+    for (const project of projects) {
+      const url = prefix + projectUrl(project);
+      const html = await read(url.slice(1) + 'index.html');
+      assert.ok(cv.includes(`href="${url}"`));
+      assert.ok(sitemap.includes(`<loc>https://grgyone.com${url}</loc>`));
+      assert.match(html, /<link rel="canonical"/);
+      assert.match(html, /hreflang="en"/);
+      assert.match(html, /hreflang="ru"/);
+      assert.ok(html.includes(project[prefix ? 'descriptionRu' : 'descriptionEn']));
+      assert.match(html, /href="[^\"]+" rel="(?:prev|next)"/);
+      if (!project.coverImage) {
+        assert.doesNotMatch(html, /property="og:image"|class="project-image"/);
+        assert.match(html, /name="twitter:card" content="summary"/);
+      }
+    }
+  }
 });
 
 test('sitemap includes all twelve localized works and excludes commerce; domain preserved', async () => {

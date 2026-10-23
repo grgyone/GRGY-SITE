@@ -66,3 +66,14 @@ and archive files from the existing GitHub Pages publication path. Source CSS is
 retained in `styles.css`; portfolio-specific styles are in `portfolio.css`.
 
 Review and test this branch before any publication to the main domain.
+
+## Projects and collaborations
+
+Project content is centralized in `data/projects.json`; complete media galleries,
+video, bilingual descriptions and links render through `scripts/projects.mjs`.
+See [project intake and schema](docs/projects.md) for the current material
+inventory, exact media fields and validation commands. The three confirmed
+projects currently have text pages in both languages; media can be added later
+through the same data. Draft projects remain excluded from pages, category
+navigation, CV and sitemap. A project without a cover uses a text listing, with
+no placeholder image or borrowed artwork.

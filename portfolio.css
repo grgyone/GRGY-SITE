@@ -56,6 +56,46 @@
 .contact-links { list-style: none; display: grid; gap: 10px; }
 .contact-links a { text-decoration: none; }
 .contact-links a:hover { text-decoration: underline; }
+.project-detail { max-width: 1000px; }
+.all-works-projects { margin-top: 56px; }
+.all-works-projects > h2 { font-size: 14px; font-weight: 400; margin-bottom: 28px; }
+.project-card-text { min-width: 0; border-top: 1px solid #eee; padding-top: 22px; }
+.project-card-text h2 { font-size: 14px; font-weight: 400; line-height: 1.65; }
+.project-card-text h2 a { text-decoration: none; }
+.project-card-text h2 a:hover { text-decoration: underline; }
+.project-card-meta { color: #777; font-size: 12px; margin-top: 10px; }
+.project-card-description { font-size: 13px; line-height: 1.8; margin-top: 18px; max-width: 640px; }
+.project-index .artwork-grid { grid-template-columns: minmax(0, 1fr); max-width: 1000px; gap: 36px; }
+.project-index .project-card-text { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); column-gap: 32px; }
+.project-index .project-card-description { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
+.project-detail-text .project-information { margin-top: 12px; }
+.project-figure { margin: 0; min-width: 0; }
+.project-image, .project-video { display: block; width: 100%; height: auto; }
+.project-video { background: #111; }
+.project-figure figcaption { margin-top: 10px; max-width: 680px; color: #666; font-size: 12px; line-height: 1.7; }
+.project-information { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 32px; margin: 28px 0 40px; }
+.project-information h1 { font-size: 16px; margin-bottom: 20px; overflow-wrap: anywhere; }
+.project-information dl { display: grid; gap: 10px; font-size: 12px; }
+.project-information dl > div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
+.project-information dt { color: #777; }
+.project-information dd, .project-external-links a, .project-card .artwork-title, .cv-projects a { overflow-wrap: anywhere; }
+.project-description { max-width: 680px; line-height: 1.8; overflow-wrap: anywhere; }
+.project-description p + p { margin-top: 18px; }
+.project-gallery { display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; }
+.project-external-links { margin-top: 36px; font-size: 12px; }
+.project-external-links h2 { font-size: 12px; font-weight: 500; margin-bottom: 12px; }
+.project-external-links ul { display: grid; gap: 10px; list-style: none; }
+.cv-projects { margin-top: 36px; }
+.project-detail .artwork-pagination a { max-width: 46%; overflow-wrap: anywhere; }
+@media (max-width: 1000px) {
+  .project-information { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .project-index .project-card-text { display: block; }
+  .project-index .project-card-description { margin-top: 18px; }
+}
+@media (max-width: 760px) {
+  .project-information { margin: 24px 0 32px; }
+  .project-gallery { gap: 28px; }
+}
 @media (min-width: 1600px) { .portfolio-site .portfolio-main { margin-right: auto; } }
 @media (max-width: 1000px) and (min-width: 761px) {
   .portfolio-site { --sidebar-width: 190px; }

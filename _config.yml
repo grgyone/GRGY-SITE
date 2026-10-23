@@ -6,6 +6,7 @@ exclude:
   - scripts
   - tests
   - data
+  - docs
   - package.json
   - package-lock.json
   - README.md

@@ -4,6 +4,7 @@ const { spawn } = require('node:child_process');
 const { mkdir } = require('node:fs/promises');
 const path = require('node:path');
 const { artworks } = require('../data/artworks.json');
+const projects = require('../data/projects.json').filter(project => project.status === 'ready').sort((a, b) => a.displayOrder - b.displayOrder);
 const root = path.resolve(__dirname, '..');
 const origin = 'http://127.0.0.1:4174';
 const server = spawn(process.execPath, ['scripts/serve.mjs'], { cwd: root, env: { ...process.env, PORT: '4174' }, stdio: ['ignore', 'pipe', 'pipe'] });
@@ -51,7 +52,7 @@ async function main() {
         } else assert.equal(await menu.isVisible(), false);
         const navLinks = await page.locator('.artist-navigation a').allTextContents();
         assert.equal(navLinks.length, 3);
-        assert.equal(await page.locator('#work-categories li').count(), 3);
+        assert.equal(await page.locator('#work-categories li').count(), 3 + Number(projects.length > 0));
         await page.locator('.works-toggle').click();
         assert.equal(await page.locator('#work-categories').isVisible(), false);
         await page.locator('.works-toggle').click();
@@ -88,10 +89,34 @@ async function main() {
           await page.keyboard.press('Escape');
           assert.equal(await menu.getAttribute('aria-expanded'), 'false');
         }
+        // Test actual approved project records, not just the media layout fixtures.
+        await page.goto(origin + prefix + '/cv/');
+        assert.equal(await page.locator('.cv-projects a').count(), projects.length);
+        for (const project of projects) {
+          await page.goto(origin + prefix + '/cv/');
+          await page.locator(`.cv-projects a[href="${prefix}/works/projects/${project.slug}/"]`).click();
+          await page.waitForURL(origin + prefix + `/works/projects/${project.slug}/`);
+          assert.equal(await page.locator('h1').textContent(), project.title);
+          assert.equal((await page.locator('.project-description').innerText()).trim(), project[prefix ? 'descriptionRu' : 'descriptionEn']);
+          assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Project page does not overflow');
+          if (!project.coverImage && !project.gallery.length && !project.videos.length) assert.equal(await page.locator('main img, main video, .project-gallery').count(), 0);
+          if ([1440, 390].includes(viewport.width)) await page.screenshot({ path: path.join(root, `test-results/project-${project.id}-${prefix ? 'ru' : 'en'}-${viewport.width}.png`), fullPage: true });
+          if (mobile) await menu.click();
+          await page.locator(`.language-switch a[lang="${prefix ? 'en' : 'ru'}"]`).click();
+          await page.waitForURL(origin + (prefix ? '' : '/ru') + `/works/projects/${project.slug}/`);
+          assert.equal(await page.locator('h1').textContent(), project.title);
+          const adjacent = page.locator('.artwork-pagination a').first();
+          await adjacent.click();
+          assert.ok(await page.locator('.project-description').isVisible());
+          await page.locator('.back-link').click();
+          assert.equal(await page.locator('.project-card').count(), projects.length);
+        }
+        await page.goto(origin + prefix + '/works/projects/');
+        if ([1440, 390].includes(viewport.width)) await page.screenshot({ path: path.join(root, `test-results/projects-${prefix ? 'ru' : 'en'}-${viewport.width}.png`), fullPage: true });
         assert.deepEqual(errors, [], 'No browser runtime errors');
         assert.deepEqual(failedResponses, [], 'No broken media or script requests');
         await context.close();
-        console.log(`PASS ${prefix ? 'RU' : 'EN'} ${viewport.width}px: gallery, six artwork pages, originals, menu, language switching`);
+        console.log(`PASS ${prefix ? 'RU' : 'EN'} ${viewport.width}px: six artworks, ${projects.length} projects, CV links, navigation and language switching`);
       }
     }
     const context = await browser.newContext();
