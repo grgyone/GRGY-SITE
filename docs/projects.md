@@ -85,9 +85,11 @@ After originals arrive, add their media records, run `npm run images`, then
 `npm run build`; no template changes are needed. Any declared missing file fails
 the build rather than producing a broken public image or video. Metadata for a
 text-only project omits image fields instead of borrowing an unrelated artwork.
-Both language variants, project listing, category navigation, CV links, adjacent
-project navigation, Open Graph, canonical/hreflang and sitemap follow the data.
-Existing CV content is retained. Homepage selection and its six-work order stay
+Both language variants, project listing, category navigation, adjacent project
+navigation, Open Graph, canonical/hreflang and sitemap follow the project data.
+The v4 CV is curated separately in `data/artist.json`: an approved event's
+`projectId` links it to a ready project without changing its supplied wording.
+Homepage selection and its six-work order stay
 independent of project listing order (`displayOrder`).
 
 ## Validation

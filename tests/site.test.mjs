@@ -81,10 +81,10 @@ test('navigation order, category filtering and bilingual approved texts', async 
   assert.match(english, /href="\/works\/projects\/">Projects/);
   assert.ok(english.indexOf('href="/contact/"') < english.indexOf('class="works-heading"'));
   assert.doesNotMatch(english, /New Grgy Times|src="\/images\/logo\.png"/);
-  assert.match(await read('ru/cv/index.html'), /чёрное облако с белыми глазами/);
-  assert.match(await read('cv/index.html'), /black cloud with white eyes/);
-  assert.match(await read('artist-statement/index.html'), /Visual Art Journal/);
-  assert.match(await read('ru/artist-statement/index.html'), /ЦИПР, Нижний Новгород/);
+  assert.match(await read('ru/cv/index.html'), /TON AVATARS/);
+  assert.match(await read('cv/index.html'), /Contemporary Artist/);
+  assert.match(await read('artist-statement/index.html'), /GRGY is a parasite/);
+  assert.match(await read('ru/artist-statement/index.html'), /GRGY — паразит/);
 });
 
 test('every project has EN/RU pages, CV links, metadata and sitemap entries without borrowed images', async () => {

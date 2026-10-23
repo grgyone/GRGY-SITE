@@ -60,9 +60,8 @@ try {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     for (const prefix of ['', '/ru']) {
-      await page.goto(origin + prefix + '/cv/');
-      assert.equal(await page.locator('.cv-projects a').count(), 2);
-      await page.locator('.cv-projects a').first().click();
+      // CV is curated v4 content; technical fixture projects are not CV events.
+      await page.goto(origin + prefix + '/works/projects/layout-test-2/');
       await page.waitForURL(origin + prefix + '/works/projects/layout-test-2/');
       for (const media of await page.locator('.project-image').all()) {
         await media.scrollIntoViewIfNeeded();
@@ -104,7 +103,7 @@ try {
       const xml = await readFile(path.join(site, 'sitemap.xml'), 'utf8');
       assert.ok(xml.includes(`https://grgyone.com${prefix}/works/projects/layout-test-1/`));
       assert.deepEqual(errors, []);
-      console.log(`PASS project fixture ${prefix ? 'RU' : 'EN'} ${width}px: CV, gallery, video playback/seeking, navigation, language, sitemap`);
+      console.log(`PASS project fixture ${prefix ? 'RU' : 'EN'} ${width}px: gallery, video playback/seeking, navigation, language, sitemap`);
     }
     await page.close();
   }

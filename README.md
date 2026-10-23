@@ -43,11 +43,15 @@ Add categories in the categories array: only categories with artworks appear in
 navigation, always below Artist Statement/Bio/CV. The supplied category “On the
 street” maps to the requested Street Art navigation label.
 
-Approved artist texts and English translations live in `data/artist.json`.
-Following the artist’s supplied labels, the biographical paragraph is under CV;
-exhibitions, publication and education are under Artist Statement. Bio uses the
-name and location already present in the original site. Artwork pages deliberately
-have no Description block, as requested. SEO descriptions remain in the head.
+Approved v4 artist texts live in `data/artist.json`: four paragraphs each for
+Artist Statement and Bio in EN/RU, and structured CV sections with localized
+entries. Add CV events to the appropriate section in reverse chronology, preserving
+the supplied copy. `projectId` connects an entry to an existing project; external
+sources become links only with `status: "verified"`. See `docs/content-v4.md` for
+the source-check limitations. `portrait: null` keeps Bio text-only; a future
+approved portrait can supply `src`, actual `width`/`height` and `alt.en`/`alt.ru`.
+Artwork pages deliberately have no Description block; SEO descriptions remain
+in the head.
 
 English is at `/`, Russian at `/ru/`. Language links preserve the current artwork
 or section. Artwork titles and category names remain original; interface labels,

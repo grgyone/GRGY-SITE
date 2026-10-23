@@ -1,30 +1,282 @@
 {
   "en": {
-    "cv": "GRGY (Georgy Sukhanov) is an artist from Saint Petersburg. Beginning with drawing in the street, he works with painting, graphics, objects and digital imagery. Since 2010, his recurring character has been a black cloud with white eyes. Through it, the artist explores shifts in feeling: anxiety, loss, intimacy and love.",
-    "exhibitionsTitle": "Exhibitions and projects",
-    "exhibitions": [
-      "2025 — COMPOSITIONS. Selected Works 2022–2024, solo digital exhibition, OnCyber.",
-      "2023 — Decipraland, CIPR, Nizhny Novgorod.",
-      "2023 — Merch as Art, MEGA Dybenko, Saint Petersburg.",
-      "2022 — NFT. Stage of Acceptance, Here on Taganka Gallery, Moscow."
+    "role": "Contemporary Artist",
+    "location": "Saint Petersburg, Russia",
+    "statement": [
+      "I create my own visual world, one that has long revolved around Kloud — a character that began around 2010 as a simple drawing of a black cloud. Over time, it changed into a monster, a sheep-like figure, an abstract form, and eventually became a symbol and my personal signature.",
+      "I'm drawn to the process of making things and the freedom to rework whatever catches my attention. In a way, GRGY is a parasite — a monster that absorbs the imagery it likes and transforms it into something of its own. I don't limit myself to one medium. I work with digital images, drawings, canvases, public spaces, sculptures, accessories, and everyday objects. These are different ways for the same visual world to exist.",
+      "In *Composition*, I work spontaneously with shapes and a limited palette. In *Reworked*, I bring the GRGY aesthetic into found imagery. The street is an open exhibition space for me, a way to make my work visible beyond the internet.",
+      "Now I'm interested in moving beyond the character itself. I want the GRGY world to remain recognizable even without Kloud's direct presence — through its forms, combinations, atmosphere, and visual language."
     ],
-    "publicationTitle": "Publication",
-    "publication": "2025 — Visual Art Journal, No. 27, May, pp. 42–43.",
-    "educationTitle": "Education",
-    "education": "2012–2019 — Saint Petersburg State University of Architecture and Civil Engineering, bachelor’s and master’s degrees."
+    "bio": [
+      "GRGY (Grgy Sukhanov) is a contemporary artist based in Saint Petersburg, Russia, working across digital art, drawing, street art, and physical objects.",
+      "His artistic practice grew out of an interest in street culture, graffiti, posters, and animation. Around 2010, he created Kloud, a character that gradually evolved from a drawing into a recognizable visual symbol.",
+      "Today, GRGY develops the *Composition* and *Reworked* series alongside street works, sculptures, accessories, and objects, experimenting with different materials and formats.",
+      "In 2025, he presented *COMPOSITIONS: Selected Works 2022–2024*, a solo digital exhibition on OnCyber. His work has also appeared in *Visual Art Journal*."
+    ],
+    "metaDescriptions": {
+      "statement": "I create my own visual world, one that has long revolved around Kloud — a character that began around 2010 as a simple drawing of a black cloud. Over time, it changed into a monster, a sheep-like figure, an abstract form, and eventually became a symbol and my personal signature.",
+      "bio": "GRGY (Grgy Sukhanov) is a contemporary artist based in Saint Petersburg, Russia, working across digital art, drawing, street art, and physical objects.",
+      "cv": "GRGY (Grgy Sukhanov). Exhibitions & Selected Projects, Selected Collaborations, Publications, Education."
+    }
   },
   "ru": {
-    "cv": "GRGY (Георгий Суханов) — художник из Санкт-Петербурга. Начав с уличного рисунка, он работает с живописью, графикой, объектом и цифровым изображением. С 2010 года его постоянный персонаж — чёрное облако с белыми глазами. Через него художник исследует перемены в чувствах: тревогу, утрату, близость и любовь.",
-    "exhibitionsTitle": "Выставки и проекты",
-    "exhibitions": [
-      "2025 — COMPOSITIONS. Selected Works 2022–2024, персональная цифровая выставка, OnCyber.",
-      "2023 — Decipraland, ЦИПР, Нижний Новгород.",
-      "2023 — «Мерч как искусство», МЕГА Дыбенко, Санкт-Петербург.",
-      "2022 — «NFT. Стадия принятия», галерея «Здесь на Таганке», Москва."
+    "role": "Современный художник",
+    "location": "Санкт-Петербург, Россия",
+    "statement": [
+      "Я создаю собственный визуальный мир, в центре которого долгое время находился Kloud — персонаж, появившийся около 2010 года из простого рисунка чёрной тучки. Со временем он менялся, превращаясь в монстра, овечку, абстрактную форму, а затем стал символом и моей личной подписью.",
+      "Меня привлекает сам процесс создания и возможность перерабатывать всё, что вызывает у меня интерес. В каком-то смысле GRGY — паразит, монстр, который поглощает понравившиеся образы и преобразует их под себя. Я не ограничиваю себя одной техникой: работаю с цифровыми изображениями, рисунками, холстами, уличными пространствами, скульптурами, аксессуарами и предметами. Всё это — разные способы существования одного визуального мира.",
+      "В *Composition* я спонтанно работаю с формами и ограниченной палитрой. В *Reworked* соединяю эстетику GRGY с найденными изображениями. Улица для меня — открытая выставочная площадка, возможность заявить о себе за пределами интернета.",
+      "Сейчас мне интересно выйти за рамки самого персонажа. Я хочу, чтобы мир GRGY можно было узнать даже там, где Kloud непосредственно не изображён — через формы, сочетания, настроение и визуальный язык."
     ],
-    "publicationTitle": "Публикация",
-    "publication": "2025 — Visual Art Journal, № 27, май, с. 42–43.",
-    "educationTitle": "Образование",
-    "education": "2012–2019 — Санкт-Петербургский государственный архитектурно-строительный университет, бакалавриат и магистратура."
-  }
+    "bio": [
+      "GRGY (Grgy Sukhanov) — современный художник из Санкт-Петербурга, работающий с цифровым искусством, рисунком, стрит-артом и физическими объектами.",
+      "Его художественная практика сформировалась под влиянием уличной культуры, граффити, постеров и анимации. Около 2010 года он создал персонажа Kloud, который постепенно превратился из рисунка в узнаваемый визуальный символ.",
+      "Сегодня GRGY развивает серии *Composition* и *Reworked*, создаёт уличные работы, скульптуры, аксессуары и предметы, экспериментируя с разными материалами и форматами.",
+      "В 2025 году он представил персональную цифровую выставку *COMPOSITIONS: Selected Works 2022–2024* на платформе OnCyber. Его работы также публиковались в *Visual Art Journal*."
+    ],
+    "metaDescriptions": {
+      "statement": "Я создаю собственный визуальный мир, в центре которого долгое время находился Kloud — персонаж, появившийся около 2010 года из простого рисунка чёрной тучки. Со временем он менялся, превращаясь в монстра, овечку, абстрактную форму, а затем стал символом и моей личной подписью.",
+      "bio": "GRGY (Grgy Sukhanov) — современный художник из Санкт-Петербурга, работающий с цифровым искусством, рисунком, стрит-артом и физическими объектами.",
+      "cv": "GRGY (Grgy Sukhanov). Выставки и избранные проекты, Избранные коллаборации, Публикации, Образование."
+    }
+  },
+  "portrait": null,
+  "cvSections": [
+    {
+      "id": "exhibitions",
+      "title": {
+        "en": "Exhibitions & Selected Projects",
+        "ru": "Выставки и избранные проекты"
+      },
+      "entries": [
+        {
+          "id": "exhibitions-1",
+          "year": "2025",
+          "text": {
+            "en": "COMPOSITIONS: Selected Works 2022–2024. Solo digital exhibition, OnCyber.",
+            "ru": "COMPOSITIONS: Selected Works 2022–2024. Персональная цифровая выставка, OnCyber."
+          }
+        },
+        {
+          "id": "exhibitions-2",
+          "year": "2023",
+          "text": {
+            "en": "DECIPRALAND: The Singularity. CIPR, Nizhny Novgorod, Russia.",
+            "ru": "DECIPRALAND: The Singularity. ЦИПР, Нижний Новгород."
+          },
+          "sourceId": "decipraland",
+          "linkText": {
+            "en": "DECIPRALAND: The Singularity",
+            "ru": "DECIPRALAND: The Singularity"
+          }
+        },
+        {
+          "id": "exhibitions-3",
+          "year": "2023",
+          "text": {
+            "en": "Merch as Art. MEGA Dybenko, Saint Petersburg, Russia.",
+            "ru": "Мерч как искусство. МЕГА Дыбенко, Санкт-Петербург."
+          }
+        },
+        {
+          "id": "exhibitions-4",
+          "year": "2022",
+          "text": {
+            "en": "NFT. Stage of Acceptance. Here on Taganka Gallery, Moscow, Russia.",
+            "ru": "NFT. Стадия принятия. Галерея «Здесь на Таганке», Москва."
+          }
+        }
+      ]
+    },
+    {
+      "id": "collaborations",
+      "title": {
+        "en": "Selected Collaborations",
+        "ru": "Избранные коллаборации"
+      },
+      "entries": [
+        {
+          "id": "collaborations-1",
+          "year": "2025",
+          "text": {
+            "en": "GRGY × Solukta × Gleb Kostin (.solutions). Collaborative bag design.",
+            "ru": "GRGY × Solukta × Gleb Kostin (.solutions). Совместный проект по созданию авторской сумки."
+          },
+          "projectId": "solukta-solutions",
+          "linkText": {
+            "en": "GRGY × Solukta × Gleb Kostin (.solutions)",
+            "ru": "GRGY × Solukta × Gleb Kostin (.solutions)"
+          }
+        },
+        {
+          "id": "collaborations-2",
+          "year": "2024",
+          "text": {
+            "en": "Napasio vs Grgy. Artist collaboration.",
+            "ru": "Napasio vs Grgy. Художественная коллаборация."
+          }
+        },
+        {
+          "id": "collaborations-3",
+          "year": "2022",
+          "text": {
+            "en": "STUDIO 21: Music Lovers Worldwide. Animated artwork featured in a collective digital art campaign displayed on media facades in Moscow.",
+            "ru": "STUDIO 21: Music Lovers Worldwide. Анимационная работа в рамках коллективного арт-проекта, представленного на медиафасадах Москвы."
+          },
+          "projectId": "studio21-music-lovers",
+          "linkText": {
+            "en": "STUDIO 21: Music Lovers Worldwide",
+            "ru": "STUDIO 21: Music Lovers Worldwide"
+          }
+        },
+        {
+          "id": "collaborations-4",
+          "year": "2022",
+          "text": {
+            "en": "ChikoRoko × GRGY: Kloud. Collaborative digital collectible toy combining GRGY's character and visual language with Roko.",
+            "ru": "ChikoRoko × GRGY: Kloud. Совместная цифровая коллекционная игрушка, объединяющая персонажа и визуальный язык GRGY с образом Roko."
+          },
+          "projectId": "chikoroko-kloud",
+          "linkText": {
+            "en": "ChikoRoko × GRGY: Kloud",
+            "ru": "ChikoRoko × GRGY: Kloud"
+          }
+        },
+        {
+          "id": "collaborations-5",
+          "year": "2022",
+          "text": {
+            "en": "Tim Baym × GRGY: Memory #27. Collaborative digital artwork.",
+            "ru": "Тим Байм × GRGY: Memory #27. Совместная цифровая работа."
+          },
+          "sourceId": "memory-27",
+          "linkText": {
+            "en": "Tim Baym × GRGY: Memory #27",
+            "ru": "Тим Байм × GRGY: Memory #27"
+          }
+        },
+        {
+          "id": "collaborations-6",
+          "year": "2022",
+          "text": {
+            "en": "HODL by Pixelord × GRGY. Digital art collaboration.",
+            "ru": "HODL by Pixelord × GRGY. Коллаборация в области цифрового искусства."
+          }
+        },
+        {
+          "id": "collaborations-7",
+          "year": "2022",
+          "text": {
+            "en": "TON AVATARS. Collaborative NFT art project.",
+            "ru": "TON AVATARS. Коллективный NFT-арт-проект."
+          }
+        },
+        {
+          "id": "collaborations-8",
+          "year": "2021",
+          "text": {
+            "en": "GRGY × RAREBANDY. Artist collaboration.",
+            "ru": "GRGY × RAREBANDY. Художественная коллаборация."
+          }
+        },
+        {
+          "id": "collaborations-9",
+          "year": "2021",
+          "text": {
+            "en": "Rarible Verification Collab. Collective NFT animation project by NFTBastards, dedicated to Rarible.",
+            "ru": "Rarible Verification Collab. Коллективный анимационный NFT-проект NFTBastards, посвящённый Rarible."
+          },
+          "sourceId": "rarible-verification",
+          "linkText": {
+            "en": "Rarible Verification Collab",
+            "ru": "Rarible Verification Collab"
+          }
+        }
+      ]
+    },
+    {
+      "id": "publications",
+      "title": {
+        "en": "Publications",
+        "ru": "Публикации"
+      },
+      "entries": [
+        {
+          "id": "publications-1",
+          "year": "2025",
+          "text": {
+            "en": "Visual Art Journal, No. 27, May, pp. 42–43.",
+            "ru": "Visual Art Journal, № 27, май, стр. 42–43."
+          }
+        }
+      ]
+    },
+    {
+      "id": "education",
+      "title": {
+        "en": "Education",
+        "ru": "Образование"
+      },
+      "entries": [
+        {
+          "id": "education-1",
+          "year": "2012–2019",
+          "text": {
+            "en": "Saint Petersburg State University of Architecture and Civil Engineering. Bachelor's and master's degrees.",
+            "ru": "Санкт-Петербургский государственный архитектурно-строительный университет. Бакалавриат и магистратура."
+          }
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "chikoroko-kloud",
+      "url": "https://r.toys/en/toy/kloud",
+      "status": "blocked-by-environment"
+    },
+    {
+      "id": "chikoroko-profile",
+      "url": "https://r.toys/en/user/grgy/toys",
+      "status": "not-checked"
+    },
+    {
+      "id": "chikoroko-legacy",
+      "url": "https://chikoroko.art/en/shop/toy/kloud",
+      "status": "retired",
+      "note": "Artist reports HTTP 404; do not use as the primary public link."
+    },
+    {
+      "id": "memory-27",
+      "url": "https://www.sobaka.ru/ufa/entertainment/art/160276",
+      "status": "blocked-by-environment"
+    },
+    {
+      "id": "studio21-adindex",
+      "url": "https://adindex.ru/news/releases/2022/05/27/304599.phtml",
+      "status": "blocked-by-environment"
+    },
+    {
+      "id": "studio21-outdoor",
+      "url": "https://outdoor.ru/news/khip_khop_radio_studio_21_obedinyaet_lyubiteley_muzyki_vo_vsyem_mire/",
+      "status": "blocked-by-environment"
+    },
+    {
+      "id": "rarible-verification",
+      "url": "https://vimeo.com/659295921",
+      "status": "blocked-by-environment"
+    },
+    {
+      "id": "decipraland",
+      "url": "https://art.cipr.ru/decipraland-2023/",
+      "status": "blocked-by-environment"
+    },
+    {
+      "id": "solutions-brand",
+      "url": "https://nuw.store/catalog/gleb_kostin_solutions/",
+      "status": "not-checked",
+      "note": "Brand context only; not evidence of the collaborative bag."
+    }
+  ]
 }

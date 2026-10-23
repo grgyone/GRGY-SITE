@@ -52,6 +52,24 @@
 .text-page p { margin-bottom: 24px; line-height: 1.8; }
 .text-page section { margin-bottom: 30px; }
 .text-page h2 { font-size: 13px; font-weight: 500; margin-bottom: 12px; }
+.artist-prose p:last-child { margin-bottom: 0; }
+.artist-portrait { margin: 0 0 28px; }
+.artist-portrait img { display: block; max-width: 100%; height: auto; }
+.cv-header { margin-bottom: 36px; }
+.cv-document .cv-header p { margin-bottom: 8px; }
+.cv-document .cv-artist { font-weight: 500; }
+.cv-document .cv-section { margin: 0 0 38px; }
+.cv-document .cv-section h2 { margin-bottom: 18px; }
+.cv-list { display: grid; gap: 14px; font-size: 13px; line-height: 1.8; }
+.cv-row { display: grid; grid-template-columns: 76px minmax(0, 1fr); column-gap: 18px; }
+.cv-year { font-variant-numeric: tabular-nums; font-weight: 500; white-space: nowrap; }
+.cv-row dd { min-width: 0; overflow-wrap: anywhere; }
+.cv-row a { text-decoration-color: #aaa; text-decoration-thickness: 1px; }
+.cv-row a:hover { text-decoration-color: #111; }
+@media (max-width: 480px) {
+  .cv-row { grid-template-columns: 66px minmax(0, 1fr); column-gap: 12px; }
+  .cv-list { gap: 18px; }
+}
 .exhibition-list { list-style: none; display: grid; gap: 12px; line-height: 1.8; }
 .contact-links { list-style: none; display: grid; gap: 10px; }
 .contact-links a { text-decoration: none; }

@@ -2,7 +2,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
-import { readyProjects, projectUrl, projectCards, projectContent, projectCv, projectsTitle, imageBase } from './projects.mjs';
+import { readyProjects, projectUrl, projectCards, projectContent, projectsTitle, imageBase } from './projects.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const { values: options } = parseArgs({ options: { 'output-dir': { type: 'string' }, 'projects-file': { type: 'string' }, 'media-root': { type: 'string' } } });
@@ -57,6 +57,34 @@ function image(work, lang, detail = false, index = 0) {
 
 function gallery(works, lang, includedProjects = []) {
   return `<div class="artwork-grid">${works.map((work, index) => `<figure class="artwork-card"><a href="${local(workUrl(work), lang)}">${image(work, lang, false, index)}<figcaption><span class="artwork-title">${esc(work.title)}</span><span class="artwork-year">${work.year}</span></figcaption></a></figure>`).join('\n')}${projectCards(includedProjects, lang)}</div>`;
+}
+
+// Approved copy is plain text with optional emphasis, never arbitrary HTML.
+const prose = paragraphs => paragraphs.map(text => `<p>${esc(text).replace(/\*([^*]+)\*/g, '<em>$1</em>')}</p>`).join('\n');
+function cvContent(lang) {
+  const content = texts[lang];
+  const sections = texts.cvSections.map(section => {
+    const rows = section.entries.map(entry => {
+      const text = entry.text[lang];
+      const project = projects.find(project => project.id === entry.projectId);
+      const source = texts.sources.find(source => source.id === entry.sourceId && source.status === 'verified');
+      const url = project ? local(projectUrl(project), lang) : source?.url;
+      const linkText = entry.linkText?.[lang];
+      if (url && (!linkText || !text.startsWith(linkText))) throw new Error(`Invalid CV link text: ${entry.id} (${lang})`);
+      if (source && !source.url.startsWith('https://')) throw new Error(`Invalid CV source URL: ${source.id}`);
+      const body = url ? `<a href="${esc(url)}"${project ? '' : ' target="_blank" rel="noopener noreferrer"'}>${esc(linkText)}</a>${esc(text.slice(linkText.length))}` : esc(text);
+      return `<div class="cv-row"><dt class="cv-year">${esc(entry.year)}</dt><dd>${body}</dd></div>`;
+    }).join('\n');
+    return `<section class="cv-section${section.id === 'collaborations' ? ' cv-projects' : ''}" aria-labelledby="cv-${section.id}"><h2 id="cv-${section.id}">${esc(section.title[lang])}</h2><dl class="cv-list">${rows}</dl></section>`;
+  }).join('\n');
+  return `<div class="text-page cv-document"><h1>CV</h1><div class="cv-header"><p class="cv-artist">${esc(artist)}</p><p>${esc(content.role)}<br>${esc(content.location)}</p></div>${sections}</div>`;
+}
+
+function bioPortrait(lang) {
+  const portrait = texts.portrait;
+  if (!portrait) return '';
+  if (!portrait.src?.startsWith('/images/') || !portrait.alt?.[lang] || !portrait.width || !portrait.height) throw new Error('A portrait requires a local image path, bilingual alt text and actual dimensions');
+  return `<figure class="artist-portrait"><img src="${esc(portrait.src)}" alt="${esc(portrait.alt[lang])}" width="${portrait.width}" height="${portrait.height}" decoding="async"></figure>`;
 }
 
 async function page(url, lang, { title, description, content, category = '', imagePath = '/images/artworks/optimized/1-1920.webp', imageAlt = `${artist} — First French Kiss, 2025`, type = 'website', noindex = false, extraHead = '', canonicalPath = url }) {
@@ -130,9 +158,9 @@ for (const lang of ['en', 'ru']) {
       await page(projectUrl(project), lang, { title: `${project.title} (${project.year})`, description, category: 'projects', imagePath: project.coverImage ? `${imageBase(project, project.coverImage)}-1920.webp` : null, imageAlt: project.coverImage?.[lang === 'ru' ? 'altRu' : 'altEn'] || '', type: 'article', extraHead: `<script type="application/ld+json">${schema}</script>`, content: projectContent(project, projects, lang) });
     }
   }
-  await page('/bio/', lang, { title: t.bio, description: `${artist}. ${t.location}.`, content: `<div class="text-page"><h1>${t.bio}</h1><p>${lang === 'ru' ? 'GRGY (Георгий Суханов)' : artist}<br>${t.location}</p></div>` });
-  await page('/cv/', lang, { title: t.cv, description: artistText.cv, content: `<div class="text-page"><h1>${t.cv}</h1><p>${esc(artistText.cv)}</p>${projectCv(projects, lang)}</div>` });
-  await page('/artist-statement/', lang, { title: t.statement, description: `${artistText.exhibitionsTitle}. ${artistText.publicationTitle}. ${artistText.educationTitle}. ${artist}.`, content: `<div class="text-page"><h1>${t.statement}</h1><section><h2>${artistText.exhibitionsTitle}</h2><ul class="exhibition-list">${artistText.exhibitions.map(text => `<li>${esc(text)}</li>`).join('')}</ul></section><section><h2>${artistText.publicationTitle}</h2><p>${esc(artistText.publication)}</p></section><section><h2>${artistText.educationTitle}</h2><p>${esc(artistText.education)}</p></section><section><h2>${t.contact}</h2><p><a href="mailto:grgyone@gmail.com">grgyone@gmail.com</a> · <a href="${local('/', lang)}">grgyone.com</a></p></section></div>` });
+  await page('/bio/', lang, { title: t.bio, description: artistText.metaDescriptions.bio, content: `<div class="text-page artist-prose"><h1>${t.bio}</h1>${bioPortrait(lang)}${prose(artistText.bio)}</div>` });
+  await page('/cv/', lang, { title: t.cv, description: artistText.metaDescriptions.cv, content: cvContent(lang) });
+  await page('/artist-statement/', lang, { title: t.statement, description: artistText.metaDescriptions.statement, content: `<div class="text-page artist-prose"><h1>${t.statement}</h1>${prose(artistText.statement)}</div>` });
   await page('/contact/', lang, { title: t.contact, description: `${t.contact} — ${artist}.`, content: `<div class="text-page"><h1>${t.contact}</h1><p><a href="mailto:grgyone@gmail.com">grgyone@gmail.com</a></p><ul class="contact-links">${[['https://instagram.com/grgyone', 'Instagram'], ['https://x.com/grgyone', 'X'], ['https://www.threads.com/@grgyone', 'Threads'], ['https://grgy.tumblr.com', 'Tumblr'], ['https://www.pinterest.com/grgyone', 'Pinterest'], ['https://vk.com/newgrgytimes', 'VK'], ['https://t.me/newgrgytimes', 'Telegram']].map(([href, title]) => `<li><a href="${href}" target="_blank" rel="noopener noreferrer">${title}</a></li>`).join('')}</ul></div>` });
   await page('/free/', lang, { title: 'FREE', description: `${artist} — ${lang === 'ru' ? 'Бесплатные материалы для личного использования.' : 'Free downloads for personal use.'}`, content: `<div class="text-page"><h1>FREE</h1><p>${lang === 'ru' ? 'Бесплатное скачивание.<br>Только для личного использования.<br>Не для продажи, распространения или коммерческого использования.' : 'Free download.<br>Personal use only.<br>No resale, no redistribution, no commercial use.'}</p></div><div class="free-grid">${['color', 'bw'].map(color => `<figure class="free-item"><img src="/free/assets/grgy_face_${color}.png" alt="GRGY Face ${color === 'bw' ? 'BW' : 'Color'}" class="free-preview" loading="lazy"><figcaption><a href="/free/assets/grgy_face_${color}.pdf" class="text-link" download>${lang === 'ru' ? 'СКАЧАТЬ' : 'DOWNLOAD'} (A3, PDF)</a></figcaption></figure>`).join('')}</div>` });
 }
