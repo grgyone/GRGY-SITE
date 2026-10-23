@@ -1,45 +1,32 @@
-document.querySelectorAll(".nav-dropdown").forEach((dropdown) => {
-  const toggle = dropdown.querySelector(".nav-dropdown-toggle");
-  const menu = dropdown.querySelector(".nav-dropdown-menu");
-
-  if (!toggle || !menu) {
-    return;
-  }
-
-  const closeMenu = () => {
-    dropdown.classList.remove("is-open");
-    toggle.setAttribute("aria-expanded", "false");
-    menu.hidden = true;
+(() => {
+  const toggle = document.querySelector('.menu-toggle');
+  const navigation = document.querySelector('#site-navigation');
+  const worksToggle = document.querySelector('.works-toggle');
+  const categories = document.querySelector('#work-categories');
+  if (!toggle || !navigation) return;
+  const mobile = window.matchMedia('(max-width: 760px)');
+  const setMenu = open => {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.querySelector('span').textContent = open ? '−' : '+';
+    navigation.hidden = mobile.matches && !open;
   };
-
-  const openMenu = () => {
-    dropdown.classList.add("is-open");
-    toggle.setAttribute("aria-expanded", "true");
-    menu.hidden = false;
-  };
-
-  const clickedPortfolio = sessionStorage.getItem("portfolioClicked") === "true";
-  const isPortfolioPage = window.location.pathname.endsWith("/portfolio.html");
-  const isFreePage = window.location.pathname.endsWith("/free/") || window.location.pathname.endsWith("/free/index.html");
-
-  if (clickedPortfolio && (isPortfolioPage || isFreePage)) {
-    openMenu();
-    sessionStorage.removeItem("portfolioClicked");
+  toggle.hidden = false;
+  toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  mobile.addEventListener('change', () => setMenu(false));
+  setMenu(false);
+  if (worksToggle && categories) {
+    worksToggle.hidden = false;
+    worksToggle.addEventListener('click', () => {
+      const open = worksToggle.getAttribute('aria-expanded') !== 'true';
+      worksToggle.setAttribute('aria-expanded', String(open));
+      worksToggle.querySelector('span').textContent = open ? '−' : '+';
+      categories.hidden = !open;
+    });
   }
-
-  toggle.addEventListener("click", () => {
-    sessionStorage.setItem("portfolioClicked", "true");
-  });
-
-  document.addEventListener("click", (event) => {
-    if (!dropdown.contains(event.target)) {
-      closeMenu();
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && mobile.matches && toggle.getAttribute('aria-expanded') === 'true') {
+      setMenu(false);
+      toggle.focus();
     }
   });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeMenu();
-    }
-  });
-});
+})();

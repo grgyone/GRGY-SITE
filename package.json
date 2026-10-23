@@ -1,0 +1,15 @@
+{
+  "name": "grgy-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static portfolio of GRGY (Grgy Sukhanov)",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "images": "node scripts/images.cjs",
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test tests/site.test.mjs",
+    "test:browser": "node tests/browser.cjs"
+  },
+  "devDependencies": { "playwright": "1.58.2", "sharp": "0.34.5" }
+}

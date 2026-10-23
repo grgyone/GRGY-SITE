@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /_archive/
+Disallow: /node_modules/
+Disallow: /tests/
+Disallow: /scripts/
+Sitemap: https://grgyone.com/sitemap.xml

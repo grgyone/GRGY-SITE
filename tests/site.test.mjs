@@ -1,0 +1,101 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile, stat, readdir } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
+
+const root = fileURLToPath(new URL('../', import.meta.url));
+const read = file => readFile(path.join(root, file), 'utf8');
+const data = JSON.parse(await read('data/artworks.json'));
+const workUrl = work => `/works/${work.category}/${work.slug}/`;
+const publicPages = [];
+async function discover(directory = '') {
+  for (const entry of await readdir(path.join(root, directory), { withFileTypes: true })) {
+    if (entry.name.startsWith('.') || ['_archive', 'node_modules', 'test-results', 'tests', 'scripts'].includes(entry.name)) continue;
+    const relative = path.join(directory, entry.name);
+    if (entry.isDirectory()) await discover(relative);
+    else if (entry.name.endsWith('.html')) publicPages.push(relative);
+  }
+}
+await discover();
+
+test('all six approved works retain their order, titles and source filenames', async () => {
+  assert.deepEqual(data.artworks.map(work => work.file), ['1.PNG', '2.PNG', '3.jpg', '4.png', '5.jpg', '6.png']);
+  assert.deepEqual(data.artworks.map(work => work.title), ['First French Kiss', 'Reworked', 'Big Face', 'Reworked', 'Kloud', 'Composition']);
+  assert.equal(new Set(data.artworks.map(workUrl)).size, 6);
+  for (const work of data.artworks) {
+    assert.ok((await stat(path.join(root, 'images/artworks/originals', work.file))).size > 0);
+    for (const size of [480, 960, 1920]) assert.ok((await stat(path.join(root, `images/artworks/optimized/${work.id}-${size}.webp`))).size > 0);
+  }
+});
+
+test('every generated local link and media reference resolves, and commerce is absent', async () => {
+  for (const file of publicPages) {
+    const html = await read(file);
+    assert.doesNotMatch(html, /href="[^"\n]*(?:store\.html|cart_items\.html|product\.html|checkout|_archive)/i, file);
+    assert.doesNotMatch(html, /<script[^>]+(?:supabase|cart-|store\.js)/i, file);
+    for (const match of html.matchAll(/(?:href|src)="([^"#]+)"/g)) {
+      const url = match[1];
+      if (/^(?:https?:|mailto:|data:)/.test(url)) continue;
+      const pathname = url.split(/[?#]/)[0];
+      const filePath = path.resolve(root, pathname.startsWith('/') ? '.' + pathname : path.join(path.dirname(file), pathname));
+      assert.ok(filePath === path.resolve(root) || filePath.startsWith(root), `${file}: invalid path ${url}`);
+      const result = await stat(filePath);
+      if (result.isDirectory()) assert.ok((await stat(path.join(filePath, 'index.html'))).isFile());
+    }
+  }
+});
+
+test('artwork pages in both languages have metadata, full images, series links and no descriptions', async () => {
+  for (const prefix of ['', 'ru/']) {
+    const homepage = await read(prefix + 'index.html');
+    assert.equal((homepage.match(/class="artwork-card"/g) || []).length, 6);
+    assert.deepEqual([...homepage.matchAll(/class="artwork-title">([^<]+)/g)].map(match => match[1]), data.artworks.map(work => work.title));
+    for (const work of data.artworks) {
+      const html = await read(prefix + workUrl(work).slice(1) + 'index.html');
+      assert.match(html, new RegExp(`<h1>${work.title}</h1>`));
+      assert.match(html, /class="artwork-full"/);
+      assert.match(html, /class="back-link"/);
+      assert.match(html, /rel="(?:prev|next)"/);
+      assert.match(html, /application\/ld\+json/);
+      assert.doesNotMatch(html, /artwork-description|<dt>Description/);
+      assert.match(html, /<meta name="description" content="[^"]+"/);
+      assert.match(html, /property="og:image"/);
+      assert.match(html, /hreflang="ru"/);
+      assert.match(html, /hreflang="en"/);
+      assert.ok(html.includes(`href="https://grgyone.com/${prefix}${workUrl(work).slice(1)}"`));
+    }
+  }
+});
+
+test('navigation order, category filtering and bilingual approved texts', async () => {
+  const english = await read('index.html');
+  assert.ok(english.indexOf('href="/artist-statement/"') < english.indexOf('class="works-heading"'));
+  assert.ok(english.indexOf('href="/bio/"') < english.indexOf('class="works-heading"'));
+  assert.ok(english.indexOf('href="/cv/"') < english.indexOf('class="works-heading"'));
+  assert.match(english, /href="\/works\/composition\/">Works/);
+  assert.doesNotMatch(english, />Objects<|>Projects</);
+  assert.match(await read('ru/cv/index.html'), /чёрное облако с белыми глазами/);
+  assert.match(await read('cv/index.html'), /black cloud with white eyes/);
+  assert.match(await read('artist-statement/index.html'), /Visual Art Journal/);
+  assert.match(await read('ru/artist-statement/index.html'), /ЦИПР, Нижний Новгород/);
+});
+
+test('sitemap includes all twelve localized works and excludes commerce; domain preserved', async () => {
+  const xml = await read('sitemap.xml');
+  for (const work of data.artworks) {
+    assert.ok(xml.includes(`<loc>https://grgyone.com${workUrl(work)}</loc>`));
+    assert.ok(xml.includes(`<loc>https://grgyone.com/ru${workUrl(work)}</loc>`));
+  }
+  assert.doesNotMatch(xml, /store|cart|product|_archive/);
+  assert.equal((await read('CNAME')).trim(), 'grgyone.com');
+  assert.match(await read('_config.yml'), /- _archive/);
+});
+
+test('static build is repeatable and produces identical pages', async () => {
+  const before = await Promise.all(publicPages.map(read));
+  execFileSync(process.execPath, ['scripts/build.mjs'], { cwd: root });
+  const after = await Promise.all(publicPages.map(read));
+  assert.deepEqual(after, before);
+});

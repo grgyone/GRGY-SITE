@@ -1,0 +1,19 @@
+{
+  "artist": "GRGY (Grgy Sukhanov)",
+  "siteUrl": "https://grgyone.com",
+  "categories": [
+    { "slug": "composition", "title": "Composition" },
+    { "slug": "reworked", "title": "Reworked" },
+    { "slug": "street-art", "title": "Street Art" },
+    { "slug": "objects", "title": "Objects" },
+    { "slug": "projects", "title": "Projects" }
+  ],
+  "artworks": [
+    { "id": "1", "slug": "first-french-kiss", "title": "First French Kiss", "year": 2025, "category": "composition", "sourceCategory": "Composition", "medium": "Digital artwork", "file": "1.PNG", "width": 5000, "height": 3334, "objectPosition": "50% 50%", "selected": true },
+    { "id": "2", "slug": "reworked-2", "title": "Reworked", "year": 2024, "category": "reworked", "sourceCategory": "Reworked", "medium": "Digital artwork", "file": "2.PNG", "width": 1440, "height": 1774, "objectPosition": "50% 50%", "selected": true },
+    { "id": "3", "slug": "big-face", "title": "Big Face", "year": 2023, "category": "street-art", "sourceCategory": "On the street", "medium": "Poster, print", "file": "3.jpg", "width": 960, "height": 1280, "objectPosition": "50% 50%", "selected": true },
+    { "id": "4", "slug": "reworked-4", "title": "Reworked", "year": 2024, "category": "reworked", "sourceCategory": "Reworked", "medium": "Digital artwork", "file": "4.png", "width": 1280, "height": 1600, "objectPosition": "50% 50%", "selected": true },
+    { "id": "5", "slug": "kloud", "title": "Kloud", "year": 2022, "category": "street-art", "sourceCategory": "On the street", "medium": "Poster, print", "file": "5.jpg", "width": 1440, "height": 1800, "objectPosition": "50% 50%", "selected": true },
+    { "id": "6", "slug": "composition", "title": "Composition", "year": 2022, "category": "composition", "sourceCategory": "Composition", "medium": "Digital artwork", "file": "6.png", "width": 3334, "height": 5000, "objectPosition": "50% 50%", "selected": true }
+  ]
+}

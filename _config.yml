@@ -1,0 +1,12 @@
+# Preserve GitHub Pages and the existing CNAME. Do not publish development tools
+# or the recoverable archive of the former commerce implementation.
+exclude:
+  - _archive
+  - node_modules
+  - scripts
+  - tests
+  - data
+  - package.json
+  - package-lock.json
+  - README.md
+  - test-results

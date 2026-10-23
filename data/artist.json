@@ -1,0 +1,30 @@
+{
+  "en": {
+    "cv": "GRGY (Georgy Sukhanov) is an artist from Saint Petersburg. Beginning with drawing in the street, he works with painting, graphics, objects and digital imagery. Since 2010, his recurring character has been a black cloud with white eyes. Through it, the artist explores shifts in feeling: anxiety, loss, intimacy and love.",
+    "exhibitionsTitle": "Exhibitions and projects",
+    "exhibitions": [
+      "2025 — COMPOSITIONS. Selected Works 2022–2024, solo digital exhibition, OnCyber.",
+      "2023 — Decipraland, CIPR, Nizhny Novgorod.",
+      "2023 — Merch as Art, MEGA Dybenko, Saint Petersburg.",
+      "2022 — NFT. Stage of Acceptance, Here on Taganka Gallery, Moscow."
+    ],
+    "publicationTitle": "Publication",
+    "publication": "2025 — Visual Art Journal, No. 27, May, pp. 42–43.",
+    "educationTitle": "Education",
+    "education": "2012–2019 — Saint Petersburg State University of Architecture and Civil Engineering, bachelor’s and master’s degrees."
+  },
+  "ru": {
+    "cv": "GRGY (Георгий Суханов) — художник из Санкт-Петербурга. Начав с уличного рисунка, он работает с живописью, графикой, объектом и цифровым изображением. С 2010 года его постоянный персонаж — чёрное облако с белыми глазами. Через него художник исследует перемены в чувствах: тревогу, утрату, близость и любовь.",
+    "exhibitionsTitle": "Выставки и проекты",
+    "exhibitions": [
+      "2025 — COMPOSITIONS. Selected Works 2022–2024, персональная цифровая выставка, OnCyber.",
+      "2023 — Decipraland, ЦИПР, Нижний Новгород.",
+      "2023 — «Мерч как искусство», МЕГА Дыбенко, Санкт-Петербург.",
+      "2022 — «NFT. Стадия принятия», галерея «Здесь на Таганке», Москва."
+    ],
+    "publicationTitle": "Публикация",
+    "publication": "2025 — Visual Art Journal, № 27, май, с. 42–43.",
+    "educationTitle": "Образование",
+    "education": "2012–2019 — Санкт-Петербургский государственный архитектурно-строительный университет, бакалавриат и магистратура."
+  }
+}
