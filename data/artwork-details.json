@@ -1,0 +1,36 @@
+{
+  "3": {
+    "displayTitle": { "en": "Big Face", "ru": "Big Face" },
+    "workingTitle": true,
+    "location": {
+      "en": "Former Imperial Railway Station, Tsarskoye Selo",
+      "ru": "Бывший Императорский вокзал, Царское Село"
+    },
+    "story": {
+      "en": [
+        "A large-scale Kloud was placed inside an architectural opening of the former Imperial Railway Station in Tsarskoye Selo. The character appears to peer out of the building, with a tear running from its eye.",
+        "According to the artist’s recollection, the work remained there for about a week. The building was then fenced off for restoration."
+      ],
+      "ru": [
+        "Крупноформатный Kloud размещён внутри архитектурного проёма бывшего Императорского вокзала в Царском Селе. Персонаж как будто выглядывает из здания, а из его глаза стекает слеза.",
+        "По воспоминаниям автора, работа находилась там около недели, после чего здание огородили для реставрации."
+      ]
+    },
+    "history": {
+      "heading": { "en": "Historical context", "ru": "Историческая справка" },
+      "text": {
+        "en": "The Imperial Railway Station was built in 1911–1912 to a design by Vladimir Pokrovsky.",
+        "ru": "Здание Императорского вокзала было построено в 1911–1912 годах по проекту Владимира Покровского."
+      },
+      "source": {
+        "url": "https://xn--80aafllehfbdgh3agvqcc0g7f.xn--p1ai/history/",
+        "label": { "en": "History of the building", "ru": "История здания" },
+        "verification": "artist-provided"
+      }
+    },
+    "documentation": {
+      "video": null,
+      "model": null
+    }
+  }
+}

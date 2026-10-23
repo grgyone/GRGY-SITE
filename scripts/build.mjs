@@ -2,7 +2,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
-import { readyProjects, projectUrl, projectCards, projectContent, projectsTitle, imageBase } from './projects.mjs';
+import { readyProjects, projectUrl, projectCards, projectContent, projectsTitle, imageBase, localized } from './projects.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const { values: options } = parseArgs({ options: { 'output-dir': { type: 'string' }, 'projects-file': { type: 'string' }, 'media-root': { type: 'string' } } });
@@ -10,6 +10,7 @@ const outputRoot = options['output-dir'] ? path.resolve(options['output-dir']) :
 const mediaRoot = options['media-root'] ? path.resolve(options['media-root']) : root;
 const data = JSON.parse(await readFile(path.join(root, 'data/artworks.json'), 'utf8'));
 const texts = JSON.parse(await readFile(path.join(root, 'data/artist.json'), 'utf8'));
+const artworkDetails = JSON.parse(await readFile(path.join(root, 'data/artwork-details.json'), 'utf8'));
 const projectRecords = JSON.parse(await readFile(options['projects-file'] || path.join(root, 'data/projects.json'), 'utf8'));
 const projects = await readyProjects(projectRecords, mediaRoot);
 const { artist, siteUrl, artworks } = data;
@@ -61,6 +62,13 @@ function gallery(works, lang, includedProjects = []) {
 
 // Approved copy is plain text with optional emphasis, never arbitrary HTML.
 const prose = paragraphs => paragraphs.map(text => `<p>${esc(text).replace(/\*([^*]+)\*/g, '<em>$1</em>')}</p>`).join('\n');
+function artworkContext(detail, lang) {
+  if (!detail) return '';
+  const history = detail.history;
+  const source = history?.source;
+  if (source && !source.url.startsWith('https://')) throw new Error('An artwork history source must use HTTPS');
+  return `<div class="artwork-context">${prose(detail.story[lang])}${history ? `<section class="artwork-history"><h2>${esc(localized(history.heading, lang))}</h2><p>${esc(localized(history.text, lang))}</p>${source ? `<p class="artwork-source"><a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(localized(source.label, lang))}</a></p>` : ''}</section>` : ''}</div>`;
+}
 function cvContent(lang) {
   const content = texts[lang];
   const sections = texts.cvSections.map(section => {
@@ -140,12 +148,16 @@ for (const lang of ['en', 'ru']) {
     if (!works.length) continue;
     await page(categoryUrl(category), lang, { title: category.title, description: `${category.title} — ${artist}.`, category: category.slug, content: `<h1>${esc(category.title)}</h1>${gallery(works, lang)}` });
     for (const [index, work] of works.entries()) {
+      const detail = artworkDetails[work.id];
+      // Detail titles are editable independently; selected-artwork titles and slugs stay fixed.
+      const displayTitle = localized(detail?.displayTitle, lang) || work.title;
+      const detailDescription = detail ? detail.story[lang].join(' ') : `${work.title} (${work.year}), ${work.medium}. ${work.sourceCategory} — ${artist}.`;
       const related = (other, direction) => other ? `<a href="${local(workUrl(other), lang)}" rel="${direction}"><span>${direction === 'prev' ? t.prev : t.next}</span> ${esc(other.title)}</a>` : '<span></span>';
-      const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'VisualArtwork', name: work.title, dateCreated: String(work.year), artMedium: work.medium, creator: { '@type': 'Person', name: artist }, image: siteUrl + `/images/artworks/originals/${work.file}`, url: siteUrl + local(workUrl(work), lang) }).replace(/</g, '\\u003c');
+      const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'VisualArtwork', name: displayTitle, dateCreated: String(work.year), artMedium: work.medium, creator: { '@type': 'Person', name: artist }, image: siteUrl + `/images/artworks/originals/${work.file}`, url: siteUrl + local(workUrl(work), lang), ...(detail ? { description: detailDescription, contentLocation: { '@type': 'Place', name: localized(detail.location, lang) } } : {}) }).replace(/</g, '\\u003c');
       await page(workUrl(work), lang, {
-        title: `${work.title} (${work.year})`, description: `${work.title} (${work.year}), ${work.medium}. ${work.sourceCategory} — ${artist}.`, category: category.slug,
-        imagePath: `/images/artworks/optimized/${work.id}-1920.webp`, imageAlt: `${work.title}, ${work.year} — ${artist}`, type: 'article', extraHead: `<script type="application/ld+json">${schema}</script>`,
-        content: `<article class="artwork-detail"><a class="back-link" href="${local(categoryUrl(category), lang)}">← ${esc(category.title)}</a><figure class="artwork-figure"><a class="original-image" href="/images/artworks/originals/${work.file}" aria-label="${lang === 'ru' ? 'Открыть оригинал' : 'Open original image'}: ${esc(work.title)}">${image(work, lang, true)}</a><figcaption class="artwork-information"><h1>${esc(work.title)}</h1><dl><div><dt>${t.year}</dt><dd>${work.year}</dd></div><div><dt>${t.medium}</dt><dd>${esc(lang === 'ru' ? (work.medium === 'Digital artwork' ? t.digital : t.poster) : work.medium)}</dd></div></dl></figcaption></figure><nav class="artwork-pagination" aria-label="${esc(category.title)}">${related(works[index - 1], 'prev')}${related(works[index + 1], 'next')}</nav></article>`
+        title: `${displayTitle} (${work.year})`, description: detailDescription, category: category.slug,
+        imagePath: `/images/artworks/optimized/${work.id}-1920.webp`, imageAlt: `${displayTitle}, ${work.year} — ${artist}`, type: 'article', extraHead: `<script type="application/ld+json">${schema}</script>`,
+        content: `<article class="artwork-detail"><a class="back-link" href="${local(categoryUrl(category), lang)}">← ${esc(category.title)}</a><figure class="artwork-figure"><a class="original-image" href="/images/artworks/originals/${work.file}" aria-label="${lang === 'ru' ? 'Открыть оригинал' : 'Open original image'}: ${esc(displayTitle)}">${image({ ...work, title: displayTitle }, lang, true)}</a><figcaption class="artwork-information"><h1>${esc(displayTitle)}</h1><dl><div><dt>${t.year}</dt><dd>${work.year}</dd></div><div><dt>${t.medium}</dt><dd>${esc(lang === 'ru' ? (work.medium === 'Digital artwork' ? t.digital : t.poster) : work.medium)}</dd></div>${detail?.location ? `<div><dt>${lang === 'ru' ? 'Место' : 'Location'}</dt><dd>${esc(localized(detail.location, lang))}</dd></div>` : ''}</dl></figcaption></figure>${artworkContext(detail, lang)}<nav class="artwork-pagination" aria-label="${esc(category.title)}">${related(works[index - 1], 'prev')}${related(works[index + 1], 'next')}</nav></article>`
       });
     }
   }

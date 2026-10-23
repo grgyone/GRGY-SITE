@@ -9,6 +9,7 @@ import { projectUrl } from '../scripts/projects.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = file => readFile(path.join(root, file), 'utf8');
 const data = JSON.parse(await read('data/artworks.json'));
+const artworkDetails = JSON.parse(await read('data/artwork-details.json'));
 const projects = JSON.parse(await read('data/projects.json')).filter(project => project.status === 'ready');
 const workUrl = work => `/works/${work.category}/${work.slug}/`;
 const publicPages = [];
@@ -56,7 +57,9 @@ test('artwork pages in both languages have metadata, full images, series links a
     assert.deepEqual([...homepage.matchAll(/class="artwork-title">([^<]+)/g)].map(match => match[1]), data.artworks.map(work => work.title));
     for (const work of data.artworks) {
       const html = await read(prefix + workUrl(work).slice(1) + 'index.html');
-      assert.match(html, new RegExp(`<h1>${work.title}</h1>`));
+      const title = artworkDetails[work.id]?.displayTitle[prefix ? 'ru' : 'en'] || work.title;
+      const escapedTitle = title.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+      assert.ok(html.includes(`<h1>${escapedTitle}</h1>`));
       assert.match(html, /class="artwork-full"/);
       assert.match(html, /class="back-link"/);
       assert.match(html, /rel="(?:prev|next)"/);

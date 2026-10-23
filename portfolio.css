@@ -44,6 +44,11 @@
 .artwork-information dl { display: grid; gap: 4px; font-size: 12px; }
 .artwork-information dl > div { display: flex; gap: 16px; }
 .artwork-information dt { color: #777; min-width: 60px; }
+.artwork-context { margin-top: 28px; max-width: 680px; line-height: 1.8; }
+.artwork-context p + p { margin-top: 18px; }
+.artwork-history { margin-top: 30px; }
+.artwork-history h2 { font-size: 13px; font-weight: 500; margin-bottom: 12px; }
+.artwork-context .artwork-source { font-size: 12px; margin-top: 12px; }
 .artwork-pagination { display: flex; justify-content: space-between; gap: 24px; border-top: 1px solid #eee; padding-top: 22px; margin-top: 42px; }
 .portfolio-site .artwork-pagination a { text-decoration: none; font-size: 12px; text-transform: none; font-weight: 400; letter-spacing: 0; }
 .artwork-pagination a span { display: block; color: #777; margin-bottom: 4px; }

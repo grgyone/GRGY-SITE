@@ -73,6 +73,11 @@ Review and test this branch before any publication to the main domain.
 
 ## Projects and collaborations
 
+Street-art narratives can be added in `data/artwork-details.json` keyed by the
+existing artwork id. Detail `displayTitle` is independent of the slug and the
+approved homepage title. See `docs/three-featured-projects.md` for the current
+Big Face update and the two media-dependent featured-project drafts.
+
 Project content is centralized in `data/projects.json`; complete media galleries,
 video, bilingual descriptions and links render through `scripts/projects.mjs`.
 See [project intake and schema](docs/projects.md) for the current material

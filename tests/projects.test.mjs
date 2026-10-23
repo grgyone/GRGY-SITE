@@ -25,7 +25,7 @@ test('the three approved projects are available as text pages without invented m
     assert.match(html, /class="project-description"/);
   }
   assert.deepEqual(await readyProjects(drafts.map(project => ({ ...project, status: 'draft' })), '/tmp'), []);
-  assert.deepEqual(drafts.map(project => project.year), [2022, 2022, 2025]);
+  assert.deepEqual(ready.map(project => project.year), [2022, 2022, 2025]);
   assert.ok(drafts[2].collaborators.some(person => person.name === 'Gleb Kostin (.solutions)'));
 });
 

@@ -4,6 +4,7 @@ const { spawn } = require('node:child_process');
 const { mkdir } = require('node:fs/promises');
 const path = require('node:path');
 const { artworks } = require('../data/artworks.json');
+const artworkDetails = require('../data/artwork-details.json');
 const projects = require('../data/projects.json').filter(project => project.status === 'ready').sort((a, b) => a.displayOrder - b.displayOrder);
 const root = path.resolve(__dirname, '..');
 const origin = 'http://127.0.0.1:4174';
@@ -66,7 +67,7 @@ async function main() {
           await page.goto(origin + prefix + '/');
           await page.locator('.artwork-card > a').nth(index).click();
           await page.waitForURL(origin + prefix + `/works/${work.category}/${work.slug}/`);
-          assert.equal(await page.locator('h1').textContent(), work.title);
+          assert.equal(await page.locator('h1').textContent(), artworkDetails[work.id]?.displayTitle[prefix ? 'ru' : 'en'] || work.title);
           const full = page.locator('.artwork-full');
           await full.evaluate(image => image.decode());
           const box = await full.boundingBox();
