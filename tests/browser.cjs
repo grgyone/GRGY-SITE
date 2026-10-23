@@ -6,6 +6,7 @@ const path = require('node:path');
 const { artworks } = require('../data/artworks.json');
 const artworkDetails = require('../data/artwork-details.json');
 const projects = require('../data/projects.json').filter(project => project.status === 'ready').sort((a, b) => a.displayOrder - b.displayOrder);
+const cvProjects = require('../data/artist.json').cvSections.flatMap(section => section.entries.map(entry => entry.projectId)).filter(id => projects.some(project => project.id === id));
 const root = path.resolve(__dirname, '..');
 const origin = 'http://127.0.0.1:4174';
 const server = spawn(process.execPath, ['scripts/serve.mjs'], { cwd: root, env: { ...process.env, PORT: '4174' }, stdio: ['ignore', 'pipe', 'pipe'] });
@@ -92,16 +93,16 @@ async function main() {
         }
         // Test actual approved project records, not just the media layout fixtures.
         await page.goto(origin + prefix + '/cv/');
-        assert.equal(await page.locator('.cv-projects a').count(), projects.length);
+        assert.equal(await page.locator('.cv-row a').count(), cvProjects.length);
         for (const project of projects) {
-          await page.goto(origin + prefix + '/cv/');
-          await page.locator(`.cv-projects a[href="${prefix}/works/projects/${project.slug}/"]`).click();
+          await page.goto(origin + prefix + (cvProjects.includes(project.id) ? '/cv/' : '/works/projects/'));
+          await page.locator(`main a[href="${prefix}/works/projects/${project.slug}/"]`).click();
           await page.waitForURL(origin + prefix + `/works/projects/${project.slug}/`);
           assert.equal(await page.locator('h1').textContent(), project.title);
           assert.equal((await page.locator('.project-description').innerText()).trim(), project[prefix ? 'descriptionRu' : 'descriptionEn']);
           assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Project page does not overflow');
           if (!project.coverImage && !project.gallery.length && !project.videos.length) assert.equal(await page.locator('main img, main video, .project-gallery').count(), 0);
-          if ([1440, 390].includes(viewport.width)) await page.screenshot({ path: path.join(root, `test-results/project-${project.id}-${prefix ? 'ru' : 'en'}-${viewport.width}.png`), fullPage: true });
+          if ([1440, 390].includes(viewport.width)) await page.screenshot({ path: path.join(root, `test-results/project-${project.id}-${prefix ? 'ru' : 'en'}-${viewport.width}.png`), fullPage: !project.coverImage });
           if (mobile) await menu.click();
           await page.locator(`.language-switch a[lang="${prefix ? 'en' : 'ru'}"]`).click();
           await page.waitForURL(origin + (prefix ? '' : '/ru') + `/works/projects/${project.slug}/`);
@@ -130,7 +131,7 @@ async function main() {
     for (const legacy of ['/store.html', '/product.html?slug=test', '/cart_items.html', '/items_1.html']) {
       await page.goto(origin + legacy);
       await page.waitForURL(origin + '/works/');
-      assert.equal(await page.locator('.artwork-card').count(), 6);
+      assert.equal(await page.locator('main > .artwork-grid > .artwork-card').count(), 6);
     }
     assert.equal((await context.request.get(origin + '/_archive/shop/store.html')).status(), 404);
     assert.equal((await context.request.get(origin + '/not-a-page/')).status(), 404);

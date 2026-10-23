@@ -11,6 +11,7 @@
     "test": "node --test tests/*.test.mjs",
     "test:projects": "node tests/projects-browser.mjs",
     "test:content": "node tests/content-browser.cjs",
+    "test:featured": "node tests/featured-browser.cjs",
     "test:browser": "node tests/browser.cjs"
   },
   "devDependencies": { "playwright": "1.58.2", "sharp": "0.34.5" }

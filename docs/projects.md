@@ -1,12 +1,12 @@
 # Projects: content and material intake
 
-Work is on `feat/grgy-projects-collaborations`. Do not push to `main` or publish
+Current work is on `feat/grgy-three-featured-projects`. Do not push to `main` or publish
 without the artist's approval for this update.
 
 ## Current material inventory
 
-The only attached archive available is `main page.zip` from the earlier homepage
-task. It contains `1.PNG`, `2.PNG`, `3.jpg`, `4.png`, `5.jpg`, `6.png` and
+`main page.zip` from the earlier homepage task contains
+`1.PNG`, `2.PNG`, `3.jpg`, `4.png`, `5.jpg`, `6.png` and
 `описание.txt`. Those six files remain assigned to their existing artworks.
 None has been reassigned to a collaboration or used as a project cover.
 
@@ -18,11 +18,12 @@ descriptions, navigation and CV links. There are no empty galleries, image
 placeholders or borrowed artwork images. Actual-page screenshots are in ignored
 `test-results/project-*.png` and `test-results/projects-*.png`.
 
-`data/projects.json` records only the three priority projects and the facts in the
-artist's request. They are `ready` for the agreed text-only version, with no
-cover/gallery/video or invented links. Additional named projects have no
-placeholder pages. A future `draft` record still stays out of pages, navigation,
-CV and sitemap.
+Those three priority projects remain `ready` for the agreed text-only version.
+Two later archives now supply real Cutestar and SHOUT OUT KLOUD galleries and
+SHOUT's MP4; both have ready EN/RU pages. See `three-featured-projects.md` for the
+complete file inventory and the blocked Big Face archive (32 MiB transfer limit).
+Other named projects have no placeholder pages. A future `draft` record still
+stays out of pages, navigation, CV and sitemap.
 
 ## Required material before completion
 
@@ -47,12 +48,21 @@ Collab as a collective project, not an individual commission from Rarible.
 Each record has `id`, `slug`, `title`, `year`, `category: "projects"`, `status`,
 `projectType`, `medium`, `collaborators`, `location` (optional), `descriptionRu`,
 `descriptionEn`, `coverImage`, `gallery`, `videos`, `externalLinks`, `displayOrder`.
-Use `null` or omit optional facts when not confirmed. `projectType`, `medium` and
+Set `year` explicitly to `null` if unconfirmed; it will be omitted from metadata
+and visible information, not inferred from filenames. Use `null` or omit other
+optional facts when not confirmed. `projectType`, `medium` and
 `location` accept either a shared string or `{ "en": "…", "ru": "…" }`.
 Collaborators use `{ "name": "…", "url": "https://…" }`; URLs are optional.
 External links use `{ "label": { "en": "…", "ru": "…" }, "url": "https://…" }`.
 
-`coverImage` and each `gallery` image use:
+Optional `layout: "collection"` places the title above the cover and uses a
+three-column desktop/two-column mobile gallery. `galleryHeading` localizes its
+heading. `supportingGallery` separates additional graphics/concepts from the main
+series; `supportingHeading` localizes that section. Optional `additionalInfo`
+entries have localized `label` and `value` objects (e.g. exhibition dates or an
+invitation credit), without changing existing projects.
+
+`coverImage` and each `gallery` / `supportingGallery` image use:
 
 ```json
 {
@@ -79,8 +89,9 @@ Preserve an original MOV separately if conversion is needed; verify the output
 against the supplied source. Videos have native controls, inline mobile playback,
 metadata-only preload and no autoplay. The dev server supports byte ranges/seeking.
 
-`ready` records require confirmed metadata and bilingual descriptions. The current
-approved text pages use `coverImage: null`, `gallery: []` and `videos: []`.
+`ready` records require bilingual descriptions and actual files for declared media.
+Unconfirmed optional facts are omitted. Approved text-only pages use
+`coverImage: null`, `gallery: []` and `videos: []`.
 After originals arrive, add their media records, run `npm run images`, then
 `npm run build`; no template changes are needed. Any declared missing file fails
 the build rather than producing a broken public image or video. Metadata for a
@@ -100,5 +111,7 @@ FFmpeg required for the isolated video playback check). Use
 The projects check builds an isolated site with clearly labeled technical media;
 it never puts fixture entries in the artist's data or public root.
 Generated `project-layout-fixture-*` screenshots are layout tests only. The main
-browser suite additionally verifies the three actual text project pages and CV
-links, and captures their desktop/mobile screenshots in both languages.
+browser suite additionally verifies all five actual project pages and curated CV
+links, and captures desktop/mobile screenshots in both languages.
+Run `npm run test:featured` for every supplied image and the actual SHOUT MP4,
+including playback, seeking, file links and both locales.

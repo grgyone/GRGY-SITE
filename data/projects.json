@@ -6,9 +6,19 @@
     "year": 2022,
     "category": "projects",
     "status": "ready",
-    "projectType": { "en": "Collaboration", "ru": "Коллаборация" },
-    "medium": { "en": "Digital collectible toy", "ru": "Цифровая коллекционная игрушка" },
-    "collaborators": [{ "name": "ChikoRoko" }],
+    "projectType": {
+      "en": "Collaboration",
+      "ru": "Коллаборация"
+    },
+    "medium": {
+      "en": "Digital collectible toy",
+      "ru": "Цифровая коллекционная игрушка"
+    },
+    "collaborators": [
+      {
+        "name": "ChikoRoko"
+      }
+    ],
     "descriptionRu": "Лимитированная цифровая коллекционная игрушка в авторском стиле GRGY.",
     "descriptionEn": "A limited-edition digital collectible toy in GRGY’s signature style.",
     "coverImage": null,
@@ -24,10 +34,23 @@
     "year": 2022,
     "category": "projects",
     "status": "ready",
-    "projectType": { "en": "Collective project", "ru": "Коллективный проект" },
-    "medium": { "en": "Animation", "ru": "Анимация" },
-    "collaborators": [{ "name": "STUDIO 21" }],
-    "location": { "en": "Moscow", "ru": "Москва" },
+    "projectType": {
+      "en": "Collective project",
+      "ru": "Коллективный проект"
+    },
+    "medium": {
+      "en": "Animation",
+      "ru": "Анимация"
+    },
+    "collaborators": [
+      {
+        "name": "STUDIO 21"
+      }
+    ],
+    "location": {
+      "en": "Moscow",
+      "ru": "Москва"
+    },
     "descriptionRu": "Анимационная работа в рамках коллективного проекта, демонстрировавшегося на медиафасадах Москвы.",
     "descriptionEn": "An animated work for a collective project shown on media façades in Moscow.",
     "coverImage": null,
@@ -43,9 +66,19 @@
     "year": 2025,
     "category": "projects",
     "status": "ready",
-    "projectType": { "en": "Collaboration", "ru": "Коллаборация" },
+    "projectType": {
+      "en": "Collaboration",
+      "ru": "Коллаборация"
+    },
     "medium": null,
-    "collaborators": [{ "name": "Solukta" }, { "name": "Gleb Kostin (.solutions)" }],
+    "collaborators": [
+      {
+        "name": "Solukta"
+      },
+      {
+        "name": "Gleb Kostin (.solutions)"
+      }
+    ],
     "descriptionRu": "Совместный проект по созданию авторской сумки.",
     "descriptionEn": "A collaborative project to create an artist-designed bag.",
     "coverImage": null,
@@ -60,21 +93,149 @@
     "title": "Cutestar / Merch as Art",
     "year": null,
     "category": "projects",
-    "status": "draft",
-    "projectType": { "en": "Artist project and exhibition", "ru": "Авторский проект и выставка" },
-    "medium": { "en": "Drawing and embroidered T-shirt", "ru": "Рисунок и футболка с вышивкой" },
+    "status": "ready",
+    "projectType": {
+      "en": "Artist project and exhibition",
+      "ru": "Авторский проект и выставка"
+    },
+    "medium": {
+      "en": "Drawing and embroidered T-shirt",
+      "ru": "Рисунок и футболка с вышивкой"
+    },
     "collaborators": [],
-    "location": { "en": "MEGA Dybenko, Saint Petersburg", "ru": "МЕГА Дыбенко, Санкт-Петербург" },
-    "descriptionRu": "Cutestar — ранний проект GRGY по созданию авторской футболки с использованием его визуального языка. Футболка стала первым опытом создания мерча с вышивкой и впоследствии была представлена на физической выставке «Мерч как искусство» в МЕГА Дыбенко, Санкт-Петербург.",
-    "descriptionEn": "Cutestar was an early GRGY project to create an artist-designed T-shirt using his visual language. The T-shirt was his first experience of creating embroidered merchandise and was later presented at the physical exhibition Merch as Art at MEGA Dybenko, Saint Petersburg.",
-    "exhibition": { "startMonthDay": "04-15", "endMonthDay": "04-30", "provisionalYear": 2023, "yearVerified": false },
-    "invitedBy": ["Денис Фабрика", "Двор 759"],
-    "coverImage": null,
-    "gallery": [],
+    "location": {
+      "en": "MEGA Dybenko, Saint Petersburg",
+      "ru": "МЕГА Дыбенко, Санкт-Петербург"
+    },
+    "descriptionRu": "Cutestar — ранний проект GRGY по созданию авторской футболки с использованием его визуального языка. Футболка стала первым опытом создания мерча с вышивкой.\n\nВпоследствии футболка была представлена на физической выставке «Мерч как искусство» в МЕГА Дыбенко, Санкт-Петербург. В предоставленном тексте мероприятия указаны даты 15–30 апреля и место проведения — атриум на первом этаже.\n\nGRGY участвовал по приглашению Дениса Фабрики и проекта «Двор 759».",
+    "descriptionEn": "Cutestar was an early GRGY project to create an artist-designed T-shirt using his visual language. The T-shirt was his first experience of creating embroidered merchandise.\n\nThe T-shirt was later presented at the physical exhibition Merch as Art at MEGA Dybenko, Saint Petersburg. The supplied event text gives the dates as 15–30 April and the venue as the ground-floor atrium.\n\nGRGY participated at the invitation of Denis Fabrika and the Dvor 759 project.",
+    "exhibition": {
+      "startMonthDay": "04-15",
+      "endMonthDay": "04-30",
+      "provisionalYear": 2023,
+      "yearVerified": false
+    },
+    "invitedBy": [
+      "Денис Фабрика",
+      "Двор 759"
+    ],
+    "coverImage": {
+      "src": "/images/projects/originals/cutestar-merch-as-art/12tig.png",
+      "width": 3000,
+      "height": 3000,
+      "altEn": "Cutestar — GRGY T-shirt visual",
+      "altRu": "Cutestar — изображение футболки GRGY"
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/originals/cutestar-merch-as-art/cutestar-01.png",
+        "width": 2048,
+        "height": 2048,
+        "altEn": "Cutestar — original drawing",
+        "altRu": "Cutestar — исходный рисунок",
+        "caption": {
+          "en": "Original drawing",
+          "ru": "Исходный рисунок"
+        }
+      },
+      {
+        "src": "/images/projects/originals/cutestar-merch-as-art/photo_2026-10-23_20-09-41.jpg",
+        "width": 960,
+        "height": 1280,
+        "altEn": "GRGY T-shirt in the exhibition at MEGA Dybenko",
+        "altRu": "Футболка GRGY в экспозиции МЕГА Дыбенко",
+        "caption": {
+          "en": "GRGY T-shirt in the exhibition at MEGA Dybenko",
+          "ru": "Футболка GRGY в экспозиции МЕГА Дыбенко"
+        }
+      },
+      {
+        "src": "/images/projects/originals/cutestar-merch-as-art/photo_2026-10-23_20-09-55.jpg",
+        "width": 1280,
+        "height": 960,
+        "altEn": "Merch as Art — exhibition display",
+        "altRu": "«Мерч как искусство» — экспозиция",
+        "caption": {
+          "en": "Merch as Art — exhibition display",
+          "ru": "«Мерч как искусство» — экспозиция"
+        }
+      },
+      {
+        "src": "/images/projects/originals/cutestar-merch-as-art/photo_2026-10-23_20-09-59.jpg",
+        "width": 960,
+        "height": 1280,
+        "altEn": "Merch as Art — view of the exhibition space",
+        "altRu": "«Мерч как искусство» — вид выставочного пространства",
+        "caption": {
+          "en": "Merch as Art — view of the exhibition space",
+          "ru": "«Мерч как искусство» — вид выставочного пространства"
+        }
+      },
+      {
+        "src": "/images/projects/originals/cutestar-merch-as-art/photo_2026-10-23_20-11-09.jpg",
+        "width": 960,
+        "height": 1280,
+        "altEn": "Merch as Art — exhibition documentation",
+        "altRu": "«Мерч как искусство» — документация выставки",
+        "caption": {
+          "en": "Merch as Art — exhibition documentation",
+          "ru": "«Мерч как искусство» — документация выставки"
+        }
+      },
+      {
+        "src": "/images/projects/originals/cutestar-merch-as-art/photo_2026-10-23_20-09-51.jpg",
+        "width": 960,
+        "height": 1280,
+        "altEn": "Merch as Art — detail of the exhibition display",
+        "altRu": "«Мерч как искусство» — фрагмент экспозиции",
+        "caption": {
+          "en": "Merch as Art — detail of the exhibition display",
+          "ru": "«Мерч как искусство» — фрагмент экспозиции"
+        }
+      },
+      {
+        "src": "/images/projects/originals/cutestar-merch-as-art/photo_2026-10-23_20-11-21.jpg",
+        "width": 1024,
+        "height": 1280,
+        "altEn": "Merch as Art — exhibition poster",
+        "altRu": "«Мерч как искусство» — афиша выставки",
+        "caption": {
+          "en": "Merch as Art — exhibition poster",
+          "ru": "«Мерч как искусство» — афиша выставки"
+        }
+      }
+    ],
     "videos": [],
     "externalLinks": [],
-    "sources": [{ "url": "https://t.me/dvor759/4223", "verification": "pending" }],
-    "displayOrder": 4
+    "sources": [
+      {
+        "url": "https://t.me/dvor759/4223",
+        "verification": "blocked-by-environment"
+      }
+    ],
+    "displayOrder": 4,
+    "additionalInfo": [
+      {
+        "label": {
+          "en": "Exhibition dates",
+          "ru": "Даты выставки"
+        },
+        "value": {
+          "en": "15–30 April",
+          "ru": "15–30 апреля"
+        }
+      },
+      {
+        "label": {
+          "en": "Invitation",
+          "ru": "Приглашение"
+        },
+        "value": {
+          "en": "Denis Fabrika / Dvor 759",
+          "ru": "Денис Фабрика / Двор 759"
+        }
+      }
+    ]
   },
   {
     "id": "shout-out-kloud",
@@ -82,17 +243,692 @@
     "title": "SHOUT OUT KLOUD",
     "year": null,
     "category": "projects",
-    "status": "draft",
-    "projectType": { "en": "Digital collection", "ru": "Цифровая коллекция" },
-    "medium": { "en": "Digital images and animation", "ru": "Цифровые изображения и анимация" },
+    "status": "ready",
+    "projectType": {
+      "en": "Digital collection",
+      "ru": "Цифровая коллекция"
+    },
+    "medium": {
+      "en": "Digital images and animation",
+      "ru": "Цифровые изображения и анимация"
+    },
     "collaborators": [],
     "descriptionRu": "SHOUT OUT KLOUD — завершённая авторская цифровая коллекция вариаций персонажа Kloud, ранее размещённая на Foundation. Проект также связан с Telegram-стикерами.",
     "descriptionEn": "SHOUT OUT KLOUD is a completed collection of digital variations of Kloud by GRGY, previously presented on Foundation. The project is also linked to Telegram stickers.",
-    "coverImage": null,
-    "gallery": [],
-    "videos": [],
-    "externalLinks": [],
-    "sources": [{ "url": "https://t.me/addstickers/KloudByGRGY", "verification": "pending" }],
-    "displayOrder": 5
+    "coverImage": {
+      "src": "/images/projects/originals/shout-out-kloud/50 in 1 L.png",
+      "width": 5016,
+      "height": 3064,
+      "altEn": "SHOUT OUT KLOUD — collection overview",
+      "altRu": "SHOUT OUT KLOUD — обзор коллекции"
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-01.png",
+        "width": 8335,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-01",
+        "altRu": "SHOUT OUT KLOUD — 50-01",
+        "caption": {
+          "en": "50-01",
+          "ru": "50-01"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-02.png",
+        "width": 8334,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-02",
+        "altRu": "SHOUT OUT KLOUD — 50-02",
+        "caption": {
+          "en": "50-02",
+          "ru": "50-02"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-03.png",
+        "width": 8334,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-03",
+        "altRu": "SHOUT OUT KLOUD — 50-03",
+        "caption": {
+          "en": "50-03",
+          "ru": "50-03"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-04.png",
+        "width": 8335,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-04",
+        "altRu": "SHOUT OUT KLOUD — 50-04",
+        "caption": {
+          "en": "50-04",
+          "ru": "50-04"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-05.png",
+        "width": 8335,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-05",
+        "altRu": "SHOUT OUT KLOUD — 50-05",
+        "caption": {
+          "en": "50-05",
+          "ru": "50-05"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-06.png",
+        "width": 8334,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-06",
+        "altRu": "SHOUT OUT KLOUD — 50-06",
+        "caption": {
+          "en": "50-06",
+          "ru": "50-06"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-07.png",
+        "width": 8334,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-07",
+        "altRu": "SHOUT OUT KLOUD — 50-07",
+        "caption": {
+          "en": "50-07",
+          "ru": "50-07"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-08.png",
+        "width": 8335,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-08",
+        "altRu": "SHOUT OUT KLOUD — 50-08",
+        "caption": {
+          "en": "50-08",
+          "ru": "50-08"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-09.png",
+        "width": 8334,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-09",
+        "altRu": "SHOUT OUT KLOUD — 50-09",
+        "caption": {
+          "en": "50-09",
+          "ru": "50-09"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-10.png",
+        "width": 8334,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-10",
+        "altRu": "SHOUT OUT KLOUD — 50-10",
+        "caption": {
+          "en": "50-10",
+          "ru": "50-10"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-11.png",
+        "width": 8335,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-11",
+        "altRu": "SHOUT OUT KLOUD — 50-11",
+        "caption": {
+          "en": "50-11",
+          "ru": "50-11"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-12.png",
+        "width": 8335,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-12",
+        "altRu": "SHOUT OUT KLOUD — 50-12",
+        "caption": {
+          "en": "50-12",
+          "ru": "50-12"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-13.png",
+        "width": 8334,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-13",
+        "altRu": "SHOUT OUT KLOUD — 50-13",
+        "caption": {
+          "en": "50-13",
+          "ru": "50-13"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-14.png",
+        "width": 8334,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-14",
+        "altRu": "SHOUT OUT KLOUD — 50-14",
+        "caption": {
+          "en": "50-14",
+          "ru": "50-14"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-15.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-15",
+        "altRu": "SHOUT OUT KLOUD — 50-15",
+        "caption": {
+          "en": "50-15",
+          "ru": "50-15"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-16.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-16",
+        "altRu": "SHOUT OUT KLOUD — 50-16",
+        "caption": {
+          "en": "50-16",
+          "ru": "50-16"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-17.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-17",
+        "altRu": "SHOUT OUT KLOUD — 50-17",
+        "caption": {
+          "en": "50-17",
+          "ru": "50-17"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-18.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-18",
+        "altRu": "SHOUT OUT KLOUD — 50-18",
+        "caption": {
+          "en": "50-18",
+          "ru": "50-18"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-19.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-19",
+        "altRu": "SHOUT OUT KLOUD — 50-19",
+        "caption": {
+          "en": "50-19",
+          "ru": "50-19"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-20.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-20",
+        "altRu": "SHOUT OUT KLOUD — 50-20",
+        "caption": {
+          "en": "50-20",
+          "ru": "50-20"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-21.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-21",
+        "altRu": "SHOUT OUT KLOUD — 50-21",
+        "caption": {
+          "en": "50-21",
+          "ru": "50-21"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-22.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-22",
+        "altRu": "SHOUT OUT KLOUD — 50-22",
+        "caption": {
+          "en": "50-22",
+          "ru": "50-22"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-23.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-23",
+        "altRu": "SHOUT OUT KLOUD — 50-23",
+        "caption": {
+          "en": "50-23",
+          "ru": "50-23"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-24.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-24",
+        "altRu": "SHOUT OUT KLOUD — 50-24",
+        "caption": {
+          "en": "50-24",
+          "ru": "50-24"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-25.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-25",
+        "altRu": "SHOUT OUT KLOUD — 50-25",
+        "caption": {
+          "en": "50-25",
+          "ru": "50-25"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-26.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-26",
+        "altRu": "SHOUT OUT KLOUD — 50-26",
+        "caption": {
+          "en": "50-26",
+          "ru": "50-26"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-27.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-27",
+        "altRu": "SHOUT OUT KLOUD — 50-27",
+        "caption": {
+          "en": "50-27",
+          "ru": "50-27"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-28.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-28",
+        "altRu": "SHOUT OUT KLOUD — 50-28",
+        "caption": {
+          "en": "50-28",
+          "ru": "50-28"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-29.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-29",
+        "altRu": "SHOUT OUT KLOUD — 50-29",
+        "caption": {
+          "en": "50-29",
+          "ru": "50-29"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-30.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-30",
+        "altRu": "SHOUT OUT KLOUD — 50-30",
+        "caption": {
+          "en": "50-30",
+          "ru": "50-30"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-31.png",
+        "width": 8335,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-31",
+        "altRu": "SHOUT OUT KLOUD — 50-31",
+        "caption": {
+          "en": "50-31",
+          "ru": "50-31"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-32.png",
+        "width": 8335,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-32",
+        "altRu": "SHOUT OUT KLOUD — 50-32",
+        "caption": {
+          "en": "50-32",
+          "ru": "50-32"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-33.png",
+        "width": 8334,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-33",
+        "altRu": "SHOUT OUT KLOUD — 50-33",
+        "caption": {
+          "en": "50-33",
+          "ru": "50-33"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-34.png",
+        "width": 8334,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-34",
+        "altRu": "SHOUT OUT KLOUD — 50-34",
+        "caption": {
+          "en": "50-34",
+          "ru": "50-34"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-35.png",
+        "width": 8335,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-35",
+        "altRu": "SHOUT OUT KLOUD — 50-35",
+        "caption": {
+          "en": "50-35",
+          "ru": "50-35"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-36.png",
+        "width": 8335,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-36",
+        "altRu": "SHOUT OUT KLOUD — 50-36",
+        "caption": {
+          "en": "50-36",
+          "ru": "50-36"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-37.png",
+        "width": 8334,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-37",
+        "altRu": "SHOUT OUT KLOUD — 50-37",
+        "caption": {
+          "en": "50-37",
+          "ru": "50-37"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-38.png",
+        "width": 8335,
+        "height": 8335,
+        "altEn": "SHOUT OUT KLOUD — 50-38",
+        "altRu": "SHOUT OUT KLOUD — 50-38",
+        "caption": {
+          "en": "50-38",
+          "ru": "50-38"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-39.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-39",
+        "altRu": "SHOUT OUT KLOUD — 50-39",
+        "caption": {
+          "en": "50-39",
+          "ru": "50-39"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-40.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-40",
+        "altRu": "SHOUT OUT KLOUD — 50-40",
+        "caption": {
+          "en": "50-40",
+          "ru": "50-40"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-41.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-41",
+        "altRu": "SHOUT OUT KLOUD — 50-41",
+        "caption": {
+          "en": "50-41",
+          "ru": "50-41"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-42.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-42",
+        "altRu": "SHOUT OUT KLOUD — 50-42",
+        "caption": {
+          "en": "50-42",
+          "ru": "50-42"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-43.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-43",
+        "altRu": "SHOUT OUT KLOUD — 50-43",
+        "caption": {
+          "en": "50-43",
+          "ru": "50-43"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-44.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-44",
+        "altRu": "SHOUT OUT KLOUD — 50-44",
+        "caption": {
+          "en": "50-44",
+          "ru": "50-44"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-45.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-45",
+        "altRu": "SHOUT OUT KLOUD — 50-45",
+        "caption": {
+          "en": "50-45",
+          "ru": "50-45"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-46.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-46",
+        "altRu": "SHOUT OUT KLOUD — 50-46",
+        "caption": {
+          "en": "50-46",
+          "ru": "50-46"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-47.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-47",
+        "altRu": "SHOUT OUT KLOUD — 50-47",
+        "caption": {
+          "en": "50-47",
+          "ru": "50-47"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-48.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-48",
+        "altRu": "SHOUT OUT KLOUD — 50-48",
+        "caption": {
+          "en": "50-48",
+          "ru": "50-48"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-49.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-49",
+        "altRu": "SHOUT OUT KLOUD — 50-49",
+        "caption": {
+          "en": "50-49",
+          "ru": "50-49"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-50.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-50",
+        "altRu": "SHOUT OUT KLOUD — 50-50",
+        "caption": {
+          "en": "50-50",
+          "ru": "50-50"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-51.png",
+        "width": 8335,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-51",
+        "altRu": "SHOUT OUT KLOUD — 50-51",
+        "caption": {
+          "en": "50-51",
+          "ru": "50-51"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-52.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-52",
+        "altRu": "SHOUT OUT KLOUD — 50-52",
+        "caption": {
+          "en": "50-52",
+          "ru": "50-52"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50-53.png",
+        "width": 8334,
+        "height": 8334,
+        "altEn": "SHOUT OUT KLOUD — 50-53",
+        "altRu": "SHOUT OUT KLOUD — 50-53",
+        "caption": {
+          "en": "50-53",
+          "ru": "50-53"
+        }
+      }
+    ],
+    "videos": [
+      {
+        "src": "/videos/projects/shout-out-kloud/SHOUTGRGY_1.mp4",
+        "width": 2500,
+        "height": 2000,
+        "poster": "/images/projects/optimized/shout-out-kloud/animation-poster.webp",
+        "caption": {
+          "en": "SHOUT OUT KLOUD — short animation",
+          "ru": "SHOUT OUT KLOUD — короткая анимация"
+        }
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": {
+          "en": "Telegram stickers",
+          "ru": "Telegram-стикеры"
+        },
+        "url": "https://t.me/addstickers/KloudByGRGY"
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://t.me/addstickers/KloudByGRGY",
+        "verification": "artist-provided; environment blocks independent availability check"
+      }
+    ],
+    "displayOrder": 5,
+    "layout": "collection",
+    "galleryHeading": {
+      "en": "Digital works",
+      "ru": "Цифровые работы"
+    },
+    "supportingHeading": {
+      "en": "Additional materials",
+      "ru": "Дополнительные материалы"
+    },
+    "supportingGallery": [
+      {
+        "src": "/images/projects/originals/shout-out-kloud/50 in 1.png",
+        "width": 3540,
+        "height": 3508,
+        "altEn": "SHOUT OUT KLOUD — alternate collection overview",
+        "altRu": "SHOUT OUT KLOUD — дополнительный обзор коллекции",
+        "caption": {
+          "en": "Collection overview",
+          "ru": "Обзор коллекции"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/TWbanner-01.png",
+        "width": 6250,
+        "height": 2084,
+        "altEn": "SHOUT OUT KLOUD — collection banner",
+        "altRu": "SHOUT OUT KLOUD — баннер коллекции",
+        "caption": {
+          "en": "Collection graphic",
+          "ru": "Графика коллекции"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/mem.png",
+        "width": 1200,
+        "height": 646,
+        "altEn": "SHOUT OUT KLOUD — additional graphic",
+        "altRu": "SHOUT OUT KLOUD — дополнительная графика",
+        "caption": {
+          "en": "Additional collection graphic",
+          "ru": "Дополнительная графика коллекции"
+        }
+      },
+      {
+        "src": "/images/projects/originals/shout-out-kloud/tt shirt.png",
+        "width": 804,
+        "height": 840,
+        "altEn": "SHOUT OUT KLOUD — T-shirt concept",
+        "altRu": "SHOUT OUT KLOUD — концепт футболки",
+        "caption": {
+          "en": "T-shirt concept",
+          "ru": "Концепт футболки"
+        }
+      }
+    ]
   }
 ]

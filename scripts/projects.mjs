@@ -5,7 +5,7 @@ const esc = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', 
 export const localized = (value, lang) => typeof value === 'string' ? value : value?.[lang] || '';
 export const projectUrl = project => `/works/projects/${project.slug}/`;
 export const localUrl = (url, lang) => (lang === 'ru' ? '/ru' : '') + url;
-export const projectImages = project => [project.coverImage, ...project.gallery].filter((image, index, images) => image && images.findIndex(other => other?.src === image.src) === index);
+export const projectImages = project => [project.coverImage, ...project.gallery, ...(project.supportingGallery || [])].filter((image, index, images) => image && images.findIndex(other => other?.src === image.src) === index);
 export const imageBase = (project, image) => `/images/projects/optimized/${project.id}/${projectImages(project).findIndex(other => other.src === image.src)}`;
 const labels = {
   en: { projects: 'Projects', back: 'Back to Projects', year: 'Year', projectType: 'Project Type', medium: 'Medium', collaborators: 'Collaborators', location: 'Location', description: 'Description', prev: 'Previous Project', next: 'Next Project', links: 'Related links', original: 'Open original image', download: 'Download video', video: 'Video' },
@@ -47,9 +47,13 @@ export async function readyProjects(records, root, { checkOptimized = true } = {
   }
   const projects = records.filter(project => project.status === 'ready').sort((a, b) => a.displayOrder - b.displayOrder);
   for (const project of projects) {
-    if (!Number.isInteger(project.year)) throw new Error(`${project.id}: confirmed year is required`);
+    if (project.year !== null && !Number.isInteger(project.year)) throw new Error(`${project.id}: year must be confirmed or explicitly null`);
     for (const lang of ['En', 'Ru']) requireText(project[`description${lang}`], `${project.id} description${lang}`);
-    if (!Array.isArray(project.gallery) || !Array.isArray(project.videos) || !Array.isArray(project.collaborators) || !Array.isArray(project.externalLinks)) throw new Error(`${project.id}: media and link arrays are required`);
+    if (!Array.isArray(project.gallery) || !Array.isArray(project.videos) || !Array.isArray(project.collaborators) || !Array.isArray(project.externalLinks) || (project.supportingGallery && !Array.isArray(project.supportingGallery))) throw new Error(`${project.id}: media and link arrays are required`);
+    for (const fact of project.additionalInfo || []) for (const lang of ['en', 'ru']) {
+      requireText(localized(fact.label, lang), `${project.id} fact label`);
+      requireText(localized(fact.value, lang), `${project.id} fact value`);
+    }
     for (const image of projectImages(project)) {
       await checkAsset(root, image.src, project.id);
       if (!/\.(?:png|jpe?g|webp)$/i.test(image.src)) throw new Error(`${project.id}: unsupported image format`);
@@ -102,33 +106,36 @@ export async function optimizeProjectImages(projects, root) {
   }
 }
 
-export function projectImage(project, image, lang, { thumbnail = false, eager = false } = {}) {
+export function projectImage(project, image, lang, { thumbnail = false, eager = false, collectionTile = false } = {}) {
   const base = imageBase(project, image);
   const widths = [...new Set([480, 960, 1920].map(width => Math.min(width, image.width)))];
   const source = width => `${base}-${width <= 480 ? 480 : width <= 960 ? 960 : 1920}.webp`;
-  const sizes = thumbnail ? '(max-width: 480px) calc(100vw - 40px), (max-width: 760px) calc((100vw - 56px) / 2), 380px' : '(max-width: 760px) calc(100vw - 40px), (max-width: 1200px) calc(100vw - 300px), 1000px';
+  const sizes = collectionTile ? '(max-width: 760px) calc((100vw - 56px) / 2), (max-width: 1200px) calc((100vw - 348px) / 3), 318px' : thumbnail ? '(max-width: 480px) calc(100vw - 40px), (max-width: 760px) calc((100vw - 56px) / 2), 380px' : '(max-width: 760px) calc(100vw - 40px), (max-width: 1200px) calc(100vw - 300px), 1000px';
   return `<img class="${thumbnail ? 'artwork-thumbnail' : 'project-image'}" src="${base}-${thumbnail ? 960 : 1920}.webp" srcset="${widths.map(width => `${source(width)} ${width}w`).join(', ')}" sizes="${sizes}" width="${image.width}" height="${image.height}" alt="${esc(image[lang === 'ru' ? 'altRu' : 'altEn'])}" loading="${eager ? 'eager' : 'lazy'}"${eager ? ' fetchpriority="high"' : ''} decoding="async"${thumbnail ? ` style="object-position: ${image.objectPosition || '50% 50%'}"` : ''}>`;
 }
 
 export function projectCards(projects, lang) {
   return projects.map(project => project.coverImage
-    ? `<figure class="artwork-card project-card"><a href="${localUrl(projectUrl(project), lang)}">${projectImage(project, project.coverImage, lang, { thumbnail: true })}<figcaption><span class="artwork-title">${esc(project.title)}</span><span class="artwork-year">${project.year}</span></figcaption></a></figure>`
-    : `<article class="project-card project-card-text"><h2><a href="${localUrl(projectUrl(project), lang)}">${esc(project.title)}</a></h2><p class="project-card-meta">${project.year}${localized(project.projectType, lang) ? ' · ' + esc(localized(project.projectType, lang)) : ''}</p><p class="project-card-description">${esc(project[lang === 'ru' ? 'descriptionRu' : 'descriptionEn'])}</p></article>`).join('\n');
+    ? `<figure class="artwork-card project-card"><a href="${localUrl(projectUrl(project), lang)}">${projectImage(project, project.coverImage, lang, { thumbnail: true })}<figcaption><span class="artwork-title">${esc(project.title)}</span>${project.year === null ? '' : `<span class="artwork-year">${project.year}</span>`}</figcaption></a></figure>`
+    : `<article class="project-card project-card-text"><h2><a href="${localUrl(projectUrl(project), lang)}">${esc(project.title)}</a></h2><p class="project-card-meta">${[project.year, localized(project.projectType, lang)].filter(value => value !== null && value !== '').map(esc).join(' · ')}</p><p class="project-card-description">${esc(project[lang === 'ru' ? 'descriptionRu' : 'descriptionEn'])}</p></article>`).join('\n');
 }
 export function projectCv(projects, lang) {
   if (!projects.length) return '';
-  return `<section class="cv-projects"><h2>${labels[lang].projects}</h2><ul class="exhibition-list">${projects.map(project => `<li>${project.year} — <a href="${localUrl(projectUrl(project), lang)}">${esc(project.title)}</a></li>`).join('')}</ul></section>`;
+  return `<section class="cv-projects"><h2>${labels[lang].projects}</h2><ul class="exhibition-list">${projects.map(project => `<li>${project.year === null ? '' : project.year + ' — '}<a href="${localUrl(projectUrl(project), lang)}">${esc(project.title)}</a></li>`).join('')}</ul></section>`;
 }
 export function projectContent(project, projects, lang) {
   const t = labels[lang];
   const info = (key, value) => value ? `<div><dt>${t[key]}</dt><dd>${value}</dd></div>` : '';
   const collaborators = project.collaborators.map(person => person.url ? `<a href="${esc(person.url)}" target="_blank" rel="noopener noreferrer">${esc(person.name)}</a>` : esc(person.name)).join(', ');
   const caption = media => localized(media.caption, lang);
-  const figure = (image, eager = false) => `<figure class="project-figure"><a href="${mediaUrl(image.src)}" aria-label="${t.original}">${projectImage(project, image, lang, { eager })}</a>${caption(image) ? `<figcaption>${esc(caption(image))}</figcaption>` : ''}</figure>`;
+  const figure = (image, eager = false, collectionTile = false) => `<figure class="project-figure"><a href="${mediaUrl(image.src)}" aria-label="${t.original}">${projectImage(project, image, lang, { eager, collectionTile })}</a>${caption(image) ? `<figcaption>${esc(caption(image))}</figcaption>` : ''}</figure>`;
   const index = projects.findIndex(other => other.id === project.id);
   const adjacent = (other, direction) => other ? `<a href="${localUrl(projectUrl(other), lang)}" rel="${direction}"><span>${direction === 'prev' ? t.prev : t.next}</span>${esc(other.title)}</a>` : '<span></span>';
   const description = project[lang === 'ru' ? 'descriptionRu' : 'descriptionEn'];
   const videos = project.videos.map(video => `<figure class="project-figure"><video class="project-video" controls playsinline preload="metadata" width="${video.width}" height="${video.height}" aria-label="${esc(caption(video) || project.title + ' — ' + t.video)}"${video.poster ? ` poster="${mediaUrl(video.poster)}"` : ''}><source src="${mediaUrl(video.src)}" type="${video.src.toLowerCase().endsWith('.webm') ? 'video/webm' : 'video/mp4'}">${(video.tracks || []).map(track => `<track kind="captions" src="${mediaUrl(track.src)}" srclang="${track.lang}" label="${esc(track.label)}"${track.lang === lang ? ' default' : ''}>`).join('')}<a href="${mediaUrl(video.src)}">${t.download}</a></video>${caption(video) ? `<figcaption>${esc(caption(video))}</figcaption>` : ''}</figure>`).join('');
-  const gallery = projectImages(project).filter(image => image.src !== project.coverImage?.src).map(image => figure(image)).join('') + videos;
-  return `<article class="project-detail${project.coverImage ? '' : ' project-detail-text'}"><a class="back-link" href="${localUrl('/works/projects/', lang)}">← ${t.back}</a>${project.coverImage ? figure(project.coverImage, true) : ''}<div class="project-information"><div><h1>${esc(project.title)}</h1><dl>${info('year', project.year)}${info('projectType', esc(localized(project.projectType, lang)))}${info('medium', esc(localized(project.medium, lang)))}${info('collaborators', collaborators)}${info('location', esc(localized(project.location, lang)))}</dl></div><section class="project-description" aria-label="${t.description}">${description.split(/\n\s*\n/).map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}</section></div>${gallery ? `<div class="project-gallery">${gallery}</div>` : ''}${project.externalLinks.length ? `<section class="project-external-links"><h2>${t.links}</h2><ul>${project.externalLinks.map(link => `<li><a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">${esc(localized(link.label, lang))}</a></li>`).join('')}</ul></section>` : ''}<nav class="artwork-pagination" aria-label="${t.projects}">${adjacent(projects[index - 1], 'prev')}${adjacent(projects[index + 1], 'next')}</nav></article>`;
+  const collection = project.layout === 'collection';
+  const gallery = project.gallery.filter((image, index, images) => image.src !== project.coverImage?.src && images.findIndex(other => other.src === image.src) === index).map(image => figure(image, false, collection)).join('');
+  const supporting = (project.supportingGallery || []).map(image => figure(image)).join('');
+  const facts = (project.additionalInfo || []).map(fact => `<div><dt>${esc(localized(fact.label, lang))}</dt><dd>${esc(localized(fact.value, lang))}</dd></div>`).join('');
+  return `<article class="project-detail${project.coverImage ? '' : ' project-detail-text'}${collection ? ' project-collection' : ''}"><a class="back-link" href="${localUrl('/works/projects/', lang)}">← ${t.back}</a>${collection ? `<h1 class="collection-title">${esc(project.title)}</h1>` : ''}${project.coverImage ? figure(project.coverImage, true) : ''}<div class="project-information"><div>${collection ? '' : `<h1>${esc(project.title)}</h1>`}<dl>${info('year', project.year)}${info('projectType', esc(localized(project.projectType, lang)))}${info('medium', esc(localized(project.medium, lang)))}${info('collaborators', collaborators)}${info('location', esc(localized(project.location, lang)))}${facts}</dl></div><section class="project-description" aria-label="${t.description}">${description.split(/\n\s*\n/).map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}</section></div>${gallery ? `<section class="project-gallery-section">${project.galleryHeading ? `<h2>${esc(localized(project.galleryHeading, lang))}</h2>` : ''}<div class="project-gallery${collection ? ' collection-gallery' : ''}">${gallery}</div></section>` : ''}${videos ? `<div class="project-videos">${videos}</div>` : ''}${supporting ? `<section class="project-supporting"><h2>${esc(localized(project.supportingHeading, lang) || (lang === 'ru' ? 'Дополнительные материалы' : 'Additional materials'))}</h2><div class="project-gallery">${supporting}</div></section>` : ''}${project.externalLinks.length ? `<section class="project-external-links"><h2>${t.links}</h2><ul>${project.externalLinks.map(link => `<li><a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">${esc(localized(link.label, lang))}</a></li>`).join('')}</ul></section>` : ''}<nav class="artwork-pagination" aria-label="${t.projects}">${adjacent(projects[index - 1], 'prev')}${adjacent(projects[index + 1], 'next')}</nav></article>`;
 }

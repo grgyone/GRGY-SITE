@@ -1,95 +1,129 @@
 # Three featured projects: implementation and material inventory
 
-Branch: `feat/grgy-three-featured-projects`, based on the un-published v4 content
-branch. Do not publish without the artist's permission. The earlier v4 work is
-retained; this update does not reset or replace it.
+Branch: `feat/grgy-three-featured-projects`, based on the unpublished v4 content.
+No deployment or push to the main branch has been performed. The existing design,
+homepage selection, stable artwork URLs, artist texts and hosting are preserved.
 
-## Available files
+## Cutestar / Merch as Art — working EN/RU pages
 
-The new upload contains the artist's request (`Pasted text.txt`) only.
-`BF w bg.zip`, `МЕГА Дыбенко.zip` and `shout out.zip` are named in that request,
-but none is present in the provided attachments or available workspace files.
-No archive file inventory, gallery attribution or MP4 playback check can be
-completed for those missing archives.
+Routes: `/works/projects/cutestar-merch-as-art/` and its `/ru/` equivalent.
+The ready project uses all eight images from `МЕГА Дыбенко.zip`:
 
-The earlier `main page.zip` is still available. Its `3.jpg` is already assigned
-to Big Face and is the only existing image used by this update. No image was
-reassigned from another artwork or used as a substitute for missing material.
+- `12tig.png`: main T-shirt visual.
+- `cutestar-01.png`: original graphic.
+- `photo_2026-10-23_20-09-41.jpg`: GRGY's exhibited T-shirt.
+- `photo_2026-10-23_20-09-55.jpg`, `photo_2026-10-23_20-09-59.jpg`,
+  `photo_2026-10-23_20-11-09.jpg`, `photo_2026-10-23_20-09-51.jpg`:
+  exhibition photographs and details, not attributed to GRGY as individual works.
+- `photo_2026-10-23_20-11-21.jpg`: exhibition poster.
 
-## Big Face — work in progress
+`about.txt` was read as source material, not as instructions. Its private reference
+copy is in `_archive/project-sources/mega-dybenko/`, excluded from publication.
+The main visual, drawing, GRGY T-shirt, exhibition context and poster are presented
+in that order. Original images are linked from their full-proportion derivatives.
+Denis Fabrika / Dvor 759 is credited for the invitation, not called a curator.
+An internal link was added to the existing exhibition entry in both CV versions;
+its approved wording and 2023 year were not changed.
 
-Existing URL `/works/street-art/big-face/` is preserved in both languages.
-The original photograph, full aspect ratio, original-image link and optimized
-derivatives are retained. Creation year remains 2023 from `data/artworks.json`;
-no photograph date or building date is substituted.
+The event text confirms 15–30 April, ground-floor atrium, MEGA Dybenko,
+Saint Petersburg. Neither the poster nor direct event text explicitly confirms
+the year. A 2023 URL in the text refers to a different Open Call, not this exhibition.
+Project creation year is therefore `null` and omitted, pending confirmation.
+Exported 2026 photo filenames and archive timestamps are not creation dates.
+The organizer post `https://t.me/dvor759/4223` could not be independently inspected:
+the environment proxy returns CONNECT 403, including with escalated execution.
+It is recorded as a blocked source, not an asserted verified public link.
 
-`data/artwork-details.json` adds the artist-provided location, two story
-paragraphs, historical context and source in EN/RU. The one-week account is
-explicitly attributed to the artist's recollection. It does not imply advance
-knowledge of restoration or an artistic commentary on it.
+## SHOUT OUT KLOUD — working EN/RU pages
 
-`displayTitle.en` / `displayTitle.ru` can change the detail heading and metadata
-without changing the stable artwork slug or the approved Selected Artworks card.
-Building dates 1911–1912 and architect Vladimir Pokrovsky are in a separate
-historical section, distinct from the artwork's 2023 creation date.
+Routes: `/works/projects/shout-out-kloud/` and its `/ru/` equivalent.
+All 59 media files from `shout out.zip` are used:
 
-The historical-source URL is included as supplied by the artist. The environment
-proxy blocks its HTTPS CONNECT request with HTTP 403 (`curl` exit 56, destination
-status 000), including with escalated execution. The historical text therefore
-remains artist-provided, not independently verified against the remote page.
+- `50 in 1 L.png`: collection cover.
+- `50-01.png` through `50-53.png`: all 53 supplied numbered files, in exact order.
+- `SHOUTGRGY_1.mp4`: original 3.04-second, silent H.264 animation, 2500 × 2000.
+- `50 in 1.png`, `TWbanner-01.png`, `mem.png`: supporting collection graphics.
+- `tt shirt.png`: explicitly labeled a T-shirt concept, not a physical release.
 
-Additional documentary photographs and the actual MP4 fly-through are still
-missing. No 3D viewer, empty video or interactive model has been invented.
-The separate `documentation.video` and `documentation.model` fields distinguish
-the future real video asset from a possible interactive model, both currently null.
+The collection has a title above its cover, a three-column desktop/two-column
+mobile gallery, lazy responsive images, full-size original links, native video
+controls and the artist-supplied Telegram sticker link. The video poster is an
+actual frame from the supplied animation, not generated substitute artwork.
+It can be reproduced with FFmpeg:
 
-## Cutestar / Merch as Art — pending archive
+```sh
+ffmpeg -i videos/projects/shout-out-kloud/SHOUTGRGY_1.mp4 -frames:v 1 -vf scale=1280:-2 -c:v libwebp -quality 82 images/projects/optimized/shout-out-kloud/animation-poster.webp
+```
 
-The draft record in `data/projects.json` retains the requested stable slug
-`cutestar-merch-as-art`, bilingual history, medium, location and invitation
-attribution. It does not call Denis Fabrika a curator. The supplied April 15–30
-dates and provisional exhibition year 2023 are explicitly pending archive
-verification; no unconfirmed creation year is displayed.
+No year was inferred from file timestamps. The page does not invent a Foundation
+URL, minted/sold token count or physical T-shirt release. Numbering describes the
+supplied files, not an edition size. No unapproved CV event was added for SHOUT.
+The Telegram sticker link comes from the artist; proxy restrictions prevent
+independent verification of Telegram pages in this environment.
 
-Original drawing, T-shirt image, exhibition photographs, poster and event text
-are absent. No public page or CV link is generated until this can be a real
-media-backed project. The existing 2023 CV record is preserved without edits.
+## Big Face — additional archive blocked
 
-## SHOUT OUT KLOUD — pending archive
+Stable route `/works/street-art/big-face/`, original photograph `3.jpg`, approved
+creation year 2023 and existing bilingual narrative remain intact. Display title
+can change separately from the URL and approved homepage card. Historical context
+distinguishes the building's 1911–1912 dates and architect Vladimir Pokrovsky from
+the artwork. The one-week account is attributed to the artist's recollection.
+The historical URL remains artist-provided; the environment proxy blocks its
+verification, as documented in the earlier update.
 
-The draft preserves the exact title, stable slug `shout-out-kloud`, bilingual
-artist-provided project description and the supplied Telegram sticker source.
-Creation year is unspecified. No token count, sales figure, physical T-shirt
-release or Foundation URL has been invented.
+The upload `BF w bg.zip` was received, but the download tool rejects it because it
+exceeds the 32 MiB transfer limit. Its contents have **not** been inspected, copied
+or attributed. Additional documentary photos and the actual MP4 fly-through remain
+unintegrated. Existing `documentation.video` and `.model` are still null: no fake
+3D viewer, empty video or placeholder gallery is rendered. Provide smaller ZIP
+parts (each under 32 MiB), or upload photographs and the video separately.
 
-The numbered images 50-01 through 50-53, overview graphics, animation and T-shirt
-concept are described in the request but not provided as files. No gallery,
-animation or public page is claimed to be complete. Sequence and exact filenames
-must be checked once the real archive arrives.
+## Preservation and unused materials
 
-## Completion prerequisites
+Original filenames and bytes of all 66 accessible images and the MP4 are preserved
+under `images/projects/originals/{project-id}/` and `videos/projects/{project-id}/`.
+`data/featured-media-manifest.json` records dimensions, byte sizes and SHA-256 hashes
+captured from the extracted archives. All accessible media are used; `about.txt`
+is used for factual reference, not displayed as promotional copy. Only the
+inaccessible Big Face archive remains unused. Responsive WebP derivatives are
+uncropped; CSS crops only project-listing previews. No original artist image was
+redrawn, retouched, renamed or assigned to a different project.
 
-Provide `BF w bg.zip`, `МЕГА Дыбенко.zip` and `shout out.zip`. Their actual contents
-are needed to select covers, retain filenames/order, create derivatives, add
-gallery captions, verify media and render final desktop/mobile screenshots.
-Resolve Cutestar's exhibition year and SHOUT OUT KLOUD's creation year from
-provided text/source evidence or artist confirmation; do not infer them from
-file modification dates or token-like file numbering.
+## Validation and screenshots
 
-Homepage, its six artworks/order, the logo, original image bytes, existing Projects
-pages and v4 informational content are unchanged by this update. No publication
-has been performed.
+- `npm run build`: 44 public pages, EN/RU metadata, canonical/hreflang and sitemap.
+- `npm test`: 22 tests, including SHA-256 checks of all 67 original media files,
+  image proportions, ordered collection, stable Big Face data and repeatable build.
+- `npm run test:browser`: six selected artworks, five projects, navigation and
+  language switching at 1440, 768, 600, 390 and 320 px, both languages.
+- `npm run test:content`: approved Statement/Bio/CV copy and links, both languages.
+- `npm run test:featured`: all 66 real images decode and original links resolve;
+  actual supplied MP4 plays and seeks, byte ranges work, CV/language links work,
+  no horizontal overflow at 1440, 768, 390 and 320 px, both languages.
+- `npm run test:projects`: isolated renderer fixtures, not presented as artist media.
 
-## Validation completed
+Actual-page screenshots (ignored `test-results/`):
+`featured-{cutestar-merch-as-art,shout-out-kloud}-{en,ru}-{1440,390}.png`,
+with `-information`, `-gallery` and (SHOUT) `-video` variants.
 
-Build and 19 tests passed. Existing six artworks and the three previously available
-projects passed the browser suite in EN/RU at 1440, 768, 600, 390 and 320 px.
-Big Face additionally passed photograph decoding, context rendering, no horizontal
-overflow, stable URL and language switching at desktop/mobile widths. Screenshots:
-`test-results/big-face-{en,ru}-{1440,390}.png`.
+Still requiring artist clarification: Cutestar's creation/exhibition year, SHOUT's
+creation year (if it should be displayed), and Big Face's inaccessible archive.
+No publication is authorized by this material upload.
 
-Git comparison against the v4 base confirmed that Selected Artworks, existing
-project pages, CV, artist texts, image files, navigation and CNAME were untouched.
-The two new featured-project drafts have no generated public pages or CV links.
-Real archive image/video checks remain unrun, because the three archives have
-not been supplied; technical fixtures are not reported as those real materials.
+## Changed files
+
+- Content: `data/projects.json`, `data/artist.json` (CV link only), new
+  `data/featured-media-manifest.json` and private source text under `_archive/`.
+- Rendering: `scripts/projects.mjs`, `scripts/build.mjs`, `portfolio.css`.
+- Assets: `images/projects/originals/`, `images/projects/optimized/`,
+  `videos/projects/shout-out-kloud/SHOUTGRGY_1.mp4`.
+- Generated pages in EN/RU: both new project directories, Projects listing,
+  Works overview, CV and the Solukta page's next-project link; `sitemap.xml`.
+- Checks: `tests/featured-projects.test.mjs`, `tests/featured-browser.cjs`,
+  `tests/projects.test.mjs`, `tests/site.test.mjs`, `tests/browser.cjs`,
+  plus the new `test:featured` command in `package.json`.
+- Documentation: `README.md`, `docs/projects.md`, this report.
+
+Git comparison against `d3bbafa` confirms no changes to `index.html`,
+`ru/index.html`, `data/artworks.json`, `data/artwork-details.json`,
+`images/artworks/`, `styles.css`, `site-nav.js` or `CNAME`.

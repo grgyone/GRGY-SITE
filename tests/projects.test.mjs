@@ -15,7 +15,7 @@ const fixture = {
 };
 
 test('the three approved projects are available as text pages without invented media', async () => {
-  const ready = await readyProjects(drafts, '/tmp');
+  const ready = await readyProjects(drafts.slice(0, 3), '/tmp');
   assert.equal(ready.length, 3);
   assert.match(projectCards(ready, 'en'), /ChikoRoko/);
   assert.match(projectCv(ready, 'ru'), /\/ru\/works\/projects\/chikoroko-grgy-kloud\//);
@@ -32,7 +32,10 @@ test('the three approved projects are available as text pages without invented m
 test('ready projects require confirmed bilingual content and verify any declared media', async () => {
   const [draft] = drafts;
   await assert.rejects(readyProjects([{ ...draft, status: 'ready', descriptionEn: '' }], '/tmp'), /descriptionEn/);
-  await assert.rejects(readyProjects([{ ...draft, status: 'ready', year: null }], '/tmp'), /confirmed year/);
+  await assert.rejects(readyProjects([{ ...draft, status: 'ready', year: undefined }], '/tmp'), /year must be confirmed/);
+  const [undated] = await readyProjects([{ ...draft, year: null }], '/tmp');
+  assert.doesNotMatch(projectContent(undated, [undated], 'en'), /<dt>Year|<dd>null/);
+  assert.doesNotMatch(projectCards([undated], 'en'), /null/);
   await assert.rejects(readyProjects([{ ...draft, status: 'ready', coverImage: image }], '/tmp'), /ENOENT/);
 });
 

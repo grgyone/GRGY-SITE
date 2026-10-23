@@ -11,6 +11,7 @@ const read = file => readFile(path.join(root, file), 'utf8');
 const data = JSON.parse(await read('data/artworks.json'));
 const artworkDetails = JSON.parse(await read('data/artwork-details.json'));
 const projects = JSON.parse(await read('data/projects.json')).filter(project => project.status === 'ready');
+const cvProjectIds = JSON.parse(await read('data/artist.json')).cvSections.flatMap(section => section.entries.map(entry => entry.projectId)).filter(Boolean);
 const workUrl = work => `/works/${work.category}/${work.slug}/`;
 const publicPages = [];
 async function discover(directory = '') {
@@ -42,7 +43,8 @@ test('every generated local link and media reference resolves, and commerce is a
       const url = match[1];
       if (/^(?:https?:|mailto:|data:)/.test(url)) continue;
       const pathname = url.split(/[?#]/)[0];
-      const filePath = path.resolve(root, pathname.startsWith('/') ? '.' + pathname : path.join(path.dirname(file), pathname));
+      const decoded = decodeURIComponent(pathname);
+      const filePath = path.resolve(root, decoded.startsWith('/') ? '.' + decoded : path.join(path.dirname(file), decoded));
       assert.ok(filePath === path.resolve(root) || filePath.startsWith(root), `${file}: invalid path ${url}`);
       const result = await stat(filePath);
       if (result.isDirectory()) assert.ok((await stat(path.join(filePath, 'index.html'))).isFile());
@@ -90,19 +92,19 @@ test('navigation order, category filtering and bilingual approved texts', async 
   assert.match(await read('ru/artist-statement/index.html'), /GRGY — паразит/);
 });
 
-test('every project has EN/RU pages, CV links, metadata and sitemap entries without borrowed images', async () => {
+test('every project has EN/RU pages, curated CV links, metadata and sitemap entries without borrowed images', async () => {
   const sitemap = await read('sitemap.xml');
   for (const prefix of ['', '/ru']) {
     const cv = await read(prefix.slice(1) + (prefix ? '/' : '') + 'cv/index.html');
     for (const project of projects) {
       const url = prefix + projectUrl(project);
       const html = await read(url.slice(1) + 'index.html');
-      assert.ok(cv.includes(`href="${url}"`));
+      assert.equal(cv.includes(`href="${url}"`), cvProjectIds.includes(project.id));
       assert.ok(sitemap.includes(`<loc>https://grgyone.com${url}</loc>`));
       assert.match(html, /<link rel="canonical"/);
       assert.match(html, /hreflang="en"/);
       assert.match(html, /hreflang="ru"/);
-      assert.ok(html.includes(project[prefix ? 'descriptionRu' : 'descriptionEn']));
+      for (const paragraph of project[prefix ? 'descriptionRu' : 'descriptionEn'].split(/\n\s*\n/)) assert.ok(html.includes(paragraph));
       assert.match(html, /href="[^\"]+" rel="(?:prev|next)"/);
       if (!project.coverImage) {
         assert.doesNotMatch(html, /property="og:image"|class="project-image"/);
