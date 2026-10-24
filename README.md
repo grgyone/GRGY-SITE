@@ -76,14 +76,18 @@ Review and test this branch before any publication to the main domain.
 Street-art narratives can be added in `data/artwork-details.json` keyed by the
 existing artwork id. Detail `displayTitle` is independent of the slug and the
 approved homepage title. See `docs/three-featured-projects.md` for the current
-Big Face archive limitation and the two completed media-backed featured projects.
+earlier material intake. The current direct Works routes, SHOUT layout,
+Big Face gallery and video-only transfer limitation are documented in
+[the Works update](docs/works-update-2026-10-24.md).
 
 Project content is centralized in `data/projects.json`; complete media galleries,
 video, bilingual descriptions and links render through `scripts/projects.mjs`.
 See [project intake and schema](docs/projects.md) for the current material
-inventory, exact media fields and validation commands. Three earlier projects
-have text pages; Cutestar and SHOUT OUT KLOUD now include actual archive galleries,
-and SHOUT includes the supplied animation. Run `npm run test:featured` to verify
+inventory, exact media fields and validation commands. Two collaborations remain
+in Projects; Solukta is retained in data but retired from public pages.
+Cutestar and SHOUT OUT KLOUD have direct Works routes and archive galleries;
+Big Face also has a direct Works route and its documentary images. SHOUT includes
+the supplied animation. Run `npm run test:featured` to verify
 all real archive images and video on desktop/mobile. Draft projects remain excluded from pages, category
 navigation, CV and sitemap. A project without a cover uses a text listing, with
 no placeholder image or borrowed artwork.

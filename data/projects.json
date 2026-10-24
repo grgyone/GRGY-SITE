@@ -61,11 +61,12 @@
   },
   {
     "id": "solukta-solutions",
+    "retired": true,
     "slug": "grgy-solukta-gleb-kostin-solutions",
     "title": "GRGY × Solukta × Gleb Kostin (.solutions)",
     "year": 2025,
     "category": "projects",
-    "status": "ready",
+    "status": "draft",
     "projectType": {
       "en": "Collaboration",
       "ru": "Коллаборация"
@@ -91,7 +92,7 @@
     "id": "cutestar-merch-as-art",
     "slug": "cutestar-merch-as-art",
     "title": "Cutestar / Merch as Art",
-    "year": null,
+    "year": 2023,
     "category": "projects",
     "status": "ready",
     "projectType": {
@@ -112,8 +113,8 @@
     "exhibition": {
       "startMonthDay": "04-15",
       "endMonthDay": "04-30",
-      "provisionalYear": 2023,
-      "yearVerified": false
+      "yearVerified": true,
+      "year": 2023
     },
     "invitedBy": [
       "Денис Фабрика",
@@ -235,7 +236,8 @@
           "ru": "Денис Фабрика / Двор 759"
         }
       }
-    ]
+    ],
+    "section": "works"
   },
   {
     "id": "shout-out-kloud",
@@ -260,7 +262,8 @@
       "width": 5016,
       "height": 3064,
       "altEn": "SHOUT OUT KLOUD — collection overview",
-      "altRu": "SHOUT OUT KLOUD — обзор коллекции"
+      "altRu": "SHOUT OUT KLOUD — обзор коллекции",
+      "assetIndex": 0
     },
     "gallery": [
       {
@@ -272,7 +275,8 @@
         "caption": {
           "en": "50-01",
           "ru": "50-01"
-        }
+        },
+        "assetIndex": 1
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-02.png",
@@ -283,7 +287,8 @@
         "caption": {
           "en": "50-02",
           "ru": "50-02"
-        }
+        },
+        "assetIndex": 2
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-03.png",
@@ -294,7 +299,8 @@
         "caption": {
           "en": "50-03",
           "ru": "50-03"
-        }
+        },
+        "assetIndex": 3
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-04.png",
@@ -305,7 +311,8 @@
         "caption": {
           "en": "50-04",
           "ru": "50-04"
-        }
+        },
+        "assetIndex": 4
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-05.png",
@@ -316,7 +323,8 @@
         "caption": {
           "en": "50-05",
           "ru": "50-05"
-        }
+        },
+        "assetIndex": 5
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-06.png",
@@ -327,7 +335,8 @@
         "caption": {
           "en": "50-06",
           "ru": "50-06"
-        }
+        },
+        "assetIndex": 6
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-07.png",
@@ -338,7 +347,8 @@
         "caption": {
           "en": "50-07",
           "ru": "50-07"
-        }
+        },
+        "assetIndex": 7
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-08.png",
@@ -349,7 +359,8 @@
         "caption": {
           "en": "50-08",
           "ru": "50-08"
-        }
+        },
+        "assetIndex": 8
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-09.png",
@@ -360,7 +371,8 @@
         "caption": {
           "en": "50-09",
           "ru": "50-09"
-        }
+        },
+        "assetIndex": 9
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-10.png",
@@ -371,7 +383,8 @@
         "caption": {
           "en": "50-10",
           "ru": "50-10"
-        }
+        },
+        "assetIndex": 10
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-11.png",
@@ -382,7 +395,8 @@
         "caption": {
           "en": "50-11",
           "ru": "50-11"
-        }
+        },
+        "assetIndex": 11
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-12.png",
@@ -393,7 +407,8 @@
         "caption": {
           "en": "50-12",
           "ru": "50-12"
-        }
+        },
+        "assetIndex": 12
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-13.png",
@@ -404,7 +419,8 @@
         "caption": {
           "en": "50-13",
           "ru": "50-13"
-        }
+        },
+        "assetIndex": 13
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-14.png",
@@ -415,7 +431,8 @@
         "caption": {
           "en": "50-14",
           "ru": "50-14"
-        }
+        },
+        "assetIndex": 14
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-15.png",
@@ -426,7 +443,8 @@
         "caption": {
           "en": "50-15",
           "ru": "50-15"
-        }
+        },
+        "assetIndex": 15
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-16.png",
@@ -437,7 +455,8 @@
         "caption": {
           "en": "50-16",
           "ru": "50-16"
-        }
+        },
+        "assetIndex": 16
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-17.png",
@@ -448,7 +467,8 @@
         "caption": {
           "en": "50-17",
           "ru": "50-17"
-        }
+        },
+        "assetIndex": 17
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-18.png",
@@ -459,7 +479,8 @@
         "caption": {
           "en": "50-18",
           "ru": "50-18"
-        }
+        },
+        "assetIndex": 18
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-19.png",
@@ -470,7 +491,8 @@
         "caption": {
           "en": "50-19",
           "ru": "50-19"
-        }
+        },
+        "assetIndex": 19
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-20.png",
@@ -481,7 +503,8 @@
         "caption": {
           "en": "50-20",
           "ru": "50-20"
-        }
+        },
+        "assetIndex": 20
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-21.png",
@@ -492,7 +515,8 @@
         "caption": {
           "en": "50-21",
           "ru": "50-21"
-        }
+        },
+        "assetIndex": 21
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-22.png",
@@ -503,7 +527,8 @@
         "caption": {
           "en": "50-22",
           "ru": "50-22"
-        }
+        },
+        "assetIndex": 22
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-23.png",
@@ -514,7 +539,8 @@
         "caption": {
           "en": "50-23",
           "ru": "50-23"
-        }
+        },
+        "assetIndex": 23
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-24.png",
@@ -525,7 +551,8 @@
         "caption": {
           "en": "50-24",
           "ru": "50-24"
-        }
+        },
+        "assetIndex": 24
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-25.png",
@@ -536,7 +563,8 @@
         "caption": {
           "en": "50-25",
           "ru": "50-25"
-        }
+        },
+        "assetIndex": 25
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-26.png",
@@ -547,7 +575,8 @@
         "caption": {
           "en": "50-26",
           "ru": "50-26"
-        }
+        },
+        "assetIndex": 26
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-27.png",
@@ -558,7 +587,8 @@
         "caption": {
           "en": "50-27",
           "ru": "50-27"
-        }
+        },
+        "assetIndex": 27
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-28.png",
@@ -569,7 +599,8 @@
         "caption": {
           "en": "50-28",
           "ru": "50-28"
-        }
+        },
+        "assetIndex": 28
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-29.png",
@@ -580,7 +611,8 @@
         "caption": {
           "en": "50-29",
           "ru": "50-29"
-        }
+        },
+        "assetIndex": 29
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-30.png",
@@ -591,7 +623,8 @@
         "caption": {
           "en": "50-30",
           "ru": "50-30"
-        }
+        },
+        "assetIndex": 30
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-31.png",
@@ -602,7 +635,8 @@
         "caption": {
           "en": "50-31",
           "ru": "50-31"
-        }
+        },
+        "assetIndex": 31
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-32.png",
@@ -613,7 +647,8 @@
         "caption": {
           "en": "50-32",
           "ru": "50-32"
-        }
+        },
+        "assetIndex": 32
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-33.png",
@@ -624,7 +659,8 @@
         "caption": {
           "en": "50-33",
           "ru": "50-33"
-        }
+        },
+        "assetIndex": 33
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-34.png",
@@ -635,7 +671,8 @@
         "caption": {
           "en": "50-34",
           "ru": "50-34"
-        }
+        },
+        "assetIndex": 34
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-35.png",
@@ -646,7 +683,8 @@
         "caption": {
           "en": "50-35",
           "ru": "50-35"
-        }
+        },
+        "assetIndex": 35
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-36.png",
@@ -657,7 +695,8 @@
         "caption": {
           "en": "50-36",
           "ru": "50-36"
-        }
+        },
+        "assetIndex": 36
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-37.png",
@@ -668,7 +707,8 @@
         "caption": {
           "en": "50-37",
           "ru": "50-37"
-        }
+        },
+        "assetIndex": 37
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-38.png",
@@ -679,7 +719,8 @@
         "caption": {
           "en": "50-38",
           "ru": "50-38"
-        }
+        },
+        "assetIndex": 38
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-39.png",
@@ -690,7 +731,8 @@
         "caption": {
           "en": "50-39",
           "ru": "50-39"
-        }
+        },
+        "assetIndex": 39
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-40.png",
@@ -701,7 +743,8 @@
         "caption": {
           "en": "50-40",
           "ru": "50-40"
-        }
+        },
+        "assetIndex": 40
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-41.png",
@@ -712,7 +755,8 @@
         "caption": {
           "en": "50-41",
           "ru": "50-41"
-        }
+        },
+        "assetIndex": 41
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-42.png",
@@ -723,7 +767,8 @@
         "caption": {
           "en": "50-42",
           "ru": "50-42"
-        }
+        },
+        "assetIndex": 42
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-43.png",
@@ -734,7 +779,8 @@
         "caption": {
           "en": "50-43",
           "ru": "50-43"
-        }
+        },
+        "assetIndex": 43
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-44.png",
@@ -745,7 +791,8 @@
         "caption": {
           "en": "50-44",
           "ru": "50-44"
-        }
+        },
+        "assetIndex": 44
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-45.png",
@@ -756,7 +803,8 @@
         "caption": {
           "en": "50-45",
           "ru": "50-45"
-        }
+        },
+        "assetIndex": 45
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-46.png",
@@ -767,7 +815,8 @@
         "caption": {
           "en": "50-46",
           "ru": "50-46"
-        }
+        },
+        "assetIndex": 46
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-47.png",
@@ -778,7 +827,8 @@
         "caption": {
           "en": "50-47",
           "ru": "50-47"
-        }
+        },
+        "assetIndex": 47
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-48.png",
@@ -789,7 +839,8 @@
         "caption": {
           "en": "50-48",
           "ru": "50-48"
-        }
+        },
+        "assetIndex": 48
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-49.png",
@@ -800,7 +851,8 @@
         "caption": {
           "en": "50-49",
           "ru": "50-49"
-        }
+        },
+        "assetIndex": 49
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-50.png",
@@ -811,7 +863,8 @@
         "caption": {
           "en": "50-50",
           "ru": "50-50"
-        }
+        },
+        "assetIndex": 50
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/50-51.png",
@@ -822,29 +875,8 @@
         "caption": {
           "en": "50-51",
           "ru": "50-51"
-        }
-      },
-      {
-        "src": "/images/projects/originals/shout-out-kloud/50-52.png",
-        "width": 8334,
-        "height": 8334,
-        "altEn": "SHOUT OUT KLOUD — 50-52",
-        "altRu": "SHOUT OUT KLOUD — 50-52",
-        "caption": {
-          "en": "50-52",
-          "ru": "50-52"
-        }
-      },
-      {
-        "src": "/images/projects/originals/shout-out-kloud/50-53.png",
-        "width": 8334,
-        "height": 8334,
-        "altEn": "SHOUT OUT KLOUD — 50-53",
-        "altRu": "SHOUT OUT KLOUD — 50-53",
-        "caption": {
-          "en": "50-53",
-          "ru": "50-53"
-        }
+        },
+        "assetIndex": 51
       }
     ],
     "videos": [
@@ -894,7 +926,8 @@
         "caption": {
           "en": "Collection overview",
           "ru": "Обзор коллекции"
-        }
+        },
+        "assetIndex": 54
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/TWbanner-01.png",
@@ -905,7 +938,8 @@
         "caption": {
           "en": "Collection graphic",
           "ru": "Графика коллекции"
-        }
+        },
+        "assetIndex": 55
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/mem.png",
@@ -916,7 +950,8 @@
         "caption": {
           "en": "Additional collection graphic",
           "ru": "Дополнительная графика коллекции"
-        }
+        },
+        "assetIndex": 56
       },
       {
         "src": "/images/projects/originals/shout-out-kloud/tt shirt.png",
@@ -927,8 +962,36 @@
         "caption": {
           "en": "T-shirt concept",
           "ru": "Концепт футболки"
-        }
+        },
+        "assetIndex": 57
       }
-    ]
+    ],
+    "section": "works",
+    "openingImage": {
+      "src": "/images/projects/originals/shout-out-kloud/50-52.png",
+      "width": 8334,
+      "height": 8334,
+      "altEn": "SHOUT OUT KLOUD — project logo",
+      "altRu": "SHOUT OUT KLOUD — логотип проекта",
+      "caption": {
+        "en": "50-52",
+        "ru": "50-52"
+      },
+      "assetIndex": 52
+    },
+    "closingImage": {
+      "src": "/images/projects/originals/shout-out-kloud/50-53.png",
+      "width": 8334,
+      "height": 8334,
+      "altEn": "SHOUT OUT KLOUD — closing project logo",
+      "altRu": "SHOUT OUT KLOUD — завершающий логотип проекта",
+      "caption": {
+        "en": "50-53",
+        "ru": "50-53"
+      },
+      "assetIndex": 53
+    },
+    "hideCaptions": true,
+    "videoPosition": "opening"
   }
 ]

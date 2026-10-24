@@ -2,7 +2,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
-import { readyProjects, projectUrl, projectCards, projectContent, projectsTitle, imageBase, localized } from './projects.mjs';
+import { readyProjects, projectUrl, artworkUrl, projectCards, projectContent, projectsTitle, projectImage, imageBase, localized } from './projects.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const { values: options } = parseArgs({ options: { 'output-dir': { type: 'string' }, 'projects-file': { type: 'string' }, 'media-root': { type: 'string' } } });
@@ -13,10 +13,18 @@ const texts = JSON.parse(await readFile(path.join(root, 'data/artist.json'), 'ut
 const artworkDetails = JSON.parse(await readFile(path.join(root, 'data/artwork-details.json'), 'utf8'));
 const projectRecords = JSON.parse(await readFile(options['projects-file'] || path.join(root, 'data/projects.json'), 'utf8'));
 const projects = await readyProjects(projectRecords, mediaRoot);
+const listedProjects = projects.filter(project => project.section !== 'works');
+const standaloneProjects = projects.filter(project => project.section === 'works');
 const { artist, siteUrl, artworks } = data;
-const categories = data.categories.filter(category => artworks.some(work => work.category === category.slug) || (category.slug === 'projects' && projects.length));
+const standaloneEntries = [...standaloneProjects, ...artworks.filter(work => artworkDetails[work.id]?.standalone).map(work => ({ ...work, section: 'works' }))];
+const categories = data.categories.filter(category => artworks.some(work => work.category === category.slug && !artworkDetails[work.id]?.standalone) || (category.slug === 'projects' && listedProjects.length));
+const navigationItems = [...categories.filter(category => category.slug !== 'projects').map(category => ({ title: category.title, url: `/works/${category.slug}/`, category: category.slug })), ...standaloneEntries.map(entry => ({ title: entry.title, url: projectUrl(entry) })), ...categories.filter(category => category.slug === 'projects').map(category => ({ title: category.title, url: '/works/projects/', category: category.slug }))];
 const esc = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
-const workUrl = work => `/works/${work.category}/${work.slug}/`;
+const workUrl = work => artworkUrl(work, artworkDetails);
+for (const work of artworks) {
+  const detail = artworkDetails[work.id];
+  if (detail?.media) await readyProjects([{ ...detail.media, slug: work.slug, title: work.title, year: work.year, category: 'projects', status: 'ready', displayOrder: 0, descriptionEn: detail.story.en.join('\n\n'), descriptionRu: detail.story.ru.join('\n\n'), collaborators: [], videos: [], externalLinks: [] }], mediaRoot);
+}
 const categoryUrl = category => `/works/${category.slug}/`;
 const local = (url, lang) => (lang === 'ru' ? '/ru' : '') + url;
 const pages = [];
@@ -43,7 +51,7 @@ function navigation(current, lang, activeCategory = '') {
     ${link('/contact/', t.contact)}
     <div class="works-navigation">
       <div class="works-heading">${link('/works/composition/', t.works)}<button class="works-toggle" type="button" aria-label="${lang === 'ru' ? 'Показать или скрыть категории' : 'Toggle work categories'}" aria-expanded="true" aria-controls="work-categories" hidden><span aria-hidden="true">−</span></button></div>
-      <ul id="work-categories">${categories.map(category => `<li><a href="${local(categoryUrl(category), lang)}"${activeCategory === category.slug && current === categoryUrl(category) ? ' aria-current="page"' : ''}${activeCategory === category.slug ? ' class="active-category"' : ''}>${esc(category.title)}</a></li>`).join('')}</ul>
+      <ul id="work-categories">${navigationItems.map(item => `<li><a href="${local(item.url, lang)}"${current === item.url ? ' aria-current="page"' : ''}${item.category && activeCategory === item.category ? ' class="active-category"' : ''}>${esc(item.title)}</a></li>`).join('')}</ul>
     </div>
     <div class="language-switch" aria-label="${lang === 'ru' ? 'Язык' : 'Language'}"><a href="${current}" lang="en" hreflang="en"${lang === 'en' ? ' aria-current="true"' : ''}>EN</a><span aria-hidden="true">/</span><a href="${local(current, 'ru')}" lang="ru" hreflang="ru"${lang === 'ru' ? ' aria-current="true"' : ''}>RU</a></div>
   </nav>
@@ -142,39 +150,60 @@ for (const lang of ['en', 'ru']) {
   const t = ui[lang];
   const artistText = texts[lang];
   await page('/', lang, { title: t.selected, description: `${t.selected} — ${artist}. First French Kiss, Reworked, Big Face, Kloud, Composition.`, content: `<h1>${t.selected}</h1>${gallery(artworks.filter(work => work.selected), lang)}<p class="gallery-footer"><a class="text-link" href="${local('/works/', lang)}">${t.all}</a></p>` });
-  await page('/works/', lang, { title: t.works, description: `${t.works} — ${artist}: ${categories.map(category => category.title).join(', ')}.`, content: `<h1>${t.works}</h1>${gallery(artworks, lang)}${projects.length ? `<section class="all-works-projects"><h2>${projectsTitle(lang)}</h2>${gallery([], lang, projects)}</section>` : ''}` });
+  await page('/works/', lang, { title: t.works, description: `${t.works} — ${artist}: ${categories.map(category => category.title).join(', ')}.`, content: `<h1>${t.works}</h1>${gallery(artworks, lang, standaloneProjects)}${listedProjects.length ? `<section class="all-works-projects"><h2>${projectsTitle(lang)}</h2>${gallery([], lang, listedProjects)}</section>` : ''}` });
   for (const category of categories) {
-    const works = artworks.filter(work => work.category === category.slug);
+    const works = artworks.filter(work => work.category === category.slug && !artworkDetails[work.id]?.standalone);
     if (!works.length) continue;
     await page(categoryUrl(category), lang, { title: category.title, description: `${category.title} — ${artist}.`, category: category.slug, content: `<h1>${esc(category.title)}</h1>${gallery(works, lang)}` });
-    for (const [index, work] of works.entries()) {
-      const detail = artworkDetails[work.id];
-      // Detail titles are editable independently; selected-artwork titles and slugs stay fixed.
-      const displayTitle = localized(detail?.displayTitle, lang) || work.title;
-      const detailDescription = detail ? detail.story[lang].join(' ') : `${work.title} (${work.year}), ${work.medium}. ${work.sourceCategory} — ${artist}.`;
-      const related = (other, direction) => other ? `<a href="${local(workUrl(other), lang)}" rel="${direction}"><span>${direction === 'prev' ? t.prev : t.next}</span> ${esc(other.title)}</a>` : '<span></span>';
-      const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'VisualArtwork', name: displayTitle, dateCreated: String(work.year), artMedium: work.medium, creator: { '@type': 'Person', name: artist }, image: siteUrl + `/images/artworks/originals/${work.file}`, url: siteUrl + local(workUrl(work), lang), ...(detail ? { description: detailDescription, contentLocation: { '@type': 'Place', name: localized(detail.location, lang) } } : {}) }).replace(/</g, '\\u003c');
-      await page(workUrl(work), lang, {
-        title: `${displayTitle} (${work.year})`, description: detailDescription, category: category.slug,
-        imagePath: `/images/artworks/optimized/${work.id}-1920.webp`, imageAlt: `${displayTitle}, ${work.year} — ${artist}`, type: 'article', extraHead: `<script type="application/ld+json">${schema}</script>`,
-        content: `<article class="artwork-detail"><a class="back-link" href="${local(categoryUrl(category), lang)}">← ${esc(category.title)}</a><figure class="artwork-figure"><a class="original-image" href="/images/artworks/originals/${work.file}" aria-label="${lang === 'ru' ? 'Открыть оригинал' : 'Open original image'}: ${esc(displayTitle)}">${image({ ...work, title: displayTitle }, lang, true)}</a><figcaption class="artwork-information"><h1>${esc(displayTitle)}</h1><dl><div><dt>${t.year}</dt><dd>${work.year}</dd></div><div><dt>${t.medium}</dt><dd>${esc(lang === 'ru' ? (work.medium === 'Digital artwork' ? t.digital : t.poster) : work.medium)}</dd></div>${detail?.location ? `<div><dt>${lang === 'ru' ? 'Место' : 'Location'}</dt><dd>${esc(localized(detail.location, lang))}</dd></div>` : ''}</dl></figcaption></figure>${artworkContext(detail, lang)}<nav class="artwork-pagination" aria-label="${esc(category.title)}">${related(works[index - 1], 'prev')}${related(works[index + 1], 'next')}</nav></article>`
-      });
-    }
   }
-  if (projects.length) {
-    const illustratedProject = projects.find(project => project.coverImage);
-    await page('/works/projects/', lang, { title: projectsTitle(lang), description: `${projectsTitle(lang)} — ${artist}.`, category: 'projects', content: `<section class="project-index"><h1>${projectsTitle(lang)}</h1>${gallery([], lang, projects)}</section>`, imagePath: illustratedProject ? `${imageBase(illustratedProject, illustratedProject.coverImage)}-1920.webp` : null, imageAlt: illustratedProject?.coverImage[lang === 'ru' ? 'altRu' : 'altEn'] || '' });
-    for (const project of projects) {
+  for (const work of artworks) {
+    const detail = artworkDetails[work.id];
+    const displayTitle = localized(detail?.displayTitle, lang) || work.title;
+    const detailDescription = detail ? detail.story[lang].join(' ') : `${work.title} (${work.year}), ${work.medium}. ${work.sourceCategory} — ${artist}.`;
+    const standalone = detail?.standalone;
+    const category = data.categories.find(category => category.slug === work.category);
+    const siblings = standalone ? standaloneEntries : artworks.filter(other => other.category === work.category && !artworkDetails[other.id]?.standalone);
+    const index = siblings.findIndex(other => other.id === work.id);
+    const related = (other, direction) => other ? `<a href="${local(standalone ? projectUrl(other) : workUrl(other), lang)}" rel="${direction}"><span>${direction === 'prev' ? t.prev : t.next}</span> ${esc(other.title)}</a>` : '<span></span>';
+    const media = detail?.media;
+    const original = media?.coverImage.src || `/images/artworks/originals/${work.file}`;
+    const hero = media ? projectImage(media, media.coverImage, lang, { eager: true }).replace('class="project-image"', 'class="artwork-full"') : image({ ...work, title: displayTitle }, lang, true);
+    const documentaryGallery = media ? `<div class="project-gallery artwork-documentation">${media.gallery.map(item => `<figure class="project-figure"><a href="${item.src}" aria-label="${lang === 'ru' ? 'Открыть оригинал' : 'Open original image'}">${projectImage(media, item, lang)}</a></figure>`).join('')}</div>` : '';
+    const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'VisualArtwork', name: displayTitle, dateCreated: String(work.year), artMedium: work.medium, creator: { '@type': 'Person', name: artist }, image: siteUrl + original, url: siteUrl + local(workUrl(work), lang), ...(detail ? { description: detailDescription, contentLocation: { '@type': 'Place', name: localized(detail.location, lang) } } : {}) }).replace(/</g, '\\u003c');
+    await page(workUrl(work), lang, {
+      title: `${displayTitle} (${work.year})`, description: detailDescription, category: standalone ? '' : category.slug,
+      imagePath: media ? `${imageBase(media, media.coverImage)}-1920.webp` : `/images/artworks/optimized/${work.id}-1920.webp`, imageAlt: `${displayTitle}, ${work.year} — ${artist}`, type: 'article', extraHead: `<script type="application/ld+json">${schema}</script>`,
+      content: `<article class="artwork-detail"><a class="back-link" href="${local(standalone ? '/works/' : categoryUrl(category), lang)}">← ${standalone ? (lang === 'ru' ? 'Назад к работам' : 'Back to Works') : esc(category.title)}</a><figure class="artwork-figure"><a class="original-image" href="${original}" aria-label="${lang === 'ru' ? 'Открыть оригинал' : 'Open original image'}: ${esc(displayTitle)}">${hero}</a><figcaption class="artwork-information"><h1>${esc(displayTitle)}</h1><dl><div><dt>${t.year}</dt><dd>${work.year}</dd></div><div><dt>${t.medium}</dt><dd>${esc(lang === 'ru' ? (work.medium === 'Digital artwork' ? t.digital : t.poster) : work.medium)}</dd></div>${detail?.location ? `<div><dt>${lang === 'ru' ? 'Место' : 'Location'}</dt><dd>${esc(localized(detail.location, lang))}</dd></div>` : ''}</dl></figcaption></figure>${artworkContext(detail, lang)}${documentaryGallery}<nav class="artwork-pagination" aria-label="${standalone ? t.works : esc(category.title)}">${related(siblings[index - 1], 'prev')}${related(siblings[index + 1], 'next')}</nav></article>`
+    });
+  }
+  if (listedProjects.length) {
+    const illustratedProject = listedProjects.find(project => project.coverImage);
+    await page('/works/projects/', lang, { title: projectsTitle(lang), description: `${projectsTitle(lang)} — ${artist}.`, category: 'projects', content: `<section class="project-index"><h1>${projectsTitle(lang)}</h1>${gallery([], lang, listedProjects)}</section>`, imagePath: illustratedProject ? `${imageBase(illustratedProject, illustratedProject.coverImage)}-1920.webp` : null, imageAlt: illustratedProject?.coverImage[lang === 'ru' ? 'altRu' : 'altEn'] || '' });
+  }
+  for (const project of projects) {
       const description = project[lang === 'ru' ? 'descriptionRu' : 'descriptionEn'];
       const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'CreativeWork', name: project.title, ...(project.year === null ? {} : { dateCreated: String(project.year) }), creator: { '@type': 'Person', name: artist }, description, ...(project.coverImage ? { image: siteUrl + project.coverImage.src } : {}), url: siteUrl + local(projectUrl(project), lang) }).replace(/</g, '\\u003c');
-      await page(projectUrl(project), lang, { title: project.title + (project.year === null ? '' : ` (${project.year})`), description, category: 'projects', imagePath: project.coverImage ? `${imageBase(project, project.coverImage)}-1920.webp` : null, imageAlt: project.coverImage?.[lang === 'ru' ? 'altRu' : 'altEn'] || '', type: 'article', extraHead: `<script type="application/ld+json">${schema}</script>`, content: projectContent(project, projects, lang) });
-    }
+      await page(projectUrl(project), lang, { title: project.title + (project.year === null ? '' : ` (${project.year})`), description, category: project.section === 'works' ? '' : 'projects', imagePath: project.coverImage ? `${imageBase(project, project.coverImage)}-1920.webp` : null, imageAlt: project.coverImage?.[lang === 'ru' ? 'altRu' : 'altEn'] || '', type: 'article', extraHead: `<script type="application/ld+json">${schema}</script>`, content: projectContent(project, project.section === 'works' ? standaloneEntries : listedProjects, lang) });
   }
   await page('/bio/', lang, { title: t.bio, description: artistText.metaDescriptions.bio, content: `<div class="text-page artist-prose"><h1>${t.bio}</h1>${bioPortrait(lang)}${prose(artistText.bio)}</div>` });
   await page('/cv/', lang, { title: t.cv, description: artistText.metaDescriptions.cv, content: cvContent(lang) });
   await page('/artist-statement/', lang, { title: t.statement, description: artistText.metaDescriptions.statement, content: `<div class="text-page artist-prose"><h1>${t.statement}</h1>${prose(artistText.statement)}</div>` });
   await page('/contact/', lang, { title: t.contact, description: `${t.contact} — ${artist}.`, content: `<div class="text-page"><h1>${t.contact}</h1><p><a href="mailto:grgyone@gmail.com">grgyone@gmail.com</a></p><ul class="contact-links">${[['https://instagram.com/grgyone', 'Instagram'], ['https://x.com/grgyone', 'X'], ['https://www.threads.com/@grgyone', 'Threads'], ['https://grgy.tumblr.com', 'Tumblr'], ['https://www.pinterest.com/grgyone', 'Pinterest'], ['https://vk.com/newgrgytimes', 'VK'], ['https://t.me/newgrgytimes', 'Telegram']].map(([href, title]) => `<li><a href="${href}" target="_blank" rel="noopener noreferrer">${title}</a></li>`).join('')}</ul></div>` });
   await page('/free/', lang, { title: 'FREE', description: `${artist} — ${lang === 'ru' ? 'Бесплатные материалы для личного использования.' : 'Free downloads for personal use.'}`, content: `<div class="text-page"><h1>FREE</h1><p>${lang === 'ru' ? 'Бесплатное скачивание.<br>Только для личного использования.<br>Не для продажи, распространения или коммерческого использования.' : 'Free download.<br>Personal use only.<br>No resale, no redistribution, no commercial use.'}</p></div><div class="free-grid">${['color', 'bw'].map(color => `<figure class="free-item"><img src="/free/assets/grgy_face_${color}.png" alt="GRGY Face ${color === 'bw' ? 'BW' : 'Color'}" class="free-preview" loading="lazy"><figcaption><a href="/free/assets/grgy_face_${color}.pdf" class="text-link" download>${lang === 'ru' ? 'СКАЧАТЬ' : 'DOWNLOAD'} (A3, PDF)</a></figcaption></figure>`).join('')}</div>` });
+}
+
+// Preserve public incoming links after moving works or retiring a project page.
+for (const lang of ['en', 'ru']) {
+  const redirects = [
+    ...projects.filter(project => project.section === 'works').map(project => [`/works/projects/${project.slug}/`, projectUrl(project)]),
+    ...projectRecords.filter(project => project.retired).map(project => [`/works/projects/${project.slug}/`, '/works/projects/']),
+    ...artworks.filter(work => artworkDetails[work.id]?.standalone).map(work => [`/works/${work.category}/${work.slug}/`, workUrl(work)])
+  ];
+  for (const [from, to] of redirects) await page(from, lang, {
+    title: 'GRGY', description: `${artist}.`, noindex: true, canonicalPath: to,
+    extraHead: `<meta http-equiv="refresh" content="0; url=${local(to, lang)}">`,
+    content: `<p><a href="${local(to, lang)}">${lang === 'ru' ? 'Перейти к работе' : 'Continue'} →</a></p>`
+  });
 }
 
 // Preserve incoming URLs while retiring every public commerce interface.

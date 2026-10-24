@@ -37,7 +37,7 @@ async function main() {
             assert.deepEqual(await page.locator('.cv-section h2').allTextContents(), data.cvSections.map(section => section.title[lang]));
             assert.deepEqual(await page.locator('.cv-row dd').allTextContents(), data.cvSections.flatMap(section => section.entries.map(entry => entry.text[lang])));
             assert.deepEqual(await page.locator('.cv-year').allTextContents(), data.cvSections.flatMap(section => section.entries.map(entry => entry.year)));
-            assert.equal(await page.locator('.cv-projects a').count(), 3);
+            assert.equal(await page.locator('.cv-projects a').count(), 2);
             for (const row of await page.locator('.cv-row').all()) {
               const year = await row.locator('dt').boundingBox();
               const entry = await row.locator('dd').boundingBox();

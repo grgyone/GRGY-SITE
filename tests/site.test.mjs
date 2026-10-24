@@ -4,7 +4,7 @@ import { readFile, stat, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
-import { projectUrl } from '../scripts/projects.mjs';
+import { projectUrl, artworkUrl } from '../scripts/projects.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = file => readFile(path.join(root, file), 'utf8');
@@ -12,7 +12,7 @@ const data = JSON.parse(await read('data/artworks.json'));
 const artworkDetails = JSON.parse(await read('data/artwork-details.json'));
 const projects = JSON.parse(await read('data/projects.json')).filter(project => project.status === 'ready');
 const cvProjectIds = JSON.parse(await read('data/artist.json')).cvSections.flatMap(section => section.entries.map(entry => entry.projectId)).filter(Boolean);
-const workUrl = work => `/works/${work.category}/${work.slug}/`;
+const workUrl = work => artworkUrl(work, artworkDetails);
 const publicPages = [];
 async function discover(directory = '') {
   for (const entry of await readdir(path.join(root, directory), { withFileTypes: true })) {
@@ -64,7 +64,7 @@ test('artwork pages in both languages have metadata, full images, series links a
       assert.ok(html.includes(`<h1>${escapedTitle}</h1>`));
       assert.match(html, /class="artwork-full"/);
       assert.match(html, /class="back-link"/);
-      assert.match(html, /rel="(?:prev|next)"/);
+      if (work.id !== '5') assert.match(html, /rel="(?:prev|next)"/);
       assert.match(html, /application\/ld\+json/);
       assert.doesNotMatch(html, /artwork-description|<dt>Description/);
       assert.match(html, /<meta name="description" content="[^"]+"/);
@@ -95,7 +95,7 @@ test('navigation order, category filtering and bilingual approved texts', async 
 test('every project has EN/RU pages, curated CV links, metadata and sitemap entries without borrowed images', async () => {
   const sitemap = await read('sitemap.xml');
   for (const prefix of ['', '/ru']) {
-    const cv = await read(prefix.slice(1) + (prefix ? '/' : '') + 'cv/index.html');
+    const cv = (await read(prefix.slice(1) + (prefix ? '/' : '') + 'cv/index.html')).match(/<main\b[^>]*>([\s\S]*?)<\/main>/)[1];
     for (const project of projects) {
       const url = prefix + projectUrl(project);
       const html = await read(url.slice(1) + 'index.html');

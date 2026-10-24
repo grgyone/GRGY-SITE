@@ -3,6 +3,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { artworks } = require('../data/artworks.json');
 const projectRecords = require('../data/projects.json');
+const artworkDetails = require('../data/artwork-details.json');
 const root = path.resolve(__dirname, '..');
 
 (async () => {
@@ -19,6 +20,7 @@ const root = path.resolve(__dirname, '..');
   const { readyProjects, optimizeProjectImages } = await import('./projects.mjs');
   const projects = await readyProjects(projectRecords, root, { checkOptimized: false });
   await optimizeProjectImages(projects, root);
+  await optimizeProjectImages(Object.values(artworkDetails).map(detail => detail.media).filter(Boolean), root);
   console.log(`Prepared responsive images for ${artworks.length} artworks; originals unchanged.`);
   console.log(`Prepared responsive images for ${projects.length} projects; drafts excluded.`);
 })().catch(error => { console.error(error); process.exitCode = 1; });

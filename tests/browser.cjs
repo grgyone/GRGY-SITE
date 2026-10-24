@@ -12,6 +12,9 @@ const origin = 'http://127.0.0.1:4174';
 const server = spawn(process.execPath, ['scripts/serve.mjs'], { cwd: root, env: { ...process.env, PORT: '4174' }, stdio: ['ignore', 'pipe', 'pipe'] });
 
 async function main() {
+  const { projectUrl, artworkUrl } = await import('../scripts/projects.mjs');
+  const listedProjects = projects.filter(project => project.section !== 'works');
+  const standalone = projects.filter(project => project.section === 'works');
   await new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('Test server startup timed out')), 10000);
     server.once('error', reject);
@@ -54,7 +57,7 @@ async function main() {
         } else assert.equal(await menu.isVisible(), false);
         const navLinks = await page.locator('.artist-navigation a').allTextContents();
         assert.equal(navLinks.length, 3);
-        assert.equal(await page.locator('#work-categories li').count(), 3 + Number(projects.length > 0));
+        assert.equal(await page.locator('#work-categories li').count(), 3 + Number(listedProjects.length > 0) + standalone.length + 1);
         await page.locator('.works-toggle').click();
         assert.equal(await page.locator('#work-categories').isVisible(), false);
         await page.locator('.works-toggle').click();
@@ -67,14 +70,14 @@ async function main() {
           // Open through the homepage gallery, not just a synthetic request.
           await page.goto(origin + prefix + '/');
           await page.locator('.artwork-card > a').nth(index).click();
-          await page.waitForURL(origin + prefix + `/works/${work.category}/${work.slug}/`);
+          await page.waitForURL(origin + prefix + artworkUrl(work, artworkDetails));
           assert.equal(await page.locator('h1').textContent(), artworkDetails[work.id]?.displayTitle[prefix ? 'ru' : 'en'] || work.title);
           const full = page.locator('.artwork-full');
           await full.evaluate(image => image.decode());
           const box = await full.boundingBox();
           assert.ok(Math.abs(box.width / box.height - work.width / work.height) < 0.005, 'Full artwork must retain its original ratio');
           assert.notEqual(await full.evaluate(image => getComputedStyle(image).objectFit), 'cover');
-          assert.equal(await page.locator('.artwork-pagination a').count(), 1);
+          assert.equal(await page.locator('.artwork-pagination a').count(), work.id === '5' ? 0 : 1);
           assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
           const original = await page.locator('.original-image').getAttribute('href');
           const response = await context.request.get(origin + original);
@@ -95,9 +98,9 @@ async function main() {
         await page.goto(origin + prefix + '/cv/');
         assert.equal(await page.locator('.cv-row a').count(), cvProjects.length);
         for (const project of projects) {
-          await page.goto(origin + prefix + (cvProjects.includes(project.id) ? '/cv/' : '/works/projects/'));
-          await page.locator(`main a[href="${prefix}/works/projects/${project.slug}/"]`).click();
-          await page.waitForURL(origin + prefix + `/works/projects/${project.slug}/`);
+          await page.goto(origin + prefix + (cvProjects.includes(project.id) ? '/cv/' : '/works/'));
+          await page.locator(`main a[href="${prefix}${projectUrl(project)}"]`).click();
+          await page.waitForURL(origin + prefix + projectUrl(project));
           assert.equal(await page.locator('h1').textContent(), project.title);
           assert.equal((await page.locator('.project-description').innerText()).trim(), project[prefix ? 'descriptionRu' : 'descriptionEn']);
           assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Project page does not overflow');
@@ -105,13 +108,13 @@ async function main() {
           if ([1440, 390].includes(viewport.width)) await page.screenshot({ path: path.join(root, `test-results/project-${project.id}-${prefix ? 'ru' : 'en'}-${viewport.width}.png`), fullPage: !project.coverImage });
           if (mobile) await menu.click();
           await page.locator(`.language-switch a[lang="${prefix ? 'en' : 'ru'}"]`).click();
-          await page.waitForURL(origin + (prefix ? '' : '/ru') + `/works/projects/${project.slug}/`);
+          await page.waitForURL(origin + (prefix ? '' : '/ru') + projectUrl(project));
           assert.equal(await page.locator('h1').textContent(), project.title);
           const adjacent = page.locator('.artwork-pagination a').first();
           await adjacent.click();
           assert.ok(await page.locator('.project-description').isVisible());
           await page.locator('.back-link').click();
-          assert.equal(await page.locator('.project-card').count(), projects.length);
+          assert.equal(await page.locator('.project-card').count(), project.section === 'works' ? projects.length : listedProjects.length);
         }
         await page.goto(origin + prefix + '/works/projects/');
         if ([1440, 390].includes(viewport.width)) await page.screenshot({ path: path.join(root, `test-results/projects-${prefix ? 'ru' : 'en'}-${viewport.width}.png`), fullPage: true });
@@ -131,7 +134,7 @@ async function main() {
     for (const legacy of ['/store.html', '/product.html?slug=test', '/cart_items.html', '/items_1.html']) {
       await page.goto(origin + legacy);
       await page.waitForURL(origin + '/works/');
-      assert.equal(await page.locator('main > .artwork-grid > .artwork-card').count(), 6);
+      assert.equal(await page.locator('main > .artwork-grid > .artwork-card').count(), 6 + standalone.length);
     }
     assert.equal((await context.request.get(origin + '/_archive/shop/store.html')).status(), 404);
     assert.equal((await context.request.get(origin + '/not-a-page/')).status(), 404);

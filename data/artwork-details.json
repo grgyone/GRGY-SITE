@@ -1,6 +1,9 @@
 {
   "3": {
-    "displayTitle": { "en": "Big Face", "ru": "Big Face" },
+    "displayTitle": {
+      "en": "Big Face",
+      "ru": "Big Face"
+    },
     "workingTitle": true,
     "location": {
       "en": "Former Imperial Railway Station, Tsarskoye Selo",
@@ -17,20 +20,67 @@
       ]
     },
     "history": {
-      "heading": { "en": "Historical context", "ru": "Историческая справка" },
+      "heading": {
+        "en": "Historical context",
+        "ru": "Историческая справка"
+      },
       "text": {
         "en": "The Imperial Railway Station was built in 1911–1912 to a design by Vladimir Pokrovsky.",
         "ru": "Здание Императорского вокзала было построено в 1911–1912 годах по проекту Владимира Покровского."
       },
       "source": {
         "url": "https://xn--80aafllehfbdgh3agvqcc0g7f.xn--p1ai/history/",
-        "label": { "en": "History of the building", "ru": "История здания" },
+        "label": {
+          "en": "History of the building",
+          "ru": "История здания"
+        },
         "verification": "artist-provided"
       }
     },
     "documentation": {
       "video": null,
       "model": null
+    },
+    "standalone": true,
+    "media": {
+      "id": "big-face",
+      "coverImage": {
+        "src": "/images/projects/originals/big-face/2.jpg",
+        "width": 960,
+        "height": 1280,
+        "altEn": "Big Face in the architectural opening",
+        "altRu": "Big Face в архитектурном проёме"
+      },
+      "gallery": [
+        {
+          "src": "/images/projects/originals/big-face/0.png",
+          "width": 2000,
+          "height": 2769,
+          "altEn": "Big Face — original drawing",
+          "altRu": "Big Face — исходный рисунок"
+        },
+        {
+          "src": "/images/projects/originals/big-face/1.jpg",
+          "width": 3024,
+          "height": 4032,
+          "altEn": "Former Imperial Railway Station — architectural view",
+          "altRu": "Бывший Императорский вокзал — вид здания"
+        },
+        {
+          "src": "/images/projects/originals/big-face/3.jpg",
+          "width": 1536,
+          "height": 2048,
+          "altEn": "Big Face — entrance and artwork",
+          "altRu": "Big Face — вход и работа"
+        },
+        {
+          "src": "/images/projects/originals/big-face/4.jpg",
+          "width": 960,
+          "height": 1280,
+          "altEn": "Big Face — interior view",
+          "altRu": "Big Face — вид изнутри"
+        }
+      ]
     }
   }
 }

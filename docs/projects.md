@@ -1,5 +1,9 @@
 # Projects: content and material intake
 
+For the current structure and material status, see
+[the 24 October Works update](works-update-2026-10-24.md). Earlier inventory notes
+below describe the original intake; newer artist instructions take precedence.
+
 Current work is on `feat/grgy-three-featured-projects`. Do not push to `main` or publish
 without the artist's approval for this update.
 

@@ -553,8 +553,56 @@
     },
     {
       "name": "BF w bg.zip",
+      "status": "inspected",
+      "images": [
+        {
+          "file": "0.png",
+          "width": 2000,
+          "height": 2769,
+          "bytes": 203631,
+          "sha256": "f5a83da00315878de156392567a9c516ae6695fd6ebcf18f0aa01e72feef1ac1",
+          "src": "/images/projects/originals/big-face/0.png"
+        },
+        {
+          "file": "1.jpg",
+          "width": 3024,
+          "height": 4032,
+          "bytes": 3683017,
+          "sha256": "9a1f98b15314df0e2f8a8a9716a73c0f237f846a48306700f8ef609fae2355be",
+          "src": "/images/projects/originals/big-face/1.jpg"
+        },
+        {
+          "file": "2.jpg",
+          "width": 960,
+          "height": 1280,
+          "bytes": 206029,
+          "sha256": "6be60e11e1f1ae5826be3a2f615908a727a0da9e6565014709cd10b01b435296",
+          "src": "/images/projects/originals/big-face/2.jpg"
+        },
+        {
+          "file": "3.jpg",
+          "width": 1536,
+          "height": 2048,
+          "bytes": 610002,
+          "sha256": "b3f5bd9f5a18848d589e892f012d3bb9e4964f8f9d2b94151d671095631de9ec",
+          "src": "/images/projects/originals/big-face/3.jpg"
+        },
+        {
+          "file": "4.jpg",
+          "width": 960,
+          "height": 1280,
+          "bytes": 213616,
+          "sha256": "4b4beca4851ed9da5cfdab058908816c1694870f3f3f6bf80dab9d6c2804da14",
+          "src": "/images/projects/originals/big-face/4.jpg"
+        }
+      ]
+    }
+  ],
+  "uploads": [
+    {
+      "name": "IMG_1649.MP4",
       "status": "download-blocked",
-      "reason": "Uploaded file exceeds the 32 MiB executor transfer limit; contents not inspected."
+      "reason": "Uploaded file exceeds the 32 MiB executor transfer limit; video contents not inspected."
     }
   ]
 }

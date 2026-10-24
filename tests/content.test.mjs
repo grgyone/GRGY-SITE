@@ -39,7 +39,7 @@ test('blocked, retired and context-only sources are not published as verified li
     for (const source of data.sources.filter(source => source.status !== 'verified')) assert.ok(!html.includes(`href="${source.url}"`));
     assert.match(html, /href="[^\"]*works\/projects\/chikoroko-grgy-kloud\/"/);
     assert.match(html, /href="[^\"]*works\/projects\/studio-21-music-lovers-worldwide\/"/);
-    assert.match(html, /href="[^\"]*works\/projects\/grgy-solukta-gleb-kostin-solutions\/"/);
+    assert.doesNotMatch(html, /href="[^"]*grgy-solukta-gleb-kostin-solutions/);
     assert.equal((html.match(/class="cv-row"/g) || []).length, 15);
     assert.equal((html.match(/class="cv-section/g) || []).length, 4);
   }

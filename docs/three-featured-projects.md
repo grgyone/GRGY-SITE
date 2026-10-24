@@ -1,5 +1,9 @@
 # Three featured projects: implementation and material inventory
 
+Historical snapshot of 23 October 2026. The subsequent Works moves, confirmed
+Cutestar year, new Big Face images and remaining video-only transfer limit are
+documented in [the 24 October update](works-update-2026-10-24.md).
+
 Branch: `feat/grgy-three-featured-projects`, based on the unpublished v4 content.
 No deployment or push to the main branch has been performed. The existing design,
 homepage selection, stable artwork URLs, artist texts and hosting are preserved.

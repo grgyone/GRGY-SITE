@@ -10,6 +10,7 @@ const origin = 'http://127.0.0.1:4178';
 const server = spawn(process.execPath, ['scripts/serve.mjs'], { cwd: root, env: { ...process.env, PORT: '4178' }, stdio: ['ignore', 'pipe', 'pipe'] });
 
 async function main() {
+  const { projectUrl } = await import('../scripts/projects.mjs');
   await new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('Featured server startup timeout')), 10000);
     server.once('error', reject);
@@ -27,11 +28,11 @@ async function main() {
       page.on('pageerror', error => errors.push(error.message));
       page.on('response', response => { if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`); });
       for (const project of projects) {
-        await page.goto(`${origin}${prefix}/works/projects/`);
-        await page.locator(`.project-card a[href="${prefix}/works/projects/${project.slug}/"]`).click();
+        await page.goto(`${origin}${prefix}/works/`);
+        await page.locator(`.project-card a[href="${prefix}${projectUrl(project)}"]`).click();
         assert.equal(await page.locator('h1').textContent(), project.title);
         assert.equal(await page.locator('html').getAttribute('lang'), lang);
-        const images = [project.coverImage, ...project.gallery, ...(project.supportingGallery || [])];
+        const images = [project.openingImage, project.coverImage, ...project.gallery, ...(project.supportingGallery || []), project.closingImage].filter(Boolean);
         assert.equal(await page.locator('.project-image').count(), images.length);
         // Load every lazy image and verify its natural and rendered proportions.
         for (const [index, image] of (await page.locator('.project-image').all()).entries()) {
@@ -51,7 +52,10 @@ async function main() {
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'No horizontal overflow');
         if (project.layout === 'collection') {
           assert.equal(await page.locator('.collection-gallery').evaluate(element => getComputedStyle(element).gridTemplateColumns.split(' ').length), width <= 760 ? 2 : 3);
-          assert.deepEqual(await page.locator('.collection-gallery figcaption').allTextContents(), project.gallery.map(image => image.caption[lang]));
+          assert.equal(await page.locator('main figcaption').count(), 0);
+          assert.ok((await page.locator('.project-opening img').getAttribute('alt')).includes(lang === 'ru' ? 'логотип' : 'logo'));
+          assert.ok(await page.locator('.project-opening').evaluate(element => element.nextElementSibling.matches('.project-opening-video')));
+          assert.equal(await page.locator('main .project-image').last().locator('..').getAttribute('href'), project.closingImage.src);
           const video = page.locator('video');
           await video.scrollIntoViewIfNeeded();
           assert.equal(await video.getAttribute('autoplay'), null);
@@ -86,15 +90,45 @@ async function main() {
         }
         if (width <= 760) await page.locator('.menu-toggle').click();
         await page.locator(`.language-switch a[lang="${lang === 'en' ? 'ru' : 'en'}"]`).click();
-        await page.waitForURL(`${origin}${lang === 'en' ? '/ru' : ''}/works/projects/${project.slug}/`);
+        await page.waitForURL(`${origin}${lang === 'en' ? '/ru' : ''}${projectUrl(project)}`);
         assert.equal(await page.locator('h1').textContent(), project.title);
       }
+      for (const slug of ['cutestar-merch-as-art', 'shout-out-kloud']) {
+        await page.goto(`${origin}${prefix}/works/projects/${slug}/`);
+        await page.waitForURL(`${origin}${prefix}/works/${slug}/`);
+      }
+      await page.goto(`${origin}${prefix}/works/street-art/big-face/`);
+      await page.waitForURL(`${origin}${prefix}/works/big-face/`);
+      const bigFace = require('../data/artwork-details.json')['3'];
+      assert.equal(await page.locator('h1').textContent(), 'Big Face');
+      assert.equal(await page.locator('.back-link').getAttribute('href'), `${prefix}/works/`);
+      assert.equal(await page.locator('main video, main iframe').count(), 0);
+      const documentation = page.locator('main .artwork-full, main .project-image');
+      const bigFaceImages = [bigFace.media.coverImage, ...bigFace.media.gallery];
+      assert.equal(await documentation.count(), 5);
+      for (const [index, image] of (await documentation.all()).entries()) {
+        await image.scrollIntoViewIfNeeded();
+        await image.evaluate(element => element.decode());
+        const box = await image.boundingBox();
+        assert.ok(Math.abs(box.height - box.width * bigFaceImages[index].height / bigFaceImages[index].width) < 2);
+        assert.equal((await context.request.head(origin + bigFaceImages[index].src)).status(), 200);
+      }
+      if ([1440, 390].includes(width)) {
+        await page.evaluate(() => scrollTo(0, 0));
+        await page.screenshot({ path: path.join(root, `test-results/big-face-${lang}-${width}.png`) });
+        await page.locator('.artwork-documentation').evaluate(element => scrollTo(0, element.getBoundingClientRect().top + scrollY - 120));
+        await page.screenshot({ path: path.join(root, `test-results/big-face-${lang}-${width}-gallery.png`) });
+      }
+      await page.goto(`${origin}${prefix}/works/projects/grgy-solukta-gleb-kostin-solutions/`);
+      await page.waitForURL(`${origin}${prefix}/works/projects/`);
+      assert.equal(await page.locator('.project-card').count(), 2);
+      assert.ok(!(await page.locator('main').innerText()).includes('Solukta'));
       await page.goto(`${origin}${prefix}/cv/`);
-      await page.locator(`.cv-row a[href="${prefix}/works/projects/cutestar-merch-as-art/"]`).click();
-      await page.waitForURL(`${origin}${prefix}/works/projects/cutestar-merch-as-art/`);
+      await page.locator(`.cv-row a[href="${prefix}/works/cutestar-merch-as-art/"]`).click();
+      await page.waitForURL(`${origin}${prefix}/works/cutestar-merch-as-art/`);
       assert.deepEqual(errors, []);
       await context.close();
-      console.log(`PASS real archive media ${lang.toUpperCase()} ${width}px: 66 images, MP4 playback/seeking, CV and language links`);
+      console.log(`PASS real archive media ${lang.toUpperCase()} ${width}px: 71 images, SHOUT layout and MP4, Big Face, redirects, CV and language links`);
     }
   } finally { await browser.close(); }
 }
