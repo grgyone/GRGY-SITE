@@ -77,7 +77,7 @@ async function main() {
           const box = await full.boundingBox();
           assert.ok(Math.abs(box.width / box.height - work.width / work.height) < 0.005, 'Full artwork must retain its original ratio');
           assert.notEqual(await full.evaluate(image => getComputedStyle(image).objectFit), 'cover');
-          assert.equal(await page.locator('.artwork-pagination a').count(), work.id === '5' ? 0 : work.id === '6' ? 2 : 1);
+          assert.equal(await page.locator('.artwork-pagination a').count(), work.id === '5' ? 0 : ['4', '6'].includes(work.id) ? 2 : 1);
           assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
           const original = await page.locator('.original-image').getAttribute('href');
           const response = await context.request.get(origin + original);

@@ -1,0 +1,202 @@
+{
+  "files": [
+    {
+      "file": "2022 (1).PNG",
+      "width": 568,
+      "height": 793,
+      "bytes": 290015,
+      "sha256": "2296b909e9da58f19d195cfd27a2c1dcd6a7677ce644a70d98ea3f13fad26e21",
+      "pixels": "bc0c34e5374f6dd1d147daa806d9a42563aeec12576a39a7256f7a3a6f4a34b1",
+      "year": 2022,
+      "status": "added",
+      "workId": "27"
+    },
+    {
+      "file": "2022 (2).png",
+      "width": 1080,
+      "height": 1266,
+      "bytes": 1446944,
+      "sha256": "c046cec63c2b17d75b8c477f8acef1e3f93d66a66dcd84f091547f0be8e75f26",
+      "pixels": "c3185055e024fa7a7023d675f8fba645e05da5b2e6342af24028c9e4c8b6dca9",
+      "year": 2022,
+      "status": "added",
+      "workId": "28"
+    },
+    {
+      "file": "2022 (3).png",
+      "width": 640,
+      "height": 485,
+      "bytes": 696167,
+      "sha256": "d67faecc33d5af1e88be8d433f0b7ebd36497e7e4304de337c0bae7ce40e38b2",
+      "pixels": "9635e79d3d543d6f8d38215961e7a44279b2bab7104298f7de80cad1ff59a67d",
+      "year": 2022,
+      "status": "added",
+      "workId": "29"
+    },
+    {
+      "file": "2023 (1).PNG",
+      "width": 1280,
+      "height": 1627,
+      "bytes": 1552958,
+      "sha256": "07c4617318f6e1e86372cef9205f13e5a6b5b365bda9c2574967ec03df7cf99e",
+      "pixels": "d2d1a9818e1c16d3d6d06a39fad0712f37e5482e482c2a0405e78b098a6519ca",
+      "year": 2023,
+      "status": "added",
+      "workId": "30"
+    },
+    {
+      "file": "2023 (2).png",
+      "width": 563,
+      "height": 553,
+      "bytes": 168745,
+      "sha256": "69ae9f74249881a90c0059d0c3bf1bbb49aa0e9bd3a6ff22bf20d00b0fc17e17",
+      "pixels": "dcf0c100bbdff0bd1ad9f05d12240ecb5c184f72b8787aede76188bdf41a6364",
+      "year": 2023,
+      "status": "added",
+      "workId": "31"
+    },
+    {
+      "file": "2023 (3).PNG",
+      "width": 828,
+      "height": 936,
+      "bytes": 278465,
+      "sha256": "93315845ad81e0e9d7dbded525032cc0345916d18ced044ec0b0df63e98457c2",
+      "pixels": "4d9bbb647a9c6908e956a11efd816170cd7de66148b90497c7b98b5ce8739703",
+      "year": 2023,
+      "status": "added",
+      "workId": "32"
+    },
+    {
+      "file": "2024 (1).PNG",
+      "width": 1440,
+      "height": 1774,
+      "bytes": 1409031,
+      "sha256": "8e62acd6f4b65da819672a2364507dc7dfc8e7ebb043c92b42ebe8103ea49cdf",
+      "pixels": "794cbccd2791a05eec14ac9dd2f82d8ed36ab48d99ed3af2e5192d3cbe720939",
+      "year": 2024,
+      "status": "duplicate",
+      "workId": "2"
+    },
+    {
+      "file": "2024 (2).PNG",
+      "width": 1280,
+      "height": 1593,
+      "bytes": 2037317,
+      "sha256": "497704775998b41b0dfa2f9b981009d8fb670bc4b9b80775e3ec63f1c7f3442f",
+      "pixels": "9ca9e9c9547275392890e8a387d15b922d80fd06d9faf52e24f13b88914da813",
+      "year": 2024,
+      "status": "added",
+      "workId": "33"
+    },
+    {
+      "file": "2024 (3).png",
+      "width": 600,
+      "height": 600,
+      "bytes": 594921,
+      "sha256": "63d7ca245cc502331b46c1da147d27a5703a70ad4fbb6f03417a16585dbaf2b1",
+      "pixels": "5ddee25829f58c19e95b7368bb816b7053f16cfa551cc6cb783dcde16c05cc0b",
+      "year": 2024,
+      "status": "added",
+      "workId": "34"
+    },
+    {
+      "file": "2025 (1).png",
+      "width": 640,
+      "height": 937,
+      "bytes": 554186,
+      "sha256": "e078818228c58bc9a34d1865ad2f67a63ddd6700eec7bfa0cc81e131b2bffd67",
+      "pixels": "9f80c1dc41b5b7c20b5b7a41754685955766c32bf586d54526236f324ee20c04",
+      "year": 2025,
+      "status": "added",
+      "workId": "35"
+    },
+    {
+      "file": "2025 (2).png",
+      "width": 742,
+      "height": 778,
+      "bytes": 312990,
+      "sha256": "a71e2a5cdb32d2d8d8f20c25a5580785d53d17b6681d21a3b5e425202200e79d",
+      "pixels": "c0aeb032582c9c15b9c056b4f965b3db482b297e76bdf523c93a11c126bac52a",
+      "year": 2025,
+      "status": "added",
+      "workId": "36"
+    },
+    {
+      "file": "2026-10-17 Untitled CD Cover 2.png",
+      "width": 1386,
+      "height": 1135,
+      "bytes": 2264244,
+      "sha256": "3cef9881c93695a2757a74ebd08953ac0bb652abf66b7644c8c54831978ac3e9",
+      "pixels": "0a40d39c70d67afcf02d2f0ffb6497dc7cbb7f4cf91f0048a431e48d41755f75",
+      "year": 2026,
+      "status": "added",
+      "workId": "37"
+    },
+    {
+      "file": "070525.PNG",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 266664,
+      "sha256": "0799ff5a841c90bd246464c80586db36ea7f1c0388b33131dcb7e444b353a3a9",
+      "pixels": "5fc72280a13ada802012019c9cd394a2c3181f359b90a7478c630ca69ed3b9b2",
+      "year": null,
+      "status": "added",
+      "workId": "38"
+    },
+    {
+      "file": "150425.png",
+      "width": 1440,
+      "height": 1800,
+      "bytes": 2343931,
+      "sha256": "11a20aa1b27a1d761864564efe60fddbe5be3bc5cd43557de84c8035c51099af",
+      "pixels": "fcdb9c1ee382f9cfc02780a30ba49c91e0d557487074b05eb1c380b349f88baf",
+      "year": null,
+      "status": "added",
+      "workId": "39"
+    },
+    {
+      "file": "05022026 2 v2.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 2544936,
+      "sha256": "44c5258589fa10e3f360ae04598483ef68ff14c19c25360eec2d3eb6b42768f3",
+      "pixels": "0b7f2144c0d7b6c69048fc4da0530ceffe4d989ee2110439a277992392329ce1",
+      "year": 2026,
+      "status": "added",
+      "workId": "40"
+    },
+    {
+      "file": "05022026 3.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1899451,
+      "sha256": "c97febc40c4bf85fa29468354609d466f15fd055ad0d23f218a593879c3b8888",
+      "pixels": "0d7e3ef50851ecc837b01e3fb187b7f9855c63c462577543c8a3f1fccaaf25b8",
+      "year": 2026,
+      "status": "added",
+      "workId": "41"
+    },
+    {
+      "file": "22082025 3.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 2544191,
+      "sha256": "d805bba7c868e23289e16bb65e02bfd0446abef42f25bffb1f505e0e56799cfd",
+      "pixels": "62ff4fefca5cb25d45106d5ff8324aec861fb84f7b1ded6850e5a6e29138cea0",
+      "year": 2025,
+      "status": "added",
+      "workId": "42"
+    },
+    {
+      "file": "28082025.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 2619910,
+      "sha256": "edf3807b25dda736e2063b88973b024aafe731755f7a64af6dec0b844f879d82",
+      "pixels": "9f08edcdf3865e3b28a483a500f89b852b58b7d356115129a11853dbd12c4217",
+      "year": 2025,
+      "status": "added",
+      "workId": "43"
+    }
+  ]
+}
