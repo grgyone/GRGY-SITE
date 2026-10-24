@@ -139,9 +139,10 @@
       "bytes": 266664,
       "sha256": "0799ff5a841c90bd246464c80586db36ea7f1c0388b33131dcb7e444b353a3a9",
       "pixels": "5fc72280a13ada802012019c9cd394a2c3181f359b90a7478c630ca69ed3b9b2",
-      "year": null,
+      "year": 2025,
       "status": "added",
-      "workId": "38"
+      "workId": "38",
+      "yearSource": "artist-confirmed"
     },
     {
       "file": "150425.png",
@@ -150,9 +151,10 @@
       "bytes": 2343931,
       "sha256": "11a20aa1b27a1d761864564efe60fddbe5be3bc5cd43557de84c8035c51099af",
       "pixels": "fcdb9c1ee382f9cfc02780a30ba49c91e0d557487074b05eb1c380b349f88baf",
-      "year": null,
+      "year": 2025,
       "status": "added",
-      "workId": "39"
+      "workId": "39",
+      "yearSource": "artist-confirmed"
     },
     {
       "file": "05022026 2 v2.png",

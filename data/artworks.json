@@ -608,7 +608,7 @@
       "id": "38",
       "slug": "reworked-undated-38",
       "title": "Reworked",
-      "year": null,
+      "year": 2025,
       "category": "reworked",
       "sourceCategory": "Reworked",
       "medium": "Digital artwork",
@@ -618,13 +618,14 @@
       "objectPosition": "50% 50%",
       "selected": false,
       "altEn": "Photographic image with added graphic elements — GRGY (Grgy Sukhanov).",
-      "altRu": "Фотографическое изображение с добавленными графическими элементами — GRGY (Grgy Sukhanov)."
+      "altRu": "Фотографическое изображение с добавленными графическими элементами — GRGY (Grgy Sukhanov).",
+      "yearSource": "artist-confirmed"
     },
     {
       "id": "39",
       "slug": "reworked-undated-39",
       "title": "Reworked",
-      "year": null,
+      "year": 2025,
       "category": "reworked",
       "sourceCategory": "Reworked",
       "medium": "Digital artwork",
@@ -634,7 +635,8 @@
       "objectPosition": "50% 50%",
       "selected": false,
       "altEn": "Photographic image with added graphic elements — GRGY (Grgy Sukhanov).",
-      "altRu": "Фотографическое изображение с добавленными графическими элементами — GRGY (Grgy Sukhanov)."
+      "altRu": "Фотографическое изображение с добавленными графическими элементами — GRGY (Grgy Sukhanov).",
+      "yearSource": "artist-confirmed"
     },
     {
       "id": "40",

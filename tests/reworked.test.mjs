@@ -13,8 +13,10 @@ test('Reworked import retains 18 originals, maps the exact duplicate and omits u
   for (const f of files) {
     assert.equal(createHash('sha256').update(await read('images/artworks/originals/reworked-import/' + f.file)).digest('hex'), f.sha256);
     if (f.status !== 'added') continue;
-    assert.equal(f.year, artworkYear(f.file));
+    assert.equal(f.year, f.yearSource === 'artist-confirmed' ? 2025 : artworkYear(f.file));
     const work = artworks.find(w => w.id === f.workId);
+    assert.equal(work.year, f.year);
+    if (['070525.PNG', '150425.png'].includes(f.file)) assert.equal(work.year, 2025);
     assert.equal(work.title, 'Reworked'); assert.equal(work.selected, false);
     for (const prefix of ['', 'ru/']) {
       const html = String(await read(`${prefix}works/reworked/${work.slug}/index.html`));
