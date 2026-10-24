@@ -60,7 +60,7 @@ function navigation(current, lang, activeCategory = '') {
 
 function image(work, lang, detail = false, index = 0) {
   const base = `/images/artworks/optimized/${work.id}`;
-  const alt = `${work.title}, ${work.year} — ${work.medium} — ${artist}`;
+  const alt = work[lang === 'ru' ? 'altRu' : 'altEn'] || `${work.title}, ${work.year} — ${work.medium} — ${artist}`;
   return `<img class="${detail ? 'artwork-full' : 'artwork-thumbnail'}" src="${base}-${detail ? '1920' : '960'}.webp" srcset="${base}-480.webp ${Math.min(480, work.width)}w, ${base}-960.webp ${Math.min(960, work.width)}w${work.width > 960 ? `, ${base}-1920.webp ${Math.min(1920, work.width)}w` : ''}" sizes="${detail ? '(max-width: 760px) calc(100vw - 40px), (max-width: 1200px) calc(100vw - 300px), 1000px' : '(max-width: 480px) calc(100vw - 40px), (max-width: 760px) calc((100vw - 56px) / 2), (max-width: 1200px) calc((100vw - 330px) / 3), 380px'}" width="${work.width}" height="${work.height}" alt="${esc(alt)}" ${detail || index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async"${detail ? '' : ` style="object-position: ${work.objectPosition}"`}>`;
 }
 

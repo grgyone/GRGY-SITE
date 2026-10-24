@@ -35,7 +35,7 @@ async function main() {
         page.on('response', response => { if (response.status() >= 400) failedResponses.push(response.url()); });
         await page.goto(origin + prefix + '/', { waitUntil: 'networkidle' });
         assert.equal(await page.locator('html').getAttribute('lang'), prefix ? 'ru' : 'en');
-        assert.deepEqual(await page.locator('.artwork-title').allTextContents(), artworks.map(work => work.title));
+        assert.deepEqual(await page.locator('.artwork-title').allTextContents(), artworks.filter(work => work.selected).map(work => work.title));
         const grid = await page.locator('.artwork-grid').evaluate(element => getComputedStyle(element).gridTemplateColumns.split(' ').length);
         assert.equal(grid, viewport.width <= 480 ? 1 : mobile ? 2 : 3);
         for (const thumb of await page.locator('.artwork-thumbnail').all()) {
@@ -64,9 +64,9 @@ async function main() {
         assert.equal(await page.locator('#work-categories').isVisible(), true);
         await page.locator('.works-heading > a').click();
         await page.waitForURL(origin + prefix + '/works/composition/');
-        assert.equal(await page.locator('.artwork-card').count(), 2);
+        assert.equal(await page.locator('.artwork-card').count(), artworks.filter(work => work.category === 'composition').length);
 
-        for (const [index, work] of artworks.entries()) {
+        for (const [index, work] of artworks.filter(work => work.selected).entries()) {
           // Open through the homepage gallery, not just a synthetic request.
           await page.goto(origin + prefix + '/');
           await page.locator('.artwork-card > a').nth(index).click();
@@ -77,7 +77,7 @@ async function main() {
           const box = await full.boundingBox();
           assert.ok(Math.abs(box.width / box.height - work.width / work.height) < 0.005, 'Full artwork must retain its original ratio');
           assert.notEqual(await full.evaluate(image => getComputedStyle(image).objectFit), 'cover');
-          assert.equal(await page.locator('.artwork-pagination a').count(), work.id === '5' ? 0 : 1);
+          assert.equal(await page.locator('.artwork-pagination a').count(), work.id === '5' ? 0 : work.id === '6' ? 2 : 1);
           assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
           const original = await page.locator('.original-image').getAttribute('href');
           const response = await context.request.get(origin + original);
@@ -134,7 +134,7 @@ async function main() {
     for (const legacy of ['/store.html', '/product.html?slug=test', '/cart_items.html', '/items_1.html']) {
       await page.goto(origin + legacy);
       await page.waitForURL(origin + '/works/');
-      assert.equal(await page.locator('main > .artwork-grid > .artwork-card').count(), 6 + standalone.length);
+      assert.equal(await page.locator('main > .artwork-grid > .artwork-card').count(), artworks.length + standalone.length);
     }
     assert.equal((await context.request.get(origin + '/_archive/shop/store.html')).status(), 404);
     assert.equal((await context.request.get(origin + '/not-a-page/')).status(), 404);

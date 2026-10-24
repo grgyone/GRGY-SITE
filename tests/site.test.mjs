@@ -25,9 +25,9 @@ async function discover(directory = '') {
 await discover();
 
 test('all six approved works retain their order, titles and source filenames', async () => {
-  assert.deepEqual(data.artworks.map(work => work.file), ['1.PNG', '2.PNG', '3.jpg', '4.png', '5.jpg', '6.png']);
-  assert.deepEqual(data.artworks.map(work => work.title), ['First French Kiss', 'Reworked', 'Big Face', 'Reworked', 'Kloud', 'Composition']);
-  assert.equal(new Set(data.artworks.map(workUrl)).size, 6);
+  assert.deepEqual(data.artworks.filter(work => work.selected).map(work => work.file), ['1.PNG', '2.PNG', '3.jpg', '4.png', '5.jpg', '6.png']);
+  assert.deepEqual(data.artworks.filter(work => work.selected).map(work => work.title), ['First French Kiss', 'Reworked', 'Big Face', 'Reworked', 'Kloud', 'Composition']);
+  assert.equal(new Set(data.artworks.map(workUrl)).size, data.artworks.length);
   for (const work of data.artworks) {
     assert.ok((await stat(path.join(root, 'images/artworks/originals', work.file))).size > 0);
     for (const size of [480, 960, 1920]) assert.ok((await stat(path.join(root, `images/artworks/optimized/${work.id}-${size}.webp`))).size > 0);
@@ -56,7 +56,7 @@ test('artwork pages in both languages have metadata, full images, series links a
   for (const prefix of ['', 'ru/']) {
     const homepage = await read(prefix + 'index.html');
     assert.equal((homepage.match(/class="artwork-card"/g) || []).length, 6);
-    assert.deepEqual([...homepage.matchAll(/class="artwork-title">([^<]+)/g)].map(match => match[1]), data.artworks.map(work => work.title));
+    assert.deepEqual([...homepage.matchAll(/class="artwork-title">([^<]+)/g)].map(match => match[1]), data.artworks.filter(work => work.selected).map(work => work.title));
     for (const work of data.artworks) {
       const html = await read(prefix + workUrl(work).slice(1) + 'index.html');
       const title = artworkDetails[work.id]?.displayTitle[prefix ? 'ru' : 'en'] || work.title;

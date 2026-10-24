@@ -13,7 +13,7 @@ const root = path.resolve(__dirname, '..');
   for (const work of artworks) {
     for (const width of [480, 960, 1920]) {
       await sharp(path.join(root, 'images/artworks/originals', work.file))
-        .resize({ width, withoutEnlargement: true }).webp({ quality: 82 })
+        .resize({ width, withoutEnlargement: true }).webp({ quality: work.file.startsWith('composition-import/') ? 90 : 82 })
         .toFile(path.join(root, `images/artworks/optimized/${work.id}-${width}.webp`));
     }
   }
