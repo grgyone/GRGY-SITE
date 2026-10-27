@@ -2,6 +2,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
+import { documentationVideo } from './documentation.mjs';
 import { readyProjects, projectUrl, artworkUrl, projectCards, projectContent, projectsTitle, projectImage, imageBase, localized } from './projects.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -17,8 +18,8 @@ const listedProjects = projects.filter(project => project.section !== 'works');
 const standaloneProjects = projects.filter(project => project.section === 'works');
 const { artist, siteUrl, artworks } = data;
 const standaloneEntries = [...standaloneProjects, ...artworks.filter(work => artworkDetails[work.id]?.standalone).map(work => ({ ...work, section: 'works' }))];
-const categories = data.categories.filter(category => artworks.some(work => work.category === category.slug && !artworkDetails[work.id]?.standalone) || (category.slug === 'projects' && listedProjects.length));
-const navigationItems = [...categories.filter(category => category.slug !== 'projects').map(category => ({ title: category.title, url: `/works/${category.slug}/`, category: category.slug })), ...standaloneEntries.map(entry => ({ title: entry.title, url: projectUrl(entry) })), ...categories.filter(category => category.slug === 'projects').map(category => ({ title: category.title, url: '/works/projects/', category: category.slug }))];
+const categories = data.categories.filter(category => artworks.some(work => work.category === category.slug && (!artworkDetails[work.id]?.standalone || artworkDetails[work.id]?.navigationCategory === work.category)) || (category.slug === 'projects' && listedProjects.length));
+const navigationItems = [...categories.filter(category => category.slug !== 'projects').map(category => ({ title: category.title, url: `/works/${category.slug}/`, category: category.slug })), ...standaloneEntries.filter(entry => !artworkDetails[entry.id]?.navigationCategory).map(entry => ({ title: entry.title, url: projectUrl(entry) })), ...categories.filter(category => category.slug === 'projects').map(category => ({ title: category.title, url: '/works/projects/', category: category.slug }))];
 const esc = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const workUrl = work => artworkUrl(work, artworkDetails);
 for (const work of artworks) {
@@ -152,7 +153,7 @@ for (const lang of ['en', 'ru']) {
   await page('/', lang, { title: t.selected, description: `${t.selected} — ${artist}. First French Kiss, Reworked, Big Face, Kloud, Composition.`, content: `<h1>${t.selected}</h1>${gallery(artworks.filter(work => work.selected), lang)}<p class="gallery-footer"><a class="text-link" href="${local('/works/', lang)}">${t.all}</a></p>` });
   await page('/works/', lang, { title: t.works, description: `${t.works} — ${artist}: ${categories.map(category => category.title).join(', ')}.`, content: `<h1>${t.works}</h1>${gallery(artworks, lang, standaloneProjects)}${listedProjects.length ? `<section class="all-works-projects"><h2>${projectsTitle(lang)}</h2>${gallery([], lang, listedProjects)}</section>` : ''}` });
   for (const category of categories) {
-    const works = artworks.filter(work => work.category === category.slug && !artworkDetails[work.id]?.standalone);
+    const works = artworks.filter(work => work.category === category.slug && (!artworkDetails[work.id]?.standalone || artworkDetails[work.id]?.navigationCategory === work.category));
     if (!works.length) continue;
     await page(categoryUrl(category), lang, { title: category.title, description: `${category.title} — ${artist}.`, category: category.slug, content: `<h1>${esc(category.title)}</h1>${gallery(works, lang)}` });
   }
@@ -160,9 +161,10 @@ for (const lang of ['en', 'ru']) {
     const detail = artworkDetails[work.id];
     const displayTitle = localized(detail?.displayTitle, lang) || work.title;
     const detailDescription = detail ? detail.story[lang].join(' ') : `${work.title}${work.year === null ? '' : ` (${work.year})`}, ${work.medium}. ${work.sourceCategory} — ${artist}.`;
-    const standalone = detail?.standalone;
+    const standalone = detail?.standalone && !detail.navigationCategory;
+    const documentation = await documentationVideo(detail?.documentation?.video, lang, mediaRoot);
     const category = data.categories.find(category => category.slug === work.category);
-    const siblings = standalone ? standaloneEntries : artworks.filter(other => other.category === work.category && !artworkDetails[other.id]?.standalone);
+    const siblings = standalone ? standaloneEntries : artworks.filter(other => other.category === work.category && (!artworkDetails[other.id]?.standalone || artworkDetails[other.id]?.navigationCategory === other.category));
     const index = siblings.findIndex(other => other.id === work.id);
     const related = (other, direction) => other ? `<a href="${local(standalone ? projectUrl(other) : workUrl(other), lang)}" rel="${direction}"><span>${direction === 'prev' ? t.prev : t.next}</span> ${esc(other.title)}</a>` : '<span></span>';
     const media = detail?.media;
@@ -172,8 +174,8 @@ for (const lang of ['en', 'ru']) {
     const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'VisualArtwork', name: displayTitle, ...(work.year === null ? {} : { dateCreated: String(work.year) }), artMedium: work.medium, creator: { '@type': 'Person', name: artist }, image: siteUrl + original, url: siteUrl + local(workUrl(work), lang), ...(detail ? { description: detailDescription, contentLocation: { '@type': 'Place', name: localized(detail.location, lang) } } : {}) }).replace(/</g, '\\u003c');
     await page(workUrl(work), lang, {
       title: displayTitle + (work.year === null ? '' : ` (${work.year})`), description: detailDescription, category: standalone ? '' : category.slug,
-      imagePath: media ? `${imageBase(media, media.coverImage)}-1920.webp` : `/images/artworks/optimized/${work.id}-1920.webp`, imageAlt: `${displayTitle}${work.year === null ? '' : `, ${work.year}`} — ${artist}`, type: 'article', extraHead: `<script type="application/ld+json">${schema}</script>`,
-      content: `<article class="artwork-detail"><a class="back-link" href="${local(standalone ? '/works/' : categoryUrl(category), lang)}">← ${standalone ? (lang === 'ru' ? 'Назад к работам' : 'Back to Works') : esc(category.title)}</a><figure class="artwork-figure"><a class="original-image" href="${original}" aria-label="${lang === 'ru' ? 'Открыть оригинал' : 'Open original image'}: ${esc(displayTitle)}">${hero}</a><figcaption class="artwork-information"><h1>${esc(displayTitle)}</h1><dl>${work.year === null ? '' : `<div><dt>${t.year}</dt><dd>${work.year}</dd></div>`}<div><dt>${t.medium}</dt><dd>${esc(lang === 'ru' ? (work.medium === 'Digital artwork' ? t.digital : t.poster) : work.medium)}</dd></div>${detail?.location ? `<div><dt>${lang === 'ru' ? 'Место' : 'Location'}</dt><dd>${esc(localized(detail.location, lang))}</dd></div>` : ''}</dl></figcaption></figure>${artworkContext(detail, lang)}${documentaryGallery}<nav class="artwork-pagination" aria-label="${standalone ? t.works : esc(category.title)}">${related(siblings[index - 1], 'prev')}${related(siblings[index + 1], 'next')}</nav></article>`
+      imagePath: media ? `${imageBase(media, media.coverImage)}-1920.webp` : `/images/artworks/optimized/${work.id}-1920.webp`, imageAlt: `${displayTitle}${work.year === null ? '' : `, ${work.year}`} — ${artist}`, type: 'article', extraHead: `<script type="application/ld+json">${schema}</script>${documentation ? '<link rel="stylesheet" href="/documentation-video.css"><script src="/documentation-video.js" defer></script>' : ''}`,
+      content: `<article class="artwork-detail"><a class="back-link" href="${local(standalone ? '/works/' : categoryUrl(category), lang)}">← ${standalone ? (lang === 'ru' ? 'Назад к работам' : 'Back to Works') : esc(category.title)}</a><figure class="artwork-figure"><a class="original-image" href="${original}" aria-label="${lang === 'ru' ? 'Открыть оригинал' : 'Open original image'}: ${esc(displayTitle)}">${hero}</a><figcaption class="artwork-information"><h1>${esc(displayTitle)}</h1><dl>${work.year === null ? '' : `<div><dt>${t.year}</dt><dd>${work.year}</dd></div>`}<div><dt>${t.medium}</dt><dd>${esc(lang === 'ru' ? (work.medium === 'Digital artwork' ? t.digital : t.poster) : work.medium)}</dd></div>${detail?.location ? `<div><dt>${lang === 'ru' ? 'Место' : 'Location'}</dt><dd>${esc(localized(detail.location, lang))}</dd></div>` : ''}</dl></figcaption></figure>${artworkContext(detail, lang)}${documentaryGallery}${documentation}<nav class="artwork-pagination" aria-label="${standalone ? t.works : esc(category.title)}">${related(siblings[index - 1], 'prev')}${related(siblings[index + 1], 'next')}</nav></article>`
     });
   }
   if (listedProjects.length) {

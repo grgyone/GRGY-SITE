@@ -11,12 +11,14 @@
     },
     "story": {
       "en": [
-        "A large-scale Kloud was placed inside an architectural opening of the former Imperial Railway Station in Tsarskoye Selo. The character appears to peer out of the building, with a tear running from its eye.",
-        "According to the artist’s recollection, the work remained there for about a week. The building was then fenced off for restoration."
+        "In 2023, I placed a large-scale Kloud in an architectural opening of the former Imperial Railway Station in Tsarskoye Selo. The character appears to be looking out of the building, with a tear running from his eye.",
+        "The work remained visible for about a week. Shortly after its appearance, the building was completely fenced off for restoration.",
+        "Kloud became part of this space for only a brief moment. The project survives through photographs and digital documentation."
       ],
       "ru": [
-        "Крупноформатный Kloud размещён внутри архитектурного проёма бывшего Императорского вокзала в Царском Селе. Персонаж как будто выглядывает из здания, а из его глаза стекает слеза.",
-        "По воспоминаниям автора, работа находилась там около недели, после чего здание огородили для реставрации."
+        "В 2023 году я разместил крупноформатного Kloud в одном из архитектурных проёмов бывшего Императорского вокзала в Царском Селе. Персонаж выглядывает из здания, а из его глаза стекает слеза.",
+        "Работа оставалась доступной для просмотра около недели. Вскоре после её появления здание полностью огородили для проведения реставрации.",
+        "Так Kloud стал частью этого пространства лишь на короткое время. Проект сохранился в фотографиях и цифровой документации."
       ]
     },
     "history": {
@@ -25,8 +27,8 @@
         "ru": "Историческая справка"
       },
       "text": {
-        "en": "The Imperial Railway Station was built in 1911–1912 to a design by Vladimir Pokrovsky.",
-        "ru": "Здание Императорского вокзала было построено в 1911–1912 годах по проекту Владимира Покровского."
+        "en": "The Imperial Railway Station was built in 1911–1912 to a design by Vladimir Pokrovsky. It was intended to serve the imperial family’s railway journeys.",
+        "ru": "Здание Императорского вокзала было построено в 1911–1912 годах по проекту Владимира Покровского. Оно предназначалось для обслуживания железнодорожных поездок императорской семьи."
       },
       "source": {
         "url": "https://xn--80aafllehfbdgh3agvqcc0g7f.xn--p1ai/history/",
@@ -34,7 +36,7 @@
           "en": "History of the building",
           "ru": "История здания"
         },
-        "verification": "artist-provided"
+        "verification": "artist-provided; source HTTP 403 on 2026-10-27, independent verification unavailable"
       }
     },
     "documentation": {
@@ -49,38 +51,44 @@
         "width": 960,
         "height": 1280,
         "altEn": "Big Face in the architectural opening",
-        "altRu": "Big Face в архитектурном проёме"
+        "altRu": "Big Face в архитектурном проёме",
+        "assetIndex": 0
       },
       "gallery": [
-        {
-          "src": "/images/projects/originals/big-face/0.png",
-          "width": 2000,
-          "height": 2769,
-          "altEn": "Big Face — original drawing",
-          "altRu": "Big Face — исходный рисунок"
-        },
-        {
-          "src": "/images/projects/originals/big-face/1.jpg",
-          "width": 3024,
-          "height": 4032,
-          "altEn": "Former Imperial Railway Station — architectural view",
-          "altRu": "Бывший Императорский вокзал — вид здания"
-        },
         {
           "src": "/images/projects/originals/big-face/3.jpg",
           "width": 1536,
           "height": 2048,
           "altEn": "Big Face — entrance and artwork",
-          "altRu": "Big Face — вход и работа"
+          "altRu": "Big Face — вход и работа",
+          "assetIndex": 3
         },
         {
           "src": "/images/projects/originals/big-face/4.jpg",
           "width": 960,
           "height": 1280,
           "altEn": "Big Face — interior view",
-          "altRu": "Big Face — вид изнутри"
+          "altRu": "Big Face — вид изнутри",
+          "assetIndex": 4
+        },
+        {
+          "src": "/images/projects/originals/big-face/1.jpg",
+          "width": 3024,
+          "height": 4032,
+          "altEn": "Former Imperial Railway Station — architectural view",
+          "altRu": "Бывший Императорский вокзал — вид здания",
+          "assetIndex": 2
+        },
+        {
+          "src": "/images/projects/originals/big-face/0.png",
+          "width": 2000,
+          "height": 2769,
+          "altEn": "Big Face — original drawing",
+          "altRu": "Big Face — исходный рисунок",
+          "assetIndex": 1
         }
       ]
-    }
+    },
+    "navigationCategory": "street-art"
   }
 }

@@ -101,7 +101,7 @@ async function main() {
       await page.waitForURL(`${origin}${prefix}/works/big-face/`);
       const bigFace = require('../data/artwork-details.json')['3'];
       assert.equal(await page.locator('h1').textContent(), 'Big Face');
-      assert.equal(await page.locator('.back-link').getAttribute('href'), `${prefix}/works/`);
+      assert.equal(await page.locator('.back-link').getAttribute('href'), `${prefix}/works/street-art/`);
       assert.equal(await page.locator('main video, main iframe').count(), 0);
       const documentation = page.locator('main .artwork-full, main .project-image');
       const bigFaceImages = [bigFace.media.coverImage, ...bigFace.media.gallery];
@@ -116,6 +116,8 @@ async function main() {
       if ([1440, 390].includes(width)) {
         await page.evaluate(() => scrollTo(0, 0));
         await page.screenshot({ path: path.join(root, `test-results/big-face-${lang}-${width}.png`) });
+        await page.locator('.artwork-context').evaluate(element => scrollTo(0, element.getBoundingClientRect().top + scrollY - 120));
+        await page.screenshot({ path: path.join(root, `test-results/big-face-${lang}-${width}-text.png`) });
         await page.locator('.artwork-documentation').evaluate(element => scrollTo(0, element.getBoundingClientRect().top + scrollY - 120));
         await page.screenshot({ path: path.join(root, `test-results/big-face-${lang}-${width}-gallery.png`) });
       }
