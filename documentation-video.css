@@ -1,3 +1,4 @@
 .documentation-player button { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .documentation-player img, .documentation-player video { display: block; width: 100%; height: auto; }
 .documentation-player button span { display: block; padding: 12px 0; }
+.artwork-documentation > #documentation-title { font-size: 14px; font-weight: 400; margin-bottom: 24px; }

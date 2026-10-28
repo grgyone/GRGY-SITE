@@ -11,10 +11,10 @@ The supplied file is H.264 Baseline, yuv420p, 1920 × 1080, 60 fps,
 so no re-encoding or remux was needed.
 
 Poster: images/projects/optimized/big-face/video-poster.webp, an actual frame
-at 12 seconds. Reproduce with:
+at 30 seconds, showing Kloud inside the architectural opening. Reproduce with:
 
 ```sh
-ffmpeg -ss 12 -i videos/projects/big-face/IMG_1649.mp4 -frames:v 1 -vf scale=1280:-2 -c:v libwebp -quality 88 images/projects/optimized/big-face/video-poster.webp
+ffmpeg -ss 30 -i videos/projects/big-face/IMG_1649.mp4 -frames:v 1 -vf scale=1280:-2 -c:v libwebp -quality 88 images/projects/optimized/big-face/video-poster.webp
 ```
 
 data/artwork-details.json connects video and poster with actual dimensions and
