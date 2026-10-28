@@ -123,7 +123,8 @@ async function main() {
       }
       await page.goto(`${origin}${prefix}/works/projects/grgy-solukta-gleb-kostin-solutions/`);
       await page.waitForURL(`${origin}${prefix}/works/projects/`);
-      assert.equal(await page.locator('.project-card').count(), 2);
+      const listedProjects = require('../data/projects.json').filter(project => project.status === 'ready' && project.section !== 'works');
+      assert.equal(await page.locator('.project-card').count(), listedProjects.length);
       assert.ok(!(await page.locator('main').innerText()).includes('Solukta'));
       await page.goto(`${origin}${prefix}/cv/`);
       await page.locator(`.cv-row a[href="${prefix}/works/cutestar-merch-as-art/"]`).click();
