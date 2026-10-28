@@ -118,7 +118,7 @@ async function main() {
         await page.screenshot({ path: path.join(root, `test-results/big-face-${lang}-${width}.png`) });
         await page.locator('.artwork-context').evaluate(element => scrollTo(0, element.getBoundingClientRect().top + scrollY - 120));
         await page.screenshot({ path: path.join(root, `test-results/big-face-${lang}-${width}-text.png`) });
-        await page.locator('.artwork-documentation').evaluate(element => scrollTo(0, element.getBoundingClientRect().top + scrollY - 120));
+        await page.locator('.project-gallery.artwork-documentation').evaluate(element => scrollTo(0, element.getBoundingClientRect().top + scrollY - 120));
         await page.screenshot({ path: path.join(root, `test-results/big-face-${lang}-${width}-gallery.png`) });
       }
       await page.goto(`${origin}${prefix}/works/projects/grgy-solukta-gleb-kostin-solutions/`);
