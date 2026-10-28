@@ -1,0 +1,16 @@
+{
+  "file": "IMG_1649.mp4",
+  "src": "/videos/projects/big-face/IMG_1649.mp4",
+  "bytes": 29597401,
+  "sha256": "60c91698c5df17eec7a916ceffdea7057ded533fd5d33eb41b6ea40307c5bc2f",
+  "width": 1920,
+  "height": 1080,
+  "durationSeconds": 41.066667,
+  "codec": "h264",
+  "pixelFormat": "yuv420p",
+  "frameRate": 60,
+  "audio": false,
+  "originalPreserved": true,
+  "fastStart": true,
+  "posterFrameSeconds": 12
+}

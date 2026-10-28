@@ -21,7 +21,8 @@ test('Big Face moves to Works with real documentary images and a legacy redirect
     assert.match(html, /1911–1912/);
     assert.match(html, /class="artwork-history"/);
     assert.match(html, /(?:The project survives through photographs|Проект сохранился в фотографиях)/);
-    assert.doesNotMatch(html, /<video|<iframe|model-viewer|3D Documentation/);
+    assert.doesNotMatch(html, /<video|<iframe|model-viewer/);
+    assert.match(html, /data-documentation-src/);
     assert.match(html, /href="\/images\/projects\/originals\/big-face\/2\.jpg"/);
     assert.ok(html.includes(`https://grgyone.com/${prefix}works/big-face/`));
     assert.equal(details['3'].media.gallery.length, 4);

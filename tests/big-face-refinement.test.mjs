@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { documentationVideo } from '../scripts/documentation.mjs';
 const read = file => readFile(new URL('../' + file, import.meta.url), 'utf8');
 const detail = JSON.parse(await read('data/artwork-details.json'))['3'];
-test('Big Face retains URL, belongs to Street Art, and has no empty 3D section', async () => {
+test('Big Face retains URL, belongs to Street Art, and has real lazy video documentation', async () => {
   assert.deepEqual([detail.media.coverImage, ...detail.media.gallery].map(x => x.src.split('/').pop()), ['2.jpg','3.jpg','4.jpg','1.jpg','0.png']);
   for (const prefix of ['', 'ru/']) {
     const html = await read(`${prefix}works/big-face/index.html`);
@@ -16,7 +16,9 @@ test('Big Face retains URL, belongs to Street Art, and has no empty 3D section',
     const pagination = html.match(/<nav class="artwork-pagination"[^>]*>([\s\S]*?)<\/nav>/)[1];
     assert.match(pagination, /street-art\/kloud/);
     assert.doesNotMatch(pagination, /shout|cutestar/);
-    assert.doesNotMatch(html, /<video|documentation-title|data-documentation-src|model-viewer/);
+    assert.doesNotMatch(html, /<video|model-viewer/);
+    assert.match(html, /data-documentation-src="\/videos\/projects\/big-face\/IMG_1649.mp4"/);
+    assert.match(html, /id="documentation-title"/);
   }
 });
 test('documentation is optional and supports validated external MP4 with a poster', async () => {

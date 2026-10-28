@@ -40,7 +40,16 @@
       }
     },
     "documentation": {
-      "video": null,
+      "video": {
+        "src": "/videos/projects/big-face/IMG_1649.mp4",
+        "poster": "/images/projects/optimized/big-face/video-poster.webp",
+        "width": 1920,
+        "height": 1080,
+        "alt": {
+          "en": "Frame from the 3D scan fly-through of the former Imperial Railway Station",
+          "ru": "Кадр видеооблёта 3D-скана бывшего Императорского вокзала"
+        }
+      },
       "model": null
     },
     "standalone": true,

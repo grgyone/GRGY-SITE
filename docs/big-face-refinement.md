@@ -1,5 +1,9 @@
 # Big Face refinement — review version, not published
 
+Update: the latest upload is now accessible and the actual MP4 is connected.
+See [video verification and screenshots](big-face-video.md). Transfer-limit notes
+below describe the earlier uploads, not the newly connected file.
+
 Branch: feat/big-face-refinement. URL /works/big-face/ and RU equivalent remain
 unchanged. Both supplied three-paragraph descriptions are reproduced verbatim.
 
