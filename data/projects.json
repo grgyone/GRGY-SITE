@@ -1190,9 +1190,52 @@
     "descriptionRu": "Memory #27 — совместная цифровая работа художников Тима Байма и GRGY, созданная в 2022 году.\n\nВ проекте персонаж Kloud становится частью мрачной трёхмерной сцены с горящим автомобилем, дымом и человеческой фигурой. Узнаваемая графика GRGY взаимодействует с реалистичной средой, создавая контраст между мультяшным образом и атмосферой происходящего.\n\nРабота объединяет двухмерную графику и 3D-анимацию. В декабре 2022 года Memory #27 была опубликована в интервью с Тимом Баймом для издания «Собака.ru».",
     "descriptionEn": "Memory #27 is a collaborative digital artwork created by Tim Baym and GRGY in 2022.\n\nThe project places Kloud within a dark three-dimensional scene featuring a burning car, smoke, and a human figure. GRGY's recognizable graphic language contrasts with the realistic environment, bringing a cartoon-like character into an unexpected setting.\n\nCombining 2D graphics and 3D animation, Memory #27 was featured in a December 2022 interview with Tim Baym published by Sobaka.ru.",
     "videoPosition": "opening",
-    "coverImage": null,
-    "gallery": [],
-    "videos": [],
+    "coverImage": {
+      "src": "/images/projects/optimized/memory-27/poster.webp",
+      "width": 1228,
+      "height": 1536,
+      "altEn": "Memory #27 — Kloud above a burning car with a seated figure in a dark 3D scene",
+      "altRu": "Memory #27 — Kloud над горящим автомобилем и сидящая фигура в тёмной 3D-сцене",
+      "assetIndex": 0
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/originals/memory-27/BxGcomp.png",
+        "altEn": "Memory #27 — the collaborative 3D scene beside pink BAYM × GRGY graphics",
+        "altRu": "Memory #27 — совместная 3D-сцена рядом с розовой графикой BAYM × GRGY",
+        "caption": {
+          "en": "Collaboration Artwork",
+          "ru": "Совместная работа"
+        },
+        "assetIndex": 1,
+        "width": 3164,
+        "height": 2000
+      },
+      {
+        "src": "/images/projects/originals/memory-27/bxg.png",
+        "altEn": "Original GRGY artwork — black Kloud with a red mouth on a pink background",
+        "altRu": "Исходная графика GRGY — чёрный Kloud с красным ртом на розовом фоне",
+        "caption": {
+          "en": "Original GRGY Artwork",
+          "ru": "Исходная графическая работа GRGY"
+        },
+        "assetIndex": 2,
+        "width": 4096,
+        "height": 4096
+      }
+    ],
+    "videos": [
+      {
+        "src": "/videos/projects/memory-27/1-web.mp4",
+        "width": 1228,
+        "height": 1536,
+        "poster": "/images/projects/optimized/memory-27/poster.webp",
+        "caption": {
+          "en": "Memory #27 — Tim Baym × GRGY",
+          "ru": "Memory #27 — Тим Байм × GRGY"
+        }
+      }
+    ],
     "externalLinks": [
       {
         "url": "https://www.sobaka.ru/ufa/entertainment/art/160276",
@@ -1243,6 +1286,10 @@
         "group": "profiles"
       }
     ],
-    "mediaPending": true
+    "metaImage": "/images/projects/optimized/memory-27/poster.webp",
+    "metaImageAlt": {
+      "en": "Memory #27 — Kloud above a burning car with a seated figure in a dark 3D scene",
+      "ru": "Memory #27 — Kloud над горящим автомобилем и сидящая фигура в тёмной 3D-сцене"
+    }
   }
 ]

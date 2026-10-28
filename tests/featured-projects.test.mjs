@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { projectImages, imageBase } from '../scripts/projects.mjs';
 const read = file => readFile(new URL('../' + file, import.meta.url), 'utf8');
@@ -97,7 +98,7 @@ test('every supplied original retains its filename and SHA-256; all derivatives 
   assert.equal(count, 72);
   for (const project of [...projects, details['3'].media]) for (const image of projectImages(project)) {
     for (const width of [480, 960, 1920]) {
-      const info = await sharp(new URL(`..${imageBase(project, image)}-${width}.webp`, import.meta.url).pathname).metadata();
+      const info = await sharp(fileURLToPath(new URL(`..${imageBase(project, image)}-${width}.webp`, import.meta.url))).metadata();
       assert.equal(info.width, Math.min(width, image.width));
       assert.ok(Math.abs(info.height - info.width * image.height / image.width) <= 1);
     }
