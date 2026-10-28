@@ -14,9 +14,9 @@ const fixture = {
   videos: [{ src: '/videos/projects/test/sample.webm', width: 320, height: 180, caption: { en: 'Test clip', ru: 'Тестовый ролик' } }], externalLinks: []
 };
 
-test('the two remaining projects are available as text pages without invented media', async () => {
-  const ready = await readyProjects(drafts.slice(0, 3), '/tmp');
-  assert.equal(ready.length, 2);
+test('ChikoRoko remains text-only without invented media', async () => {
+  const ready = await readyProjects(drafts.slice(0, 1), '/tmp');
+  assert.equal(ready.length, 1);
   assert.match(projectCards(ready, 'en'), /ChikoRoko/);
   assert.match(projectCv(ready, 'ru'), /\/ru\/works\/projects\/chikoroko-grgy-kloud\//);
   for (const project of ready) {
@@ -25,7 +25,7 @@ test('the two remaining projects are available as text pages without invented me
     assert.match(html, /class="project-description"/);
   }
   assert.deepEqual(await readyProjects(drafts.map(project => ({ ...project, status: 'draft' })), '/tmp'), []);
-  assert.deepEqual(ready.map(project => project.year), [2022, 2022]);
+  assert.deepEqual(ready.map(project => project.year), [2022]);
   assert.ok(drafts[2].collaborators.some(person => person.name === 'Gleb Kostin (.solutions)'));
 });
 

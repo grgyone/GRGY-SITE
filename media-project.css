@@ -1,0 +1,10 @@
+.media-project > h1 { font-size: 16px; font-weight: 400; margin-bottom: 24px; }
+.media-project section > h2 { font-size: 14px; font-weight: 400; margin-bottom: 20px; }
+.media-project-documentation, .media-project-credits, .media-project-venues { margin-top: 40px; }
+.media-project-portrait { max-width: 480px; }
+.media-project-credits dl { display: grid; gap: 12px; font-size: 12px; }
+.media-project-credits dl > div { display: grid; grid-template-columns: 160px minmax(0,1fr); gap: 12px; }
+.media-project-credits dt { color: #777; }
+.media-project-venues { max-width: 680px; font-size: 13px; line-height: 1.8; }
+.media-project-venues ul { margin: 16px 0 0; padding-left: 20px; }
+@media (max-width: 480px) { .media-project-credits dl > div { grid-template-columns: 100px minmax(0,1fr); } }

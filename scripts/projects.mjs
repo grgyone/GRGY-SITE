@@ -54,6 +54,18 @@ export async function readyProjects(records, root, { checkOptimized = true } = {
     if (project.year !== null && !Number.isInteger(project.year)) throw new Error(`${project.id}: year must be confirmed or explicitly null`);
     for (const lang of ['En', 'Ru']) requireText(project[`description${lang}`], `${project.id} description${lang}`);
     if (!Array.isArray(project.gallery) || !Array.isArray(project.videos) || !Array.isArray(project.collaborators) || !Array.isArray(project.externalLinks) || (project.supportingGallery && !Array.isArray(project.supportingGallery))) throw new Error(`${project.id}: media and link arrays are required`);
+    if (project.layout === 'media-project') {
+      for (const role of ['artwork', 'documentation']) if (project.videos.filter(video => video.role === role).length !== 1) throw new Error(`${project.id}: one ${role} video is required`);
+      if (!Array.isArray(project.credits) || !Array.isArray(project.venues)) throw new Error(`${project.id}: credits and archival venues are required`);
+      for (const row of project.credits) for (const lang of ['en','ru']) {
+        requireText(localized(row.label,lang), `${project.id} credit label`);
+        requireText(localized(row.value,lang), `${project.id} credit value`);
+      }
+    }
+    if (project.metaImage) {
+      await checkAsset(root, project.metaImage, project.id);
+      for (const lang of ['en','ru']) requireText(localized(project.metaImageAlt,lang), `${project.id} meta image alt`);
+    }
     for (const fact of project.additionalInfo || []) for (const lang of ['en', 'ru']) {
       requireText(localized(fact.label, lang), `${project.id} fact label`);
       requireText(localized(fact.value, lang), `${project.id} fact value`);

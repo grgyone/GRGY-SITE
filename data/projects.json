@@ -30,13 +30,13 @@
   {
     "id": "studio21-music-lovers",
     "slug": "studio-21-music-lovers-worldwide",
-    "title": "STUDIO 21 — Music Lovers Worldwide",
+    "title": "MUSIC LOVERS WORLDWIDE",
     "year": 2022,
     "category": "projects",
     "status": "ready",
     "projectType": {
-      "en": "Collective project",
-      "ru": "Коллективный проект"
+      "en": "Digital Animation / Public Art",
+      "ru": "Цифровая анимация / паблик-арт"
     },
     "medium": {
       "en": "Animation",
@@ -45,19 +45,183 @@
     "collaborators": [
       {
         "name": "STUDIO 21"
+      },
+      {
+        "name": "NFTBastards"
+      },
+      {
+        "name": "+111°"
       }
     ],
     "location": {
       "en": "Moscow",
       "ru": "Москва"
     },
-    "descriptionRu": "Анимационная работа в рамках коллективного проекта, демонстрировавшегося на медиафасадах Москвы.",
-    "descriptionEn": "An animated work for a collective project shown on media façades in Moscow.",
+    "descriptionRu": "GRGY (Grgy Sukhanov) создал авторскую анимацию для MUSIC LOVERS WORLDWIDE — коллективной кампании STUDIO 21 × NFTBastards × +111°, представленной на медиафасадах Москвы.\n\nХудожники NFTBastards и творческого объединения +111° вместе с хип-хоп-радиостанцией STUDIO 21 приглашают в космическое путешествие к новым галактикам. Вместе с White Punk и Malenkiy Yarche вы посещаете планеты, чтобы записать уникальный трек.",
+    "descriptionEn": "GRGY (Grgy Sukhanov) contributed an original animation to MUSIC LOVERS WORLDWIDE, a collective campaign by STUDIO 21 × NFTBastards × +111°, shown on Moscow media façades.\n\nArtists from NFTBastards and the creative association +111°, together with hip-hop radio station STUDIO 21, invite you on a space journey to new galaxies. Together with White Punk and Malenkiy Yarche, you visit planets to record a unique track.",
     "coverImage": null,
     "gallery": [],
-    "videos": [],
-    "externalLinks": [],
-    "displayOrder": 2
+    "videos": [
+      {
+        "src": "/videos/projects/studio21-music-lovers/Untitled_Artwork-web.mp4",
+        "poster": "/images/projects/optimized/studio21-music-lovers/animation-poster.webp",
+        "width": 3008,
+        "height": 800,
+        "role": "artwork",
+        "caption": {
+          "en": "Original animation by GRGY (Grgy Sukhanov)",
+          "ru": "Авторская анимация GRGY (Grgy Sukhanov)"
+        }
+      },
+      {
+        "src": "/videos/projects/studio21-music-lovers/DRYU0803-web.mp4",
+        "poster": "/images/projects/optimized/studio21-music-lovers/documentary-poster.webp",
+        "width": 720,
+        "height": 1280,
+        "role": "documentation",
+        "caption": {
+          "en": "Video documentation of the collective campaign on Moscow media façades",
+          "ru": "Видеодокументация коллективной кампании на медиафасадах Москвы"
+        }
+      }
+    ],
+    "externalLinks": [
+      {
+        "url": "https://studio21.ru/video/muzyuka-obedinyaet-studio-21-x-111-nft-bastards",
+        "label": {
+          "en": "STUDIO 21 — campaign publication",
+          "ru": "STUDIO 21 — публикация о кампании"
+        }
+      },
+      {
+        "url": "https://vimeo.com/715334537",
+        "label": {
+          "en": "Vimeo — collective campaign film and credits",
+          "ru": "Vimeo — коллективный ролик и credits"
+        }
+      },
+      {
+        "url": "https://theblueprint.ru/news/25176",
+        "label": {
+          "en": "The Blueprint — archival publication",
+          "ru": "The Blueprint — архивная публикация"
+        }
+      },
+      {
+        "url": "https://adindex.ru/news/releases/2022/05/27/304599.phtml",
+        "label": {
+          "en": "AdIndex — archival publication",
+          "ru": "AdIndex — архивная публикация"
+        }
+      }
+    ],
+    "displayOrder": 2,
+    "layout": "media-project",
+    "metaImage": "/images/projects/optimized/studio21-music-lovers/animation-poster.webp",
+    "credits": [
+      {
+        "label": {
+          "en": "Campaign",
+          "ru": "Кампания"
+        },
+        "value": "STUDIO 21 × NFTBastards × +111°"
+      },
+      {
+        "label": {
+          "en": "Curated by",
+          "ru": "Кураторы"
+        },
+        "value": "Egor Beetle and Groubtroup"
+      },
+      {
+        "label": {
+          "en": "Participating artist",
+          "ru": "Участвующий художник"
+        },
+        "value": "GRGY (Grgy Sukhanov)"
+      },
+      {
+        "label": {
+          "en": "Music",
+          "ru": "Музыка"
+        },
+        "value": "White Punk, Malenkiy Yarche"
+      },
+      {
+        "label": {
+          "en": "Sound Design",
+          "ru": "Звуковой дизайн"
+        },
+        "value": "Jealous_ok"
+      },
+      {
+        "label": {
+          "en": "Release support",
+          "ru": "Поддержка релиза"
+        },
+        "value": "NFT.ARKA"
+      }
+    ],
+    "venuesNote": {
+      "en": "Eight locations listed in the artist’s archive. This is an archival account, not independent confirmation of every venue.",
+      "ru": "Восемь площадок из архива автора. Список сохранён как архивные сведения, а не как независимое подтверждение каждой площадки."
+    },
+    "venues": [
+      {
+        "en": "RIO shopping centre — Leninsky Prospekt, 109",
+        "ru": "ТРЦ РИО — Ленинский проспект, 109"
+      },
+      {
+        "en": "Avenue shopping centre — Prospekt Vernadskogo, 86A",
+        "ru": "ТРЦ Авеню — проспект Вернадского, 86А"
+      },
+      {
+        "en": "Kvartal shopping centre — Aminyevskoye Shosse, 6",
+        "ru": "ТРЦ Квартал — Аминьевское шоссе, 6"
+      },
+      {
+        "en": "Entuziastov media façade — Shosse Entuziastov, 5",
+        "ru": "МФ Энтузиастов — шоссе Энтузиастов, 5"
+      },
+      {
+        "en": "Begovaya media façade — Khoroshyovskoye Shosse",
+        "ru": "МФ на Беговой — Хорошевское шоссе"
+      },
+      {
+        "en": "Zvenigorodskoye media façade — 2nd Silikatny Proyezd, 9, building 5",
+        "ru": "МФ на Звенигородском — Звенигородское шоссе (2-й Силикатный проезд, д. 9, стр. 5)"
+      },
+      {
+        "en": "Donskoy media façade — 5th Donskoy Proyezd, 23",
+        "ru": "МФ Донской — 5-й Донской проезд, 23"
+      },
+      {
+        "en": "Raikin Plaza shopping centre — Sheremetyevskaya, 6k1",
+        "ru": "ТРЦ Райкин Плаза — Шереметьевская, 6к1"
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://studio21.ru/video/muzyuka-obedinyaet-studio-21-x-111-nft-bastards",
+        "verification": "artist-supplied archival link; independent check blocked by environment proxy HTTP 403"
+      },
+      {
+        "url": "https://vimeo.com/715334537",
+        "verification": "artist-supplied archival link; independent check blocked by environment proxy HTTP 403"
+      },
+      {
+        "url": "https://theblueprint.ru/news/25176",
+        "verification": "artist-supplied archival link; independent check blocked by environment proxy HTTP 403"
+      },
+      {
+        "url": "https://adindex.ru/news/releases/2022/05/27/304599.phtml",
+        "verification": "artist-supplied archival link; independent check blocked by environment proxy HTTP 403"
+      }
+    ],
+    "metaImageAlt": {
+      "en": "Frame from GRGY’s original MUSIC LOVERS WORLDWIDE animation",
+      "ru": "Кадр авторской анимации GRGY для MUSIC LOVERS WORLDWIDE"
+    }
   },
   {
     "id": "solukta-solutions",

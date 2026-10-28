@@ -106,7 +106,7 @@ test('every project has EN/RU pages, curated CV links, metadata and sitemap entr
       assert.match(html, /hreflang="ru"/);
       for (const paragraph of project[prefix ? 'descriptionRu' : 'descriptionEn'].split(/\n\s*\n/)) assert.ok(html.includes(paragraph));
       assert.match(html, /href="[^\"]+" rel="(?:prev|next)"/);
-      if (!project.coverImage) {
+      if (!project.coverImage && !project.metaImage) {
         assert.doesNotMatch(html, /property="og:image"|class="project-image"/);
         assert.match(html, /name="twitter:card" content="summary"/);
       }

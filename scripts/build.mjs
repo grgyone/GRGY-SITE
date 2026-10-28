@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { documentationVideo } from './documentation.mjs';
+import { mediaProjectContent } from './media-project.mjs';
 import { readyProjects, projectUrl, artworkUrl, projectCards, projectContent, projectsTitle, projectImage, imageBase, localized } from './projects.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -184,8 +185,8 @@ for (const lang of ['en', 'ru']) {
   }
   for (const project of projects) {
       const description = project[lang === 'ru' ? 'descriptionRu' : 'descriptionEn'];
-      const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'CreativeWork', name: project.title, ...(project.year === null ? {} : { dateCreated: String(project.year) }), creator: { '@type': 'Person', name: artist }, description, ...(project.coverImage ? { image: siteUrl + project.coverImage.src } : {}), url: siteUrl + local(projectUrl(project), lang) }).replace(/</g, '\\u003c');
-      await page(projectUrl(project), lang, { title: project.title + (project.year === null ? '' : ` (${project.year})`), description, category: project.section === 'works' ? '' : 'projects', imagePath: project.coverImage ? `${imageBase(project, project.coverImage)}-1920.webp` : null, imageAlt: project.coverImage?.[lang === 'ru' ? 'altRu' : 'altEn'] || '', type: 'article', extraHead: `<script type="application/ld+json">${schema}</script>`, content: projectContent(project, project.section === 'works' ? standaloneEntries : listedProjects, lang) });
+      const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'CreativeWork', name: project.title, ...(project.year === null ? {} : { dateCreated: String(project.year) }), creator: { '@type': 'Person', name: artist }, description, ...(project.coverImage || project.metaImage ? { image: siteUrl + (project.coverImage?.src || project.metaImage) } : {}), url: siteUrl + local(projectUrl(project), lang) }).replace(/</g, '\\u003c');
+      await page(projectUrl(project), lang, { title: project.title + (project.year === null ? '' : ` (${project.year})`), description, category: project.section === 'works' ? '' : 'projects', imagePath: project.coverImage ? `${imageBase(project, project.coverImage)}-1920.webp` : project.metaImage || null, imageAlt: project.coverImage?.[lang === 'ru' ? 'altRu' : 'altEn'] || localized(project.metaImageAlt, lang), type: 'article', extraHead: `<script type="application/ld+json">${schema}</script>${project.layout === 'media-project' ? '<link rel="stylesheet" href="/media-project.css"><script src="/media-project.js" defer></script>' : ''}`, content: project.layout === 'media-project' ? mediaProjectContent(project, listedProjects, lang) : projectContent(project, project.section === 'works' ? standaloneEntries : listedProjects, lang) });
   }
   await page('/bio/', lang, { title: t.bio, description: artistText.metaDescriptions.bio, content: `<div class="text-page artist-prose"><h1>${t.bio}</h1>${bioPortrait(lang)}${prose(artistText.bio)}</div>` });
   await page('/cv/', lang, { title: t.cv, description: artistText.metaDescriptions.cv, content: cvContent(lang) });
