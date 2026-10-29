@@ -21,8 +21,32 @@
     ],
     "descriptionRu": "В 2022 году GRGY и ChikoRoko создали Kloud — цифровую коллекционную игрушку, объединившую два узнаваемых персонажа. Светлый и доброжелательный Roko встречается с тёмной палитрой, контрастными деталями и характером Kloud.\n\nКоллаборация переносит визуальный язык GRGY в объёмную форму цифровой игрушки.",
     "descriptionEn": "In 2022, GRGY and ChikoRoko created Kloud, a digital collectible toy bringing together two recognizable characters. The bright, friendly Roko meets Kloud’s dark palette, contrasting details, and distinctive character.\n\nThe collaboration translates GRGY’s visual language into the three-dimensional form of a digital toy.",
-    "coverImage": null,
-    "gallery": [],
+    "coverImage": {
+      "src": "/images/projects/originals/chikoroko-kloud/CRGRGY promo.png",
+      "width": 1024,
+      "height": 1024,
+      "altEn": "ChikoRoko × GRGY — original collaboration promotional graphic",
+      "altRu": "ChikoRoko × GRGY — оригинальная промографика коллаборации",
+      "caption": {
+        "en": "Collaboration promotional graphic",
+        "ru": "Промографика коллаборации"
+      },
+      "assetIndex": 0
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/originals/chikoroko-kloud/roko grgy model-01.png",
+        "width": 2964,
+        "height": 2964,
+        "altEn": "Kloud design sheet with front, back and side views of the digital toy",
+        "altRu": "Лист разработки Kloud с видами цифровой игрушки спереди, сзади и сбоку",
+        "caption": {
+          "en": "Original design sheet",
+          "ru": "Исходный лист разработки"
+        },
+        "assetIndex": 1
+      }
+    ],
     "videos": [],
     "externalLinks": [
       {
@@ -48,15 +72,24 @@
       }
     ],
     "displayOrder": 1,
-    "remoteCover": {
-      "src": "https://chikoroko.b-cdn.net/toys/main/Kloud-GRGY-29.10.2022.original@3x.webp",
-      "width": 1024,
-      "height": 1024,
-      "alt": {
-        "en": "Black ChikoRoko × GRGY Kloud digital collectible toy with long ears, white eyes and a red mouth",
-        "ru": "Чёрная цифровая коллекционная игрушка ChikoRoko × GRGY Kloud с длинными ушами, белыми глазами и красным ртом"
+    "supportingHeading": {
+      "en": "Released toy — artist archive",
+      "ru": "Выпущенная игрушка — архив художника"
+    },
+    "supportingGallery": [
+      {
+        "src": "/images/projects/originals/chikoroko-kloud/Снимок экрана 2026-10-23 193716.png",
+        "width": 1706,
+        "height": 1015,
+        "altEn": "Artist-supplied R.Toys profile screenshot showing the released Kloud toy",
+        "altRu": "Архивный скриншот профиля GRGY на R.Toys с выпущенной игрушкой Kloud",
+        "caption": {
+          "en": "R.Toys artist profile — archived screenshot, 23 October 2026",
+          "ru": "Профиль художника на R.Toys — архивный скриншот, 23 октября 2026"
+        },
+        "assetIndex": 2
       }
-    }
+    ]
   },
   {
     "id": "studio21-music-lovers",
@@ -1188,5 +1221,92 @@
     },
     "hideCaptions": true,
     "videoPosition": "opening"
+  },
+  {
+    "id": "memory-27",
+    "slug": "memory-27",
+    "title": "Memory #27",
+    "year": 2022,
+    "category": "projects",
+    "status": "ready",
+    "layout": "collaboration",
+    "displayOrder": 6,
+    "projectType": {
+      "en": "Collaborative Digital Artwork",
+      "ru": "Совместная цифровая работа"
+    },
+    "medium": {
+      "en": "Digital Art / 2D Graphics / 3D Animation",
+      "ru": "Цифровое искусство / 2D-графика / 3D-анимация"
+    },
+    "artists": [
+      "Tim Baym",
+      "GRGY (Grgy Sukhanov)"
+    ],
+    "collaborators": [
+      {
+        "name": "Tim Baym"
+      },
+      {
+        "name": "GRGY (Grgy Sukhanov)"
+      }
+    ],
+    "descriptionRu": "Memory #27 — совместная цифровая работа художников Тима Байма и GRGY, созданная в 2022 году.\n\nВ проекте персонаж Kloud становится частью мрачной трёхмерной сцены с горящим автомобилем, дымом и человеческой фигурой. Узнаваемая графика GRGY взаимодействует с реалистичной средой, создавая контраст между мультяшным образом и атмосферой происходящего.\n\nРабота объединяет двухмерную графику и 3D-анимацию. В декабре 2022 года Memory #27 была опубликована в интервью с Тимом Баймом для издания «Собака.ru».",
+    "descriptionEn": "Memory #27 is a collaborative digital artwork created by Tim Baym and GRGY in 2022.\n\nThe project places Kloud within a dark three-dimensional scene featuring a burning car, smoke, and a human figure. GRGY's recognizable graphic language contrasts with the realistic environment, bringing a cartoon-like character into an unexpected setting.\n\nCombining 2D graphics and 3D animation, Memory #27 was featured in a December 2022 interview with Tim Baym published by Sobaka.ru.",
+    "videoPosition": "opening",
+    "coverImage": null,
+    "gallery": [],
+    "videos": [],
+    "externalLinks": [
+      {
+        "url": "https://www.sobaka.ru/ufa/entertainment/art/160276",
+        "label": {
+          "en": "Sobaka.ru — Interview with Tim Baym, December 5, 2022",
+          "ru": "Собака.ru — интервью с Тимом Баймом, 5 декабря 2022"
+        },
+        "group": "press"
+      },
+      {
+        "url": "https://www.behance.net/baym",
+        "label": {
+          "en": "Tim Baym — Behance",
+          "ru": "Тим Байм — Behance"
+        },
+        "group": "profiles"
+      },
+      {
+        "url": "https://www.instagram.com/baym/",
+        "label": {
+          "en": "Tim Baym — Instagram",
+          "ru": "Тим Байм — Instagram"
+        },
+        "group": "profiles"
+      },
+      {
+        "url": "https://x.com/13baym",
+        "label": {
+          "en": "Tim Baym — X",
+          "ru": "Тим Байм — X"
+        },
+        "group": "profiles"
+      },
+      {
+        "url": "https://grgyone.com/",
+        "label": {
+          "en": "GRGY — Website",
+          "ru": "GRGY — сайт"
+        },
+        "group": "profiles"
+      },
+      {
+        "url": "https://x.com/grgyone",
+        "label": {
+          "en": "GRGY — X",
+          "ru": "GRGY — X"
+        },
+        "group": "profiles"
+      }
+    ],
+    "mediaPending": true
   }
 ]

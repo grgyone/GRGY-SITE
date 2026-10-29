@@ -45,7 +45,7 @@ export async function readyProjects(records, root, { checkOptimized = true } = {
     if (project.category !== 'projects') throw new Error(`${project.id}: category must be projects`);
     if (project.section && !['works', 'projects'].includes(project.section)) throw new Error(`${project.id}: invalid section`);
     if (project.videoPosition && !['opening', 'after-gallery'].includes(project.videoPosition)) throw new Error(`${project.id}: invalid videoPosition`);
-    if (project.videoPosition === 'opening' && !project.openingImage) throw new Error(`${project.id}: opening video needs an opening image`);
+    if (project.videoPosition === 'opening' && !project.openingImage && project.layout !== 'collaboration') throw new Error(`${project.id}: opening video needs an opening image`);
     if (!Number.isFinite(project.displayOrder)) throw new Error(`${project.id}: displayOrder is required`);
     requireText(project.title, project.id);
   }
@@ -54,6 +54,15 @@ export async function readyProjects(records, root, { checkOptimized = true } = {
     if (project.year !== null && !Number.isInteger(project.year)) throw new Error(`${project.id}: year must be confirmed or explicitly null`);
     for (const lang of ['En', 'Ru']) requireText(project[`description${lang}`], `${project.id} description${lang}`);
     if (!Array.isArray(project.gallery) || !Array.isArray(project.videos) || !Array.isArray(project.collaborators) || !Array.isArray(project.externalLinks) || (project.supportingGallery && !Array.isArray(project.supportingGallery))) throw new Error(`${project.id}: media and link arrays are required`);
+    if (project.layout === 'collaboration') {
+      const pending = project.mediaPending === true;
+      if (pending && (projectImages(project).length || project.videos.length || project.metaImage)) throw new Error(`${project.id}: pending media must not include partial assets`);
+      if (!pending && (!project.coverImage || project.videos.length !== 1 || project.gallery.length !== 2)) throw new Error(`${project.id}: collaboration requires a scene cover, one video and two images`);
+      if (!pending && (project.videoPosition !== 'opening' || !project.videos[0].poster)) throw new Error(`${project.id}: collaboration requires opening video with a poster`);
+      if (!Array.isArray(project.artists) || project.artists.length < 2) throw new Error(`${project.id}: collaboration requires credited artists`);
+      for (const name of project.artists) requireText(name, `${project.id} artist`);
+      for (const link of project.externalLinks) if (!['press', 'profiles'].includes(link.group)) throw new Error(`${project.id}: separate press from artist profiles`);
+    }
     if (project.layout === 'media-project') {
       for (const role of ['artwork', 'documentation']) if (project.videos.filter(video => video.role === role).length !== 1) throw new Error(`${project.id}: one ${role} video is required`);
       if (!Array.isArray(project.credits) || !Array.isArray(project.venues)) throw new Error(`${project.id}: credits and archival venues are required`);
@@ -61,10 +70,6 @@ export async function readyProjects(records, root, { checkOptimized = true } = {
         requireText(localized(row.label,lang), `${project.id} credit label`);
         requireText(localized(row.value,lang), `${project.id} credit value`);
       }
-    }
-    if (project.remoteCover) {
-      requireUrl(project.remoteCover.src, `${project.id}: remote cover`);
-      for (const lang of ['en', 'ru']) requireText(localized(project.remoteCover.alt, lang), `${project.id}: remote cover alt`);
     }
     if (project.metaImage) {
       await checkAsset(root, project.metaImage, project.id);
@@ -139,15 +144,9 @@ export function projectImage(project, image, lang, { thumbnail = false, eager = 
   return `<img class="${thumbnail ? 'artwork-thumbnail' : 'project-image'}" src="${base}-${thumbnail ? 960 : 1920}.webp" srcset="${widths.map(width => `${source(width)} ${width}w`).join(', ')}" sizes="${sizes}" width="${image.width}" height="${image.height}" alt="${esc(image[lang === 'ru' ? 'altRu' : 'altEn'])}" loading="${eager ? 'eager' : 'lazy'}"${eager ? ' fetchpriority="high"' : ''} decoding="async"${thumbnail ? ` style="object-position: ${image.objectPosition || '50% 50%'}"` : ''}>`;
 }
 
-function remoteCoverImage(project, lang, { thumbnail = false } = {}) {
-  const photo = project.remoteCover;
-  if (!photo) return '';
-  return `<img class="${thumbnail ? 'artwork-thumbnail' : 'project-image'}" src="${esc(photo.src)}" width="${photo.width || 1024}" height="${photo.height || 1024}" alt="${esc(localized(photo.alt, lang))}" loading="${thumbnail ? 'lazy' : 'eager'}" decoding="async" style="object-fit:contain;max-width:100%;height:auto;"${thumbnail ? '' : ' fetchpriority="high"'}>`;
-}
-
 export function projectCards(projects, lang) {
-  return projects.map(project => project.coverImage || project.remoteCover
-    ? `<figure class="artwork-card project-card"><a href="${localUrl(projectUrl(project), lang)}">${project.coverImage ? projectImage(project, project.coverImage, lang, { thumbnail: true }) : remoteCoverImage(project, lang, { thumbnail: true })}<figcaption><span class="artwork-title">${esc(project.title)}</span>${project.year === null ? '' : `<span class="artwork-year">${project.year}</span>`}</figcaption></a></figure>`
+  return projects.map(project => project.coverImage
+    ? `<figure class="artwork-card project-card"><a href="${localUrl(projectUrl(project), lang)}">${projectImage(project, project.coverImage, lang, { thumbnail: true })}<figcaption><span class="artwork-title">${esc(project.title)}</span>${project.year === null ? '' : `<span class="artwork-year">${project.year}</span>`}</figcaption></a></figure>`
     : `<article class="project-card project-card-text"><h2><a href="${localUrl(projectUrl(project), lang)}">${esc(project.title)}</a></h2><p class="project-card-meta">${[project.year, localized(project.projectType, lang)].filter(value => value !== null && value !== '').map(esc).join(' · ')}</p><p class="project-card-description">${esc(project[lang === 'ru' ? 'descriptionRu' : 'descriptionEn'])}</p></article>`).join('\n');
 }
 export function projectCv(projects, lang) {
@@ -155,18 +154,25 @@ export function projectCv(projects, lang) {
   return `<section class="cv-projects"><h2>${labels[lang].projects}</h2><ul class="exhibition-list">${projects.map(project => `<li>${project.year === null ? '' : project.year + ' — '}<a href="${localUrl(projectUrl(project), lang)}">${esc(project.title)}</a></li>`).join('')}</ul></section>`;
 }
 export function projectContent(project, projects, lang) {
-  const t = project.section === 'works' ? { ...labels[lang], projects: lang === 'ru' ? 'Работы' : 'Works', back: lang === 'ru' ? 'Назад к работам' : 'Back to Works', prev: lang === 'ru' ? 'Предыдущая работа' : 'Previous Work', next: lang === 'ru' ? 'Следующая работа' : 'Next Work' } : labels[lang];
+  const collaboration = project.layout === 'collaboration';
+  const t = project.section === 'works' ? { ...labels[lang], projects: lang === 'ru' ? 'Работы' : 'Works', back: lang === 'ru' ? 'Назад к работам' : 'Back to Works', prev: lang === 'ru' ? 'Предыдущая работа' : 'Previous Work', next: lang === 'ru' ? 'Следующая работа' : 'Next Work' } : { ...labels[lang] };
   const info = (key, value) => value ? `<div><dt>${t[key]}</dt><dd>${value}</dd></div>` : '';
+  if (collaboration) t.collaborators = lang === 'ru' ? 'Художники' : 'Artists';
   const collaborators = project.collaborators.map(person => person.url ? `<a href="${esc(person.url)}" target="_blank" rel="noopener noreferrer">${esc(person.name)}</a>` : esc(person.name)).join(', ');
   const caption = media => localized(media.caption, lang);
   const figure = (image, eager = false, collectionTile = false) => `<figure class="project-figure"><a href="${mediaUrl(image.src)}" aria-label="${t.original}">${projectImage(project, image, lang, { eager, collectionTile })}</a>${!project.hideCaptions && caption(image) ? `<figcaption>${esc(caption(image))}</figcaption>` : ''}</figure>`;
   const index = projects.findIndex(other => other.id === project.id);
   const adjacent = (other, direction) => other ? `<a href="${localUrl(projectUrl(other), lang)}" rel="${direction}"><span>${direction === 'prev' ? t.prev : t.next}</span>${esc(other.title)}</a>` : '<span></span>';
   const description = project[lang === 'ru' ? 'descriptionRu' : 'descriptionEn'];
-  const videos = project.videos.map(video => `<figure class="project-figure"><video class="project-video" controls playsinline preload="metadata" width="${video.width}" height="${video.height}" aria-label="${esc(caption(video) || project.title + ' — ' + t.video)}"${video.poster ? ` poster="${mediaUrl(video.poster)}"` : ''}><source src="${mediaUrl(video.src)}" type="${video.src.toLowerCase().endsWith('.webm') ? 'video/webm' : 'video/mp4'}">${(video.tracks || []).map(track => `<track kind="captions" src="${mediaUrl(track.src)}" srclang="${track.lang}" label="${esc(track.label)}"${track.lang === lang ? ' default' : ''}>`).join('')}<a href="${mediaUrl(video.src)}">${t.download}</a></video>${!project.hideCaptions && caption(video) ? `<figcaption>${esc(caption(video))}</figcaption>` : ''}</figure>`).join('');
+  const videos = project.videos.map(video => `<figure class="project-figure"><video class="project-video" controls playsinline preload="${collaboration ? 'none' : 'metadata'}" width="${video.width}" height="${video.height}" aria-label="${esc(caption(video) || project.title + ' — ' + t.video)}"${video.poster ? ` poster="${mediaUrl(video.poster)}"` : ''}><source src="${mediaUrl(video.src)}" type="${video.src.toLowerCase().endsWith('.webm') ? 'video/webm' : 'video/mp4'}">${(video.tracks || []).map(track => `<track kind="captions" src="${mediaUrl(track.src)}" srclang="${track.lang}" label="${esc(track.label)}"${track.lang === lang ? ' default' : ''}>`).join('')}<a href="${mediaUrl(video.src)}">${t.download}</a></video>${!project.hideCaptions && caption(video) ? `<figcaption>${esc(caption(video))}</figcaption>` : ''}</figure>`).join('');
   const collection = project.layout === 'collection';
-  const gallery = project.gallery.filter((image, index, images) => image.src !== project.coverImage?.src && images.findIndex(other => other.src === image.src) === index).map(image => figure(image, false, collection)).join('');
+  const gallery = project.gallery.filter((image, index, images) => (collaboration || image.src !== project.coverImage?.src) && images.findIndex(other => other.src === image.src) === index).map(image => figure(image, false, collection)).join('');
   const supporting = (project.supportingGallery || []).map(image => figure(image)).join('');
   const facts = (project.additionalInfo || []).map(fact => `<div><dt>${esc(localized(fact.label, lang))}</dt><dd>${esc(localized(fact.value, lang))}</dd></div>`).join('');
-  return `<article class="project-detail${(project.coverImage || project.remoteCover) ? '' : ' project-detail-text'}${collection ? ' project-collection' : ''}"><a class="back-link" href="${localUrl(project.section === 'works' ? '/works/' : '/works/projects/', lang)}">← ${t.back}</a>${collection ? `<h1 class="collection-title">${esc(project.title)}</h1>` : ''}${project.openingImage ? `<div class="project-opening">${figure(project.openingImage, true)}</div>` : ''}${project.videoPosition === 'opening' && videos ? `<div class="project-videos project-opening-video">${videos}</div>` : ''}${project.coverImage ? figure(project.coverImage, !project.openingImage) : project.remoteCover ? `<figure class="project-figure"><a href="https://r.toys/en/toy/kloud" target="_blank" rel="noopener noreferrer">${remoteCoverImage(project, lang)}</a></figure>` : ''}<div class="project-information"><div>${collection ? '' : `<h1>${esc(project.title)}</h1>`}<dl>${info('year', project.year)}${info('projectType', esc(localized(project.projectType, lang)))}${info('medium', esc(localized(project.medium, lang)))}${info('collaborators', collaborators)}${info('location', esc(localized(project.location, lang)))}${facts}</dl></div><section class="project-description" aria-label="${t.description}">${description.split(/\n\s*\n/).map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}</section></div>${gallery ? `<section class="project-gallery-section">${project.galleryHeading ? `<h2>${esc(localized(project.galleryHeading, lang))}</h2>` : ''}<div class="project-gallery${collection ? ' collection-gallery' : ''}">${gallery}</div></section>` : ''}${project.videoPosition !== 'opening' && videos ? `<div class="project-videos">${videos}</div>` : ''}${supporting ? `<section class="project-supporting"><h2>${esc(localized(project.supportingHeading, lang) || (lang === 'ru' ? 'Дополнительные материалы' : 'Additional materials'))}</h2><div class="project-gallery">${supporting}</div></section>` : ''}${project.externalLinks.length ? `<section class="project-external-links"><h2>${t.links}</h2><ul>${project.externalLinks.map(link => `<li><a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">${esc(localized(link.label, lang))}</a></li>`).join('')}</ul></section>` : ''}${project.closingImage ? `<div class="project-closing">${figure(project.closingImage)}</div>` : ''}<nav class="artwork-pagination" aria-label="${t.projects}">${adjacent(projects[index - 1], 'prev')}${adjacent(projects[index + 1], 'next')}</nav></article>`;
+  const linkGroups = collaboration ? [
+    { title: lang === 'ru' ? 'Избранная пресса' : 'Selected Press', links: project.externalLinks.filter(link => link.group === 'press') },
+    { title: lang === 'ru' ? 'Профили художников' : 'Artist Profiles', links: project.externalLinks.filter(link => link.group === 'profiles') }
+  ] : [{ title: t.links, links: project.externalLinks }];
+  const linkSections = linkGroups.filter(group => group.links.length).map(group => `<section class="project-external-links"><h2>${group.title}</h2><ul>${group.links.map(link => `<li><a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">${esc(localized(link.label, lang))}</a></li>`).join('')}</ul></section>`).join('');
+  return `<article class="project-detail${project.coverImage ? '' : ' project-detail-text'}${collection ? ' project-collection' : ''}"><a class="back-link" href="${localUrl(project.section === 'works' ? '/works/' : '/works/projects/', lang)}">← ${t.back}</a>${collection ? `<h1 class="collection-title">${esc(project.title)}</h1>` : ''}${project.openingImage ? `<div class="project-opening">${figure(project.openingImage, true)}</div>` : ''}${project.videoPosition === 'opening' && videos ? `<div class="project-videos project-opening-video">${videos}</div>` : ''}${project.coverImage && !collaboration ? figure(project.coverImage, !project.openingImage) : ''}<div class="project-information"><div>${collection ? '' : `<h1>${esc(project.title)}</h1>`}<dl>${info('year', project.year)}${info('projectType', esc(localized(project.projectType, lang)))}${info('medium', esc(localized(project.medium, lang)))}${info('collaborators', collaborators)}${info('location', esc(localized(project.location, lang)))}${facts}</dl></div><section class="project-description" aria-label="${t.description}">${description.split(/\n\s*\n/).map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}</section></div>${gallery ? `<section class="project-gallery-section">${project.galleryHeading ? `<h2>${esc(localized(project.galleryHeading, lang))}</h2>` : ''}<div class="project-gallery${collection ? ' collection-gallery' : ''}">${gallery}</div></section>` : ''}${project.videoPosition !== 'opening' && videos ? `<div class="project-videos">${videos}</div>` : ''}${supporting ? `<section class="project-supporting"><h2>${esc(localized(project.supportingHeading, lang) || (lang === 'ru' ? 'Дополнительные материалы' : 'Additional materials'))}</h2><div class="project-gallery">${supporting}</div></section>` : ''}${linkSections}${project.closingImage ? `<div class="project-closing">${figure(project.closingImage)}</div>` : ''}<nav class="artwork-pagination" aria-label="${t.projects}">${adjacent(projects[index - 1], 'prev')}${adjacent(projects[index + 1], 'next')}</nav></article>`;
 }
