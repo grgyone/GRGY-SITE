@@ -149,8 +149,8 @@ export function projectImage(project, image, lang, { thumbnail = false, eager = 
   return `<img class="${thumbnail ? 'artwork-thumbnail' : 'project-image'}" src="${base}-${thumbnail ? 960 : 1920}.webp" srcset="${widths.map(width => `${source(width)} ${width}w`).join(', ')}" sizes="${sizes}" width="${image.width}" height="${image.height}" alt="${esc(image[lang === 'ru' ? 'altRu' : 'altEn'])}" loading="${eager ? 'eager' : 'lazy'}"${eager ? ' fetchpriority="high"' : ''} decoding="async"${thumbnail ? ` style="object-position: ${image.objectPosition || '50% 50%'}"` : ''}>`;
 }
 
-export function projectCards(projects, lang) {
-  return projects.map(project => project.coverImage
+export function projectCards(projects, lang, { textOnly = false } = {}) {
+  return projects.map(project => project.coverImage && !textOnly
     ? `<figure class="artwork-card project-card"><a href="${localUrl(projectUrl(project), lang)}">${projectImage(project, project.coverImage, lang, { thumbnail: true })}<figcaption><span class="artwork-title">${esc(project.title)}</span>${project.year === null ? '' : `<span class="artwork-year">${project.year}</span>`}</figcaption></a></figure>`
     : `<article class="project-card project-card-text"><h2><a href="${localUrl(projectUrl(project), lang)}">${esc(project.title)}</a></h2><p class="project-card-meta">${[project.year, localized(project.projectType, lang)].filter(value => value !== null && value !== '').map(esc).join(' · ')}</p><p class="project-card-description">${esc(project[lang === 'ru' ? 'descriptionRu' : 'descriptionEn'])}</p></article>`).join('\n');
 }
