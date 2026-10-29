@@ -19,13 +19,77 @@
         "name": "ChikoRoko"
       }
     ],
-    "descriptionRu": "Лимитированная цифровая коллекционная игрушка в авторском стиле GRGY.",
-    "descriptionEn": "A limited-edition digital collectible toy in GRGY’s signature style.",
-    "coverImage": null,
-    "gallery": [],
+    "descriptionRu": "В 2022 году GRGY и ChikoRoko создали Kloud — цифровую коллекционную игрушку, объединившую два узнаваемых персонажа. Светлый и доброжелательный Roko встречается с тёмной палитрой, контрастными деталями и характером Kloud.\n\nКоллаборация переносит визуальный язык GRGY в объёмную форму цифровой игрушки.",
+    "descriptionEn": "In 2022, GRGY and ChikoRoko created Kloud, a digital collectible toy bringing together two recognizable characters. The bright, friendly Roko meets Kloud’s dark palette, contrasting details, and distinctive character.\n\nThe collaboration translates GRGY’s visual language into the three-dimensional form of a digital toy.",
+    "coverImage": {
+      "src": "/images/projects/originals/chikoroko-kloud/CRGRGY promo.png",
+      "width": 1024,
+      "height": 1024,
+      "altEn": "ChikoRoko × GRGY — original collaboration promotional graphic",
+      "altRu": "ChikoRoko × GRGY — оригинальная промографика коллаборации",
+      "caption": {
+        "en": "Collaboration promotional graphic",
+        "ru": "Промографика коллаборации"
+      },
+      "assetIndex": 0
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/originals/chikoroko-kloud/roko grgy model-01.png",
+        "width": 2964,
+        "height": 2964,
+        "altEn": "Kloud design sheet with front, back and side views of the digital toy",
+        "altRu": "Лист разработки Kloud с видами цифровой игрушки спереди, сзади и сбоку",
+        "caption": {
+          "en": "Original design sheet",
+          "ru": "Исходный лист разработки"
+        },
+        "assetIndex": 1
+      }
+    ],
     "videos": [],
-    "externalLinks": [],
-    "displayOrder": 1
+    "externalLinks": [
+      {
+        "url": "https://r.toys/en/toy/kloud",
+        "label": {
+          "en": "R.Toys — official Kloud toy page",
+          "ru": "R.Toys — официальная страница игрушки Kloud"
+        }
+      },
+      {
+        "url": "https://r.toys/en/user/grgy/toys",
+        "label": {
+          "en": "R.Toys — GRGY artist profile",
+          "ru": "R.Toys — профиль художника GRGY"
+        }
+      },
+      {
+        "url": "https://sketchfab.com/3d-models/grgy-cloud-21f1e0e76a29407983f020b07724e22b",
+        "label": {
+          "en": "GRGY Cloud — 3D model on Sketchfab (artist archive)",
+          "ru": "GRGY Cloud — 3D-модель на Sketchfab (архив художника)"
+        }
+      }
+    ],
+    "displayOrder": 1,
+    "supportingHeading": {
+      "en": "Released toy — artist archive",
+      "ru": "Выпущенная игрушка — архив художника"
+    },
+    "supportingGallery": [
+      {
+        "src": "/images/projects/originals/chikoroko-kloud/Снимок экрана 2026-10-23 193716.png",
+        "width": 1706,
+        "height": 1015,
+        "altEn": "Artist-supplied R.Toys profile screenshot showing the released Kloud toy",
+        "altRu": "Архивный скриншот профиля GRGY на R.Toys с выпущенной игрушкой Kloud",
+        "caption": {
+          "en": "R.Toys artist profile — archived screenshot, 23 October 2026",
+          "ru": "Профиль художника на R.Toys — архивный скриншот, 23 октября 2026"
+        },
+        "assetIndex": 2
+      }
+    ]
   },
   {
     "id": "studio21-music-lovers",

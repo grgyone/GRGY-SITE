@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { readyProjects, projectCards, projectContent, projectCv } from '../scripts/projects.mjs';
 
 const drafts = JSON.parse(await readFile(new URL('../data/projects.json', import.meta.url), 'utf8'));
@@ -14,14 +15,18 @@ const fixture = {
   videos: [{ src: '/videos/projects/test/sample.webm', width: 320, height: 180, caption: { en: 'Test clip', ru: 'Тестовый ролик' } }], externalLinks: []
 };
 
-test('ChikoRoko remains text-only without invented media', async () => {
-  const ready = await readyProjects(drafts.slice(0, 1), '/tmp');
+test('ChikoRoko uses the supplied archive media with localized descriptions and links', async () => {
+  const ready = await readyProjects(drafts.slice(0, 1), fileURLToPath(new URL('../', import.meta.url)));
   assert.equal(ready.length, 1);
   assert.match(projectCards(ready, 'en'), /ChikoRoko/);
   assert.match(projectCv(ready, 'ru'), /\/ru\/works\/projects\/chikoroko-grgy-kloud\//);
   for (const project of ready) {
     const html = projectContent(project, ready, 'en');
-    assert.doesNotMatch(html, /<img|<video|class="project-gallery"/);
+    assert.match(html, /CRGRGY%20promo.png/);
+    assert.match(html, /roko%20grgy%20model-01.png/);
+    assert.equal((html.match(/class="project-image"/g) || []).length, 3);
+    assert.doesNotMatch(html, /chikoroko.b-cdn.net|<video/);
+    assert.match(html, /r.toys\/en\/toy\/kloud/);
     assert.match(html, /class="project-description"/);
   }
   assert.deepEqual(await readyProjects(drafts.map(project => ({ ...project, status: 'draft' })), '/tmp'), []);
@@ -30,7 +35,7 @@ test('ChikoRoko remains text-only without invented media', async () => {
 });
 
 test('ready projects require confirmed bilingual content and verify any declared media', async () => {
-  const [draft] = drafts;
+  const draft = { ...drafts[0], coverImage: null, gallery: [], supportingGallery: [] };
   await assert.rejects(readyProjects([{ ...draft, status: 'ready', descriptionEn: '' }], '/tmp'), /descriptionEn/);
   await assert.rejects(readyProjects([{ ...draft, status: 'ready', year: undefined }], '/tmp'), /year must be confirmed/);
   const [undated] = await readyProjects([{ ...draft, year: null }], '/tmp');
