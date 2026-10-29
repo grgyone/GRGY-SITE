@@ -15,6 +15,18 @@ const fixture = {
   videos: [{ src: '/videos/projects/test/sample.webm', width: 320, height: 180, caption: { en: 'Test clip', ru: 'Тестовый ролик' } }], externalLinks: []
 };
 
+test('Projects index can show consistent text rows while preserving artwork covers', () => {
+  for (const lang of ['en', 'ru']) {
+    const html = projectCards([fixture], lang, { textOnly: true });
+    assert.match(html, /project-card-text/);
+    assert.match(html, /project-card-meta/);
+    assert.match(html, /project-card-description/);
+    assert.doesNotMatch(html, /<img/);
+    assert.match(projectCards([fixture], lang), /<img/);
+    assert.match(projectContent(fixture, [fixture], lang), /class="project-image"/);
+  }
+});
+
 test('ChikoRoko uses the supplied archive media with localized descriptions and links', async () => {
   const ready = await readyProjects(drafts.slice(0, 1), fileURLToPath(new URL('../', import.meta.url)));
   assert.equal(ready.length, 1);
