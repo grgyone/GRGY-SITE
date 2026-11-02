@@ -69,12 +69,13 @@ test('Cutestar preserves all eight images, invitation attribution and the existi
 test('SHOUT OUT KLOUD preserves numbered order, full collection and separates concept materials', () => {
   const project = projects.find(project => project.id === 'shout-out-kloud');
   assert.equal(project.layout, 'collection');
-  assert.equal(projectImages(project).length, 58);
+  assert.equal(projectImages(project).length, 57);
   assert.deepEqual(project.gallery.map(image => image.src.split('/').pop()), Array.from({ length: 51 }, (_, i) => `50-${String(i + 1).padStart(2, '0')}.png`));
-  assert.ok(project.openingImage.src.endsWith('/50-52.png'));
+  assert.equal(project.openingImage, undefined);
+  assert.ok(project.coverImage.src.endsWith('/50 in 1 L.png'));
   assert.ok(project.closingImage.src.endsWith('/50-53.png'));
   assert.equal(project.hideCaptions, true);
-  assert.equal(project.videoPosition, 'opening');
+  assert.equal(project.videoPosition, 'after-description');
   assert.equal(project.supportingGallery.length, 4);
   assert.match(project.supportingGallery.find(image => image.src.endsWith('tt shirt.png')).caption.en, /concept/i);
   assert.equal(project.videos.length, 1);
@@ -122,7 +123,10 @@ test('Works hierarchy and redirects exclude Solukta and keep retired content rec
     }
     const shout = (await read(prefix + 'works/shout-out-kloud/index.html')).match(/<main\b[^>]*>([\s\S]*?)<\/main>/)[1];
     assert.doesNotMatch(shout, /<figcaption/);
-    assert.ok(shout.indexOf('/50-52.png') < shout.indexOf('<video'));
+    assert.doesNotMatch(shout, /50-52.png/);
+    assert.ok(shout.indexOf('/50%20in%201%20L.png') < shout.indexOf('class="project-information"'));
+    assert.ok(shout.indexOf('class="project-information"') < shout.indexOf('<video'));
+    assert.equal((shout.match(/<video/g) || []).length, 1);
     assert.ok(shout.indexOf('<video') < shout.indexOf('/50-01.png'));
     const originals = [...shout.matchAll(/href="([^"#]+\.(?:png|jpg))"/g)].map(match => match[1]);
     assert.ok(originals.at(-1).endsWith('/50-53.png'));
