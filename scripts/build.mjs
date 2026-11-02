@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { documentationVideo } from './documentation.mjs';
 import { mediaProjectContent } from './media-project.mjs';
+import { exhibitionContent } from './exhibition.mjs';
 import { readyProjects, projectUrl, artworkUrl, projectCards, projectContent, projectsTitle, projectImage, imageBase, localized } from './projects.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -15,12 +16,15 @@ const texts = JSON.parse(await readFile(path.join(root, 'data/artist.json'), 'ut
 const artworkDetails = JSON.parse(await readFile(path.join(root, 'data/artwork-details.json'), 'utf8'));
 const projectRecords = JSON.parse(await readFile(options['projects-file'] || path.join(root, 'data/projects.json'), 'utf8'));
 const projects = await readyProjects(projectRecords, mediaRoot);
+const exhibition = JSON.parse(await readFile(path.join(root, 'data/exhibition.json'), 'utf8'));
+await readyProjects([exhibition], root);
 const listedProjects = projects.filter(project => project.section !== 'works');
 const standaloneProjects = projects.filter(project => project.section === 'works');
 const { artist, siteUrl, artworks } = data;
 const standaloneEntries = [...standaloneProjects, ...artworks.filter(work => artworkDetails[work.id]?.standalone).map(work => ({ ...work, section: 'works' }))];
 const categories = data.categories.filter(category => artworks.some(work => work.category === category.slug && (!artworkDetails[work.id]?.standalone || artworkDetails[work.id]?.navigationCategory === work.category)) || (category.slug === 'projects' && listedProjects.length));
 const navigationItems = [...categories.filter(category => category.slug !== 'projects').map(category => ({ title: category.title, url: `/works/${category.slug}/`, category: category.slug })), ...standaloneEntries.filter(entry => !artworkDetails[entry.id]?.navigationCategory).map(entry => ({ title: entry.title, url: projectUrl(entry) })), ...categories.filter(category => category.slug === 'projects').map(category => ({ title: category.title, url: '/works/projects/', category: category.slug }))];
+navigationItems.splice(navigationItems.findIndex(item => item.category === 'projects') < 0 ? navigationItems.length : navigationItems.findIndex(item => item.category === 'projects'), 0, { title: exhibition.navigationTitle, url: '/works/compositions-exhibition/' });
 const esc = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const workUrl = work => artworkUrl(work, artworkDetails);
 for (const work of artworks) {
@@ -151,8 +155,9 @@ ${navigation(noindex ? '/' : url, lang, category)}
 for (const lang of ['en', 'ru']) {
   const t = ui[lang];
   const artistText = texts[lang];
+  await page('/works/compositions-exhibition/', lang, { title: 'COMPOSITIONS — Exhibition (2025)', description: exhibition[lang === 'ru' ? 'descriptionRu' : 'descriptionEn'], imagePath: imageBase(exhibition, exhibition.coverImage) + '-1920.webp', imageAlt: exhibition.coverImage[lang === 'ru' ? 'altRu' : 'altEn'], type: 'article', content: exhibitionContent(exhibition, lang), extraHead: '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'CreativeWork', name: exhibition.title, alternateName: exhibition.subtitle, dateCreated: '2025', temporalCoverage: '2022/2024', creator: { '@type': 'Person', name: artist }, url: siteUrl + local('/works/compositions-exhibition/', lang), isBasedOn: exhibition.url }).replace(/</g, '\u003c') + '</script>' });
   await page('/', lang, { title: t.selected, description: `${t.selected} — ${artist}. First French Kiss, Reworked, Big Face, Kloud, Composition.`, content: `<h1>${t.selected}</h1>${gallery(artworks.filter(work => work.selected), lang)}<p class="gallery-footer"><a class="text-link" href="${local('/works/', lang)}">${t.all}</a></p>` });
-  await page('/works/', lang, { title: t.works, description: `${t.works} — ${artist}: ${categories.map(category => category.title).join(', ')}.`, content: `<h1>${t.works}</h1>${gallery(artworks, lang, standaloneProjects)}${listedProjects.length ? `<section class="all-works-projects"><h2>${projectsTitle(lang)}</h2>${gallery([], lang, listedProjects)}</section>` : ''}` });
+  await page('/works/', lang, { title: t.works, description: `${t.works} — ${artist}: ${categories.map(category => category.title).join(', ')}.`, content: `<h1>${t.works}</h1><p class="gallery-footer"><a class="text-link" href="${local('/works/compositions-exhibition/', lang)}">COMPOSITIONS — Exhibition (2025)</a></p>${gallery(artworks, lang, standaloneProjects)}${listedProjects.length ? `<section class="all-works-projects"><h2>${projectsTitle(lang)}</h2>${gallery([], lang, listedProjects)}</section>` : ''}` });
   for (const category of categories) {
     const works = artworks.filter(work => work.category === category.slug && (!artworkDetails[work.id]?.standalone || artworkDetails[work.id]?.navigationCategory === work.category));
     if (!works.length) continue;
