@@ -57,7 +57,8 @@ async function main() {
         } else assert.equal(await menu.isVisible(), false);
         const navLinks = await page.locator('.artist-navigation a').allTextContents();
         assert.equal(navLinks.length, 3);
-        assert.equal(await page.locator('#work-categories li').count(), 3 + Number(listedProjects.length > 0) + standalone.length);
+        assert.equal(await page.locator('#work-categories li').count(), 4 + Number(listedProjects.length > 0) + standalone.length);
+        assert.equal(await page.locator('#work-categories a').filter({hasText:'COMPOSITIONS — Exhibition'}).count(), 1);
         await page.locator('.works-toggle').click();
         assert.equal(await page.locator('#work-categories').isVisible(), false);
         await page.locator('.works-toggle').click();

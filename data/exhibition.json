@@ -1,0 +1,57 @@
+{
+  "id": "compositions-exhibition",
+  "slug": "compositions-exhibition",
+  "title": "COMPOSITIONS",
+  "navigationTitle": "COMPOSITIONS — Exhibition",
+  "subtitle": "Selected Works 2022–2024",
+  "year": 2025,
+  "opening": {
+    "en": "June 2025",
+    "ru": "Июнь 2025"
+  },
+  "format": {
+    "en": "Independent Virtual Exhibition",
+    "ru": "Независимая виртуальная выставка"
+  },
+  "platform": "ONCYBER",
+  "url": "https://oncyber.io/compositions",
+  "descriptionEn": "COMPOSITIONS brings together selected works from 2022–2024 in an independent virtual exhibition by GRGY (Grgy Sukhanov), opened on ONCYBER in June 2025. Rooted in the experience of love and personal transformation, the works explore the tension between creation and destruction through cloud-like figures, inverted hearts and yellow beams.",
+  "descriptionRu": "COMPOSITIONS — независимая виртуальная выставка GRGY (Grgy Sukhanov), открытая на ONCYBER в июне 2025 года и объединяющая избранные работы 2022–2024 годов. Любовь и личное преображение становятся основой работ: облакообразные персонажи, перевёрнутые сердца и жёлтые лучи раскрывают напряжение между созиданием и разрушением.",
+  "space": {
+    "en": "The virtual space places framed works around a gallery with exposed timber beams and overhead light. A three-dimensional Kloud character occupies the centre of the room, connecting GRGY’s graphic language with the spatial experience of the exhibition.",
+    "ru": "В виртуальном пространстве работы размещены на стенах зала с открытыми деревянными балками и верхним светом. В центре находится трёхмерный персонаж Kloud, связывающий графический язык GRGY с пространственным опытом выставки."
+  },
+  "coverImage": {
+    "src": "/images/projects/originals/compositions-exhibition/COMPOSITIONS by WkdjSrOfcQbHK11H02zH0V1Kkuq1.jpg",
+    "width": 2560,
+    "height": 1398,
+    "altEn": "COMPOSITIONS exhibition on ONCYBER: timber-roofed gallery, framed works and the central Kloud character",
+    "altRu": "Выставка COMPOSITIONS на ONCYBER: зал с деревянными балками, работы на стенах и персонаж Kloud",
+    "assetIndex": 0,
+    "caption": {
+      "en": "Installation view — ONCYBER",
+      "ru": "Вид экспозиции — ONCYBER"
+    }
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/originals/compositions-exhibition/Poster A3 v2.png",
+      "width": 4961,
+      "height": 3508,
+      "altEn": "COMPOSITIONS — original exhibition poster, Selected Works 2022–2024",
+      "altRu": "COMPOSITIONS — оригинальная афиша выставки Selected Works 2022–2024",
+      "assetIndex": 1,
+      "caption": {
+        "en": "Exhibition poster",
+        "ru": "Афиша выставки"
+      }
+    }
+  ],
+  "collaborators": [],
+  "videos": [],
+  "externalLinks": [],
+  "category": "projects",
+  "section": "works",
+  "status": "ready",
+  "displayOrder": 10
+}

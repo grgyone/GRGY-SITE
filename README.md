@@ -1,5 +1,18 @@
 # GRGY (Grgy Sukhanov)
 
+## COMPOSITIONS exhibition
+
+`data/exhibition.json` and `scripts/exhibition.mjs` define the independent
+COMPOSITIONS (2025) exhibition at `/works/compositions-exhibition/` and its RU
+route. It is separate from the Composition series and does not alter homepage
+selection. Only selected documentary media belongs in the public repository.
+
+For local preservation, run `node scripts/archive-exhibition.cjs --source PATH
+--archive PATH` with an archive directory outside both the source and repository.
+It copies originals with SHA-256 checks and prepares a manifest and scene inventory.
+See `docs/compositions-preservation-report.md` for export research, missing assets,
+rights questions and the reconstruction assessment. No 3D scene is archived yet.
+
 The existing static HTML/CSS site, with generated portfolio pages in English and
 Russian. Hosting and `CNAME` (`grgyone.com`) are unchanged. Generated HTML is
 committed for GitHub Pages; no framework or application server is needed there.
