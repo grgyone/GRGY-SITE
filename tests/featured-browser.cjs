@@ -53,8 +53,9 @@ async function main() {
         if (project.layout === 'collection') {
           assert.equal(await page.locator('.collection-gallery').evaluate(element => getComputedStyle(element).gridTemplateColumns.split(' ').length), width <= 760 ? 2 : 3);
           assert.equal(await page.locator('main figcaption').count(), 0);
-          assert.ok((await page.locator('.project-opening img').getAttribute('alt')).includes(lang === 'ru' ? 'логотип' : 'logo'));
-          assert.ok(await page.locator('.project-opening').evaluate(element => element.nextElementSibling.matches('.project-opening-video')));
+          assert.equal(await page.locator('.project-opening').count(), 0);
+          assert.equal(decodeURIComponent(await page.locator('.project-image').first().locator('..').getAttribute('href')), project.coverImage.src);
+          assert.equal(await page.locator('.project-information + .project-description-video').count(), 1);
           assert.equal(await page.locator('main .project-image').last().locator('..').getAttribute('href'), project.closingImage.src);
           const video = page.locator('video');
           await video.scrollIntoViewIfNeeded();

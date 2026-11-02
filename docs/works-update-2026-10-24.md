@@ -1,5 +1,15 @@
 # Works hierarchy update — 24 October 2026
 
+## SHOUT OUT KLOUD opening update — 2 November 2026
+
+The current opening order is the original `50 in 1 L.png` overview (stable asset
+index 0), project information/description, then the existing video. The separate
+opening logo `50-52.png` is removed from the public page; its original and derivative
+files remain preserved. The numbered gallery, supporting materials and closing
+image retain their order and stable asset indices. `videoPosition: "after-description"`
+expresses this order in the source data and renders the video once in both languages.
+This supersedes earlier opening-logo/video placement notes below.
+
 ## Structure and routes
 
 Cutestar, SHOUT OUT KLOUD and Big Face are standalone children of Works in both

@@ -1190,18 +1190,6 @@
       }
     ],
     "section": "works",
-    "openingImage": {
-      "src": "/images/projects/originals/shout-out-kloud/50-52.png",
-      "width": 8334,
-      "height": 8334,
-      "altEn": "SHOUT OUT KLOUD — project logo",
-      "altRu": "SHOUT OUT KLOUD — логотип проекта",
-      "caption": {
-        "en": "50-52",
-        "ru": "50-52"
-      },
-      "assetIndex": 52
-    },
     "closingImage": {
       "src": "/images/projects/originals/shout-out-kloud/50-53.png",
       "width": 8334,
@@ -1215,7 +1203,7 @@
       "assetIndex": 53
     },
     "hideCaptions": true,
-    "videoPosition": "opening"
+    "videoPosition": "after-description"
   },
   {
     "id": "memory-27",
