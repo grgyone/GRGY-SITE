@@ -46,6 +46,7 @@ for (const directory of ['originals', 'optimized']) {
   await mkdir(path.dirname(destination), { recursive: true });
   await cp(path.join(root, 'images/projects', directory, 'big-face'), destination, { recursive: true });
 }
+await cp(path.join(root, 'videos/projects/big-face'), path.join(site, 'videos/projects/big-face'), { recursive: true });
 await exec(process.execPath, ['scripts/build.mjs', '--output-dir', site, '--projects-file', dataFile, '--media-root', site], { cwd: root });
 for (const file of ['portfolio.css', 'styles.css', 'site-nav.js', 'favicon.ico']) await copyFile(path.join(root, file), path.join(site, file));
 await cp(path.join(root, 'images/artworks'), path.join(site, 'images/artworks'), { recursive: true });

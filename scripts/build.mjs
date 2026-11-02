@@ -181,7 +181,7 @@ for (const lang of ['en', 'ru']) {
   }
   if (listedProjects.length) {
     const illustratedProject = listedProjects.find(project => project.coverImage);
-    await page('/works/projects/', lang, { title: projectsTitle(lang), description: `${projectsTitle(lang)} — ${artist}.`, category: 'projects', content: `<section class="project-index"><h1>${projectsTitle(lang)}</h1>${gallery([], lang, listedProjects)}</section>`, imagePath: illustratedProject ? `${imageBase(illustratedProject, illustratedProject.coverImage)}-1920.webp` : null, imageAlt: illustratedProject?.coverImage[lang === 'ru' ? 'altRu' : 'altEn'] || '' });
+    await page('/works/projects/', lang, { title: projectsTitle(lang), description: `${projectsTitle(lang)} — ${artist}.`, category: 'projects', content: `<section class="project-index"><h1>${projectsTitle(lang)}</h1><div class="artwork-grid">${projectCards(listedProjects, lang, { textOnly: true })}</div></section>`, imagePath: illustratedProject ? `${imageBase(illustratedProject, illustratedProject.coverImage)}-1920.webp` : null, imageAlt: illustratedProject?.coverImage[lang === 'ru' ? 'altRu' : 'altEn'] || '' });
   }
   for (const project of projects) {
       const description = project[lang === 'ru' ? 'descriptionRu' : 'descriptionEn'];

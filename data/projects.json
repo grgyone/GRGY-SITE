@@ -19,13 +19,72 @@
         "name": "ChikoRoko"
       }
     ],
-    "descriptionRu": "Лимитированная цифровая коллекционная игрушка в авторском стиле GRGY.",
-    "descriptionEn": "A limited-edition digital collectible toy in GRGY’s signature style.",
-    "coverImage": null,
-    "gallery": [],
+    "descriptionRu": "В 2022 году GRGY и ChikoRoko создали Kloud — цифровую коллекционную игрушку, объединившую два узнаваемых персонажа. Светлый и доброжелательный Roko встречается с тёмной палитрой, контрастными деталями и характером Kloud.\n\nКоллаборация переносит визуальный язык GRGY в объёмную форму цифровой игрушки.",
+    "descriptionEn": "In 2022, GRGY and ChikoRoko created Kloud, a digital collectible toy bringing together two recognizable characters. The bright, friendly Roko meets Kloud’s dark palette, contrasting details, and distinctive character.\n\nThe collaboration translates GRGY’s visual language into the three-dimensional form of a digital toy.",
+    "coverImage": {
+      "src": "/images/projects/optimized/chikoroko-kloud/finished-toy.webp",
+      "width": 1500,
+      "height": 1500,
+      "altEn": "ChikoRoko × GRGY — finished black Kloud digital toy with long ears and a red heart-shaped mouth",
+      "altRu": "ChikoRoko × GRGY — готовая чёрная цифровая игрушка Kloud с длинными ушами и красным ртом в форме сердца",
+      "caption": {
+        "en": "Kloud — released digital toy",
+        "ru": "Kloud — выпущенная цифровая игрушка"
+      },
+      "assetIndex": 3
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/originals/chikoroko-kloud/624205448_18170996944385768_2626958301119754650_n.jpg",
+        "width": 1076,
+        "height": 1076,
+        "altEn": "Official ChikoRoko launch graphic for Kloud by GRGY, showing the finished black toy",
+        "altRu": "Официальная графика анонса Kloud by GRGY с готовой чёрной игрушкой",
+        "caption": {
+          "en": "Official ChikoRoko announcement — 28 October 2022",
+          "ru": "Официальный анонс ChikoRoko — 28 октября 2022"
+        },
+        "assetIndex": 4
+      }
+    ],
     "videos": [],
-    "externalLinks": [],
-    "displayOrder": 1
+    "externalLinks": [
+      {
+        "url": "https://www.instagram.com/p/CkRSBQbj5Iq/",
+        "label": {
+          "en": "ChikoRoko — official Instagram announcement, 28 October 2022",
+          "ru": "ChikoRoko — официальный анонс в Instagram, 28 октября 2022"
+        }
+      },
+      {
+        "url": "https://r.toys/en/toy/kloud",
+        "label": {
+          "en": "R.Toys — official Kloud toy page",
+          "ru": "R.Toys — официальная страница игрушки Kloud"
+        }
+      },
+      {
+        "url": "https://r.toys/en/user/grgy/toys",
+        "label": {
+          "en": "R.Toys — GRGY artist profile",
+          "ru": "R.Toys — профиль художника GRGY"
+        }
+      },
+      {
+        "url": "https://sketchfab.com/3d-models/grgy-cloud-21f1e0e76a29407983f020b07724e22b",
+        "label": {
+          "en": "GRGY Cloud — 3D model on Sketchfab (artist archive)",
+          "ru": "GRGY Cloud — 3D-модель на Sketchfab (архив художника)"
+        }
+      }
+    ],
+    "displayOrder": 1,
+    "supportingGallery": [],
+    "sketchfab": {
+      "id": "21f1e0e76a29407983f020b07724e22b",
+      "title": "GRGY — Cloud",
+      "author": "chiko_roko_vault"
+    }
   },
   {
     "id": "studio21-music-lovers",

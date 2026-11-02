@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { readyProjects, projectCards, projectContent, projectCv } from '../scripts/projects.mjs';
 
 const drafts = JSON.parse(await readFile(new URL('../data/projects.json', import.meta.url), 'utf8'));
@@ -14,14 +15,32 @@ const fixture = {
   videos: [{ src: '/videos/projects/test/sample.webm', width: 320, height: 180, caption: { en: 'Test clip', ru: 'Тестовый ролик' } }], externalLinks: []
 };
 
-test('ChikoRoko remains text-only without invented media', async () => {
-  const ready = await readyProjects(drafts.slice(0, 1), '/tmp');
+test('Projects index can show consistent text rows while preserving artwork covers', () => {
+  for (const lang of ['en', 'ru']) {
+    const html = projectCards([fixture], lang, { textOnly: true });
+    assert.match(html, /project-card-text/);
+    assert.match(html, /project-card-meta/);
+    assert.match(html, /project-card-description/);
+    assert.doesNotMatch(html, /<img/);
+    assert.match(projectCards([fixture], lang), /<img/);
+    assert.match(projectContent(fixture, [fixture], lang), /class="project-image"/);
+  }
+});
+
+test('ChikoRoko uses the supplied archive media with localized descriptions and links', async () => {
+  const ready = await readyProjects(drafts.slice(0, 1), fileURLToPath(new URL('../', import.meta.url)));
   assert.equal(ready.length, 1);
   assert.match(projectCards(ready, 'en'), /ChikoRoko/);
   assert.match(projectCv(ready, 'ru'), /\/ru\/works\/projects\/chikoroko-grgy-kloud\//);
   for (const project of ready) {
     const html = projectContent(project, ready, 'en');
-    assert.doesNotMatch(html, /<img|<video|class="project-gallery"/);
+    assert.match(html, /finished-toy.webp/);
+    assert.doesNotMatch(html, /roko%20grgy%20model-01.png|CRGRGY%20promo.png|Original design sheet|Исходный лист разработки/);
+    assert.equal((html.match(/class="project-image"/g) || []).length, 2);
+    assert.match(html, /sketchfab.com\/models\/21f1e0e76a29407983f020b07724e22b\/embed/);
+    assert.match(html, /instagram.com\/p\/CkRSBQbj5Iq/);
+    assert.doesNotMatch(html, /chikoroko.b-cdn.net|<video/);
+    assert.match(html, /r.toys\/en\/toy\/kloud/);
     assert.match(html, /class="project-description"/);
   }
   assert.deepEqual(await readyProjects(drafts.map(project => ({ ...project, status: 'draft' })), '/tmp'), []);
@@ -29,8 +48,18 @@ test('ChikoRoko remains text-only without invented media', async () => {
   assert.ok(drafts[2].collaborators.some(person => person.name === 'Gleb Kostin (.solutions)'));
 });
 
+test('Sketchfab embeds validate model IDs and escape their labels', async () => {
+  const root = fileURLToPath(new URL('../', import.meta.url));
+  await assert.rejects(readyProjects([{...drafts[0], sketchfab:{id:'../invalid',title:'Model',author:'Artist'}}], root), /invalid Sketchfab model id/);
+  const html=projectContent({...drafts[0],sketchfab:{id:'21f1e0e76a29407983f020b07724e22b',title:'<Model>',author:'<Artist>'}},[drafts[0]],'en');
+  assert.match(html,/title="&lt;Model&gt;"/);
+  assert.match(html,/&lt;Artist&gt;/);
+  assert.match(html,/loading="lazy" allow="fullscreen; xr-spatial-tracking" allowfullscreen/);
+  assert.doesNotMatch(projectContent(fixture,[fixture],'en'), /<iframe/);
+});
+
 test('ready projects require confirmed bilingual content and verify any declared media', async () => {
-  const [draft] = drafts;
+  const draft = { ...drafts[0], coverImage: null, gallery: [], supportingGallery: [] };
   await assert.rejects(readyProjects([{ ...draft, status: 'ready', descriptionEn: '' }], '/tmp'), /descriptionEn/);
   await assert.rejects(readyProjects([{ ...draft, status: 'ready', year: undefined }], '/tmp'), /year must be confirmed/);
   const [undated] = await readyProjects([{ ...draft, year: null }], '/tmp');

@@ -39,6 +39,10 @@ record and rejects partial records.
 
 ## Verification
 
+Publication was explicitly authorized on 2 November 2026. The branch includes the
+current ChikoRoko updates and text-only Projects index. The index stays text-only
+even though Memory #27 now has a cover, video and gallery on its own page.
+
 Run npm run build, npm test, and npm run test:featured. Inspect the actual pages
 in both languages at desktop/mobile widths, checking image loading, overflow,
 deferred video loading, playback, seeking, enabled audio, Projects cover, CV links
