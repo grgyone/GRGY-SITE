@@ -7,18 +7,27 @@ const records = JSON.parse(await readFile(new URL('../data/projects.json', impor
 const memory = records.find(project => project.id === 'memory-27');
 const image = (file, caption) => ({ src: `/images/projects/originals/memory-27/${file}`, width: 1228, height: 1536, altEn: caption, altRu: caption, caption: { en: caption, ru: caption } });
 
-test('Memory #27 is a unique text-only project while media upload is pending', async () => {
+test('Memory #27 includes the supplied media and preserves its CV connection', async () => {
   assert.equal(records.filter(project => project.slug === 'memory-27').length, 1);
   assert.equal(memory.status, 'ready');
-  assert.equal(memory.mediaPending, true);
-  assert.equal((await readyProjects([memory], '/tmp'))[0].id, 'memory-27');
-  await assert.rejects(readyProjects([{ ...memory, mediaPending: false }], '/tmp'), /scene cover, one video and two images/);
-  await assert.rejects(readyProjects([{ ...memory, coverImage: image('missing.png', 'Missing') }], '/tmp'), /partial assets/);
+  assert.notEqual(memory.mediaPending, true);
+  const root = new URL('../', import.meta.url);
+  const { fileURLToPath } = await import('node:url');
+  assert.equal((await readyProjects([memory], fileURLToPath(root)))[0].id, 'memory-27');
+  assert.deepEqual(memory.gallery.map(image => [image.width, image.height]), [[3164,2000],[4096,4096]]);
+  assert.equal(memory.videos.length, 1);
+  assert.deepEqual([memory.videos[0].width,memory.videos[0].height], [1228,1536]);
+  assert.equal(memory.metaImage, memory.videos[0].poster);
+  assert.equal(memory.coverImage.src, memory.metaImage);
+  await assert.rejects(readyProjects([{...memory, gallery:[]}], fileURLToPath(root)), /scene cover, one video and two images/);
+  await assert.rejects(readyProjects([{...memory, mediaPending:true}], fileURLToPath(root)), /partial assets/);
   for (const lang of ['en', 'ru']) {
     const html = projectContent(memory, [memory], lang);
-    assert.doesNotMatch(html, /<img|<video|poster=/);
-    assert.match(html, /Memory #27/);
-    assert.match(projectCards([memory], lang), /memory-27\//);
+    assert.match(html, /<video/);
+    assert.match(html, /controls playsinline preload="none"/);
+    assert.doesNotMatch(html, /autoplay| muted| loop/);
+    assert.ok(html.indexOf('BxGcomp.png') < html.indexOf('bxg.png'));
+    assert.match(projectCards([memory], lang), /0-960.webp/);
   }
   const artist = JSON.parse(await readFile(new URL('../data/artist.json', import.meta.url)));
   const entries = artist.cvSections.flatMap(section => section.entries).filter(entry => entry.projectId === memory.id);
