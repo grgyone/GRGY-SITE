@@ -1338,5 +1338,125 @@
       "en": "Memory #27 — Kloud above a burning car with a seated figure in a dark 3D scene",
       "ru": "Memory #27 — Kloud над горящим автомобилем и сидящая фигура в тёмной 3D-сцене"
     }
+  },
+  {
+    "id": "nft-stage-of-acceptance",
+    "slug": "nft-stage-of-acceptance",
+    "title": "NFT. Stage of Acceptance",
+    "layout": "exhibition",
+    "year": 2022,
+    "category": "projects",
+    "status": "ready",
+    "projectType": {
+      "en": "Group Exhibition / Painting",
+      "ru": "Групповая выставка / живопись"
+    },
+    "medium": {
+      "en": "Digital originals and painted canvases",
+      "ru": "Цифровые оригиналы и живопись на холсте"
+    },
+    "collaborators": [],
+    "location": {
+      "en": "Here on Taganka Gallery, Moscow, Russia",
+      "ru": "Галерея «Здесь на Таганке», Москва, Россия"
+    },
+    "descriptionEn": "Two related works, Fall in Love and Heartbreak, began as digital images and were later translated into paintings on canvas for the 2022 group exhibition NFT. Stage of Acceptance at Here on Taganka Gallery in Moscow. Both images use variations of Kloud, surrounded by red hearts, to stage opposing emotional states.\n\nThe presentation at the exhibition included censorship, as described by the artist. The digital originals and photographs of the physical works are shown together here, making the differences between the versions visible. The small word-bearing hearts visible in the digital images are absent from the canvases shown in the documentation; the exact circumstances of these changes are not documented here.\n\nThe project records a movement from the digital image to the physical exhibition space, with photographs of the painting process, completed canvases and gallery installation.",
+    "descriptionRu": "Две связанные работы — Fall in Love и Heartbreak — первоначально существовали в цифровом формате, а затем были перенесены на холсты для групповой выставки «NFT. Стадия принятия» в галерее «Здесь на Таганке» в Москве в 2022 году. В обеих работах Kloud окружён красными сердцами, но его облик и характер изображения выражают противоположные эмоциональные состояния.\n\nПо словам автора, выставочная версия включала цензурные изменения. Здесь сопоставлены исходные цифровые изображения и фотографии физических работ: на холстах, запечатлённых в документации, отсутствуют маленькие сердца с надписями, которые видны на цифровых оригиналах. Точные обстоятельства этих изменений в данном архиве не установлены.\n\nПроект документирует переход от цифрового изображения к физическому выставочному пространству — от процесса работы над холстами до их размещения в экспозиции.",
+    "coverImage": {
+      "src": "/images/projects/originals/nft-stage-of-acceptance/IMG_8098.JPG",
+      "width": 960,
+      "height": 1280,
+      "altEn": "GRGY paintings Fall in Love and Heartbreak installed one above the other on a white gallery wall",
+      "altRu": "Холсты GRGY Fall in Love и Heartbreak один над другим на белой стене галереи",
+      "caption": {
+        "en": "Exhibition view — two canvases, Here on Taganka Gallery, Moscow, 2022",
+        "ru": "Вид экспозиции — два холста, галерея «Здесь на Таганке», Москва, 2022"
+      },
+      "assetIndex": 0
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/originals/nft-stage-of-acceptance/fall in love-01-01 1200px.png",
+        "width": 1200,
+        "height": 1696,
+        "altEn": "Original Fall in Love digital drawing by GRGY: black Kloud, teardrop eyes, pink tongue and surrounding red hearts",
+        "altRu": "Исходная цифровая работа Fall in Love: чёрный Kloud, глаза-слёзы, розовый язык и красные сердца",
+        "caption": {
+          "en": "Fall in Love — original digital artwork",
+          "ru": "Fall in Love — исходная цифровая работа"
+        },
+        "assetIndex": 1
+      },
+      {
+        "src": "/images/projects/originals/nft-stage-of-acceptance/heartbreak-01 1200px.png",
+        "width": 1200,
+        "height": 1696,
+        "altEn": "Original Heartbreak digital drawing by GRGY: black Kloud with X eyes and broken red hearts",
+        "altRu": "Исходная цифровая работа Heartbreak: чёрный Kloud с глазами-крестами и разбитыми красными сердцами",
+        "caption": {
+          "en": "Heartbreak — original digital artwork",
+          "ru": "Heartbreak — исходная цифровая работа"
+        },
+        "assetIndex": 2
+      }
+    ],
+    "videos": [],
+    "externalLinks": [
+      {
+        "url": "https://kudamoscow.ru/event/vystavka-nft-stadija-prinjatija/",
+        "label": {
+          "en": "NFT. Stage of Acceptance — exhibition listing (2022)",
+          "ru": "NFT. Стадия принятия — архивная афиша выставки (2022)"
+        }
+      }
+    ],
+    "displayOrder": 7,
+    "supportingGallery": [
+      {
+        "src": "/images/projects/originals/nft-stage-of-acceptance/camphoto_1903590565.jpg",
+        "width": 2048,
+        "height": 1536,
+        "altEn": "Work in progress photograph of a GRGY canvas painting on a tabletop beside brushes and paint",
+        "altRu": "Фотография процесса создания холста GRGY на столе рядом с кистями и красками",
+        "caption": {
+          "en": "Work in progress — painting the digital composition on canvas",
+          "ru": "Процесс работы — перенос цифровой композиции на холст"
+        },
+        "assetIndex": 3
+      },
+      {
+        "src": "/images/projects/originals/nft-stage-of-acceptance/IMG_0622.JPEG",
+        "width": 1536,
+        "height": 2048,
+        "altEn": "Two GRGY canvases depicting Heartbreak and Fall in Love standing side by side in the studio",
+        "altRu": "Два холста GRGY Heartbreak и Fall in Love рядом в мастерской",
+        "caption": {
+          "en": "The two completed canvases in the studio",
+          "ru": "Два завершённых холста в мастерской"
+        },
+        "assetIndex": 4
+      },
+      {
+        "src": "/images/projects/originals/nft-stage-of-acceptance/IMG_8223.JPG",
+        "width": 1367,
+        "height": 2048,
+        "altEn": "Side view of GRGY canvases hanging in a contemporary group exhibition next to other artworks",
+        "altRu": "Боковой вид холстов GRGY на групповой выставке рядом с работами других художников",
+        "caption": {
+          "en": "Exhibition documentation — side view of the installation",
+          "ru": "Документация выставки — боковой вид экспозиции"
+        },
+        "assetIndex": 5
+      }
+    ],
+    "galleryHeading": {
+      "en": "Digital originals",
+      "ru": "Цифровые оригиналы"
+    },
+    "supportingHeading": {
+      "en": "Studio and exhibition photographs",
+      "ru": "Фотографии из мастерской и с выставки"
+    },
+    "linkFromAdjacentProjects": false
   }
 ]
